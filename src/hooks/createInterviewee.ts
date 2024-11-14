@@ -1,17 +1,17 @@
 import { db } from "@/lib/db";
 import { TaroCard } from "@prisma/client";
 
-export async function createMember(
-	name: string, 
-	teamId: string, 
-	date: Date, 
-	card: TaroCard
+export async function createInterviewee(
+  name: string,
+  teamId: string,
+  date: Date,
+  card: TaroCard
 ) {
   try {
-    const member = await db.member.create({
+    const interviewee = await db.interviewee.create({
       data: {
         name,
-				dateOfBirth: date,
+        dateOfBirth: date,
         taroCard: {
           connect: { id: card.id },
         },
@@ -20,9 +20,9 @@ export async function createMember(
         },
       },
     });
-    return member;
+    return interviewee;
   } catch (error) {
-    console.error("Error adding member to team:", error);
+    console.error("Error creating interviewee:", error);
     throw error;
   }
 }

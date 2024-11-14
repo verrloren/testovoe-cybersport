@@ -103,7 +103,7 @@ export function NewMemberModal({
     if (selectedCard?.id === card.id) {
       setSelectedCard(null);
     } else {
-      setSelectedCard(card);
+			setSelectedCard(card);
     }
   };
 

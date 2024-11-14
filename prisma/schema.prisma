@@ -37,26 +37,30 @@ model Member {
   id          String    @id @default(cuid())
   name        String
   dateOfBirth DateTime
+
 	taroCard    TaroCard? @relation(fields: [taroCardid], references: [id])
 	taroCardid String?
+
   teamId      String
   team        Team      @relation(fields: [teamId], references: [id])
 }
 
+
 model Interviewee {
-  id          String    @id @default(cuid())
-  name        String
+  id        String   @id @default(uuid())
+  name      String
   dateOfBirth DateTime
 
-	taroCardName    TaroCard? @relation(fields: [taroCardId], references: [id])
-	taroCardId String?
+  taroCard  TaroCard @relation(fields: [taroCardId], references: [id])
+  taroCardId String
+
+  team      Team     @relation(fields: [teamId], references: [id])
+  teamId    String
 
 	compatibilityTaro String?
 	compatibilityAstro String?
-
-  teamName        Team      @relation(fields: [teamId], references: [id])
-  teamId      String
 }
+
 
 model TaroCard {
   id      String   @id @default(cuid())

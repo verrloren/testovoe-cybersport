@@ -38,7 +38,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           height={500}
           alt="team member"
           className="rounded-3xl w-52 mt-9 shadow-xl"
-        />
+        /> 
       </motion.div>
     </motion.div>
   )
