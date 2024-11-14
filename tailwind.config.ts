@@ -8,10 +8,20 @@ export default {
   ],
   theme: {
     extend: {
+			fontFamily: {
+        kings: ['Kings', 'sans-serif'],
+        lancelot: ['Lancelot', 'serif'],
+				libreFranklin: ['Libre_Franklin', 'sans-serif'],
+			},
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+			borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
     },
   },
   plugins: [],
