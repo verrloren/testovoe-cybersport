@@ -132,10 +132,10 @@ export function TeamClient({ teams, taroCards }: TeamClientProps) {
       {teams ? (
         <>
           <motion.h1
-            initial={{ y: -100, opacity: 0 }}
+            initial={{ y: -30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1, ease: "easeInOut" }}
-            className="font-libreFrankline text-5xl font-bold absolute bottom-0 -left-14 
+            transition={{ duration: 0.4, delay: 1.8, ease: "easeInOut" }}
+            className="font-libreFrankline text-5xl font-bold absolute bottom-0 -left-16 
 					text-[#fff] writing-mode-vertical-rl"
           >
             {teams.map((team) => team.name).join(" & ")}

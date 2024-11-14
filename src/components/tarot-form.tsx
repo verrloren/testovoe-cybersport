@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 
 import { TeamType } from "../lib/types";
+import { Button } from "./ui/button";
 
 const schema = z.object({
   firstname: z.string().min(1, "Name is required"),
@@ -68,6 +69,26 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
         body: JSON.stringify(data),
       });
 
+			const fetchData = {
+				"id": "d4e8c328-e55a-43af-879b-391dac96ea26",
+				"teamId": "cm3hms7iz0000e63nasoyec1d"
+			}
+      const apiResponse = await fetch("https://2c9a-151-236-15-36.ngrok-free.app/new_member/predict", {
+        method: "POST",
+        headers: {
+					"Content-Type": "application/json",
+					"ngrok-skip-browser-warning": "any_value",
+					"API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
+				cors: "no-cors"
+        },
+        body: JSON.stringify(fetchData),
+			});
+
+			if (apiResponse.ok) {
+				const {answer, percentage} = await apiResponse.json();
+				console.log(answer, percentage);
+			}
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create interviewee");
@@ -99,7 +120,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           transition={{ duration: 0.4, delay: 0.6, ease: "easeInOut" }}
           className="w-full flex flex-col items-start gap-y-4"
         >
-          <h1 className="font-libreFranklin font-bold text-5xl text-white pt-12 pb-8">
+          <h1 className="font-libreFranklin font-bold text-5xl text-white pt-12 pb-4">
             Details
           </h1>
           <Input
@@ -148,7 +169,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           <select
             {...register("team")}
             className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
-              font-lancelot text-neutral-200 text-xl pl-4 py-2
+              font-lancelot text-neutral-500 text-xl pl-4 py-2
               transition-colors duration-200 focus:outline-none
               placeholder:text-neutral-500 focus:bg-neutral-950"
           >
@@ -201,16 +222,24 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
         </motion.div>
       </div>
 
-      <motion.button
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
-        className="my-10 bg-white hover:bg-[#0e0e0e] transition-colors duration-300 
-        w-full h-full py-3
-        rounded-xl font-libreFranklin text-black text-2xl duration-400"
+      <motion.div
+				className="w-full flex justify-center mt-8"
+			  initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
+			>
+			<Button
+				className="w-full  card-background-diff-direction 
+				rounded-2xl h-14 text-3xl font-lancelot text-white
+				hover:brightness-125 transition-all duration-300"
+        // className="my-10 bg-neutral-200 hover:bg-white transition-colors duration-300 
+        // w-full h-full py-3
+        // rounded-xl font-libreFranklin text-black text-2xl duration-400"
       >
-        Submit
-      </motion.button>
+        <p className="text-radial-gradient-middle">See fate</p>
+			</Button>
+      </motion.div>
+
     </form>
   );
 }

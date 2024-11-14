@@ -24,7 +24,7 @@ export default async function HomePage() {
           maxSize={1.4}
           particleDensity={15}
           className="w-full h-full"
-          particleColor="#4a4a4a"
+          particleColor="#f5f5f5"
         />
       </div>
 			<Container>

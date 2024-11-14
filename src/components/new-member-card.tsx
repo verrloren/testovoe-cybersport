@@ -31,7 +31,7 @@ export function NewMemberCard({ taroCards, teamId, onMemberAdded }: NewMemberCar
       initial="hidden"
       animate="visible"
       variants={cardVariants}
-      transition={{ duration: 0.6, delay: 0.8, ease: "easeInOut" }}
+      transition={{ duration: 0.6, delay: 1.4, ease: "easeInOut" }}
     >
       <motion.div
 				onClick={() => setShowModal(prev => !prev)}

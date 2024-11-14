@@ -20,11 +20,10 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
       initial="hidden"
       animate="visible"
       variants={cardVariants}
-      transition={{ duration: 0.6, delay: 0.8, ease: "easeInOut" }}
+      transition={{ duration: 0.6, delay: 1.4, ease: "easeInOut" }}
     >
-      <motion.div
+      <div
         className="relative flex flex-col items-center w-52 h-auto group cursor-pointer"
-        variants={cardVariants}
       >
         <div className="w-[95%] h-60 flex justify-center -z-10 card-background rounded-2xl absolute">
 					<h5 className="font-lancelot text-radial-gradient-light text-lg mt-1 group-hover:brightness-150 transition-all duration-300">
@@ -39,7 +38,7 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           alt="team member"
           className="rounded-3xl w-52 mt-9 shadow-xl"
         /> 
-      </motion.div>
+      </div>
     </motion.div>
   )
 }
