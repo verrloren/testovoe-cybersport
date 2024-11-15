@@ -77,6 +77,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
       })
 
 			const responseNewInterviewee = await response.json();
+			console.log("respose from db", intervieweeData)
 
       const fetchData = {
         id: responseNewInterviewee.id,
@@ -137,7 +138,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             {...register("firstname")}
             type="text"
             placeholder="Name"
-            className="w-full md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
+            className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
               font-lancelot text-neutral-200 text-xl pl-4 py-2
               transition-colors duration-200 focus:outline-none
               placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:border-neutral-900"
@@ -149,7 +150,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             {...register("surname")}
             type="text"
             placeholder="Surname"
-            className="w-full md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
+            className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
               font-lancelot text-neutral-200 text-xl pl-4 py-2
               transition-colors duration-200 focus:outline-none
               placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:border-neutral-900"
@@ -164,7 +165,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             render={({ field }) => (
               <DateInput
                 {...field}
-                className="w-full h-9 md:w-[85%] border bg-white/40 border-neutral-950 
+                className="w-full h-9 md:w-[85%] border bg-black border-neutral-950 
                 rounded-xl shadow-inner
                 font-lancelot text-neutral-200 text-xl pl-4 py-2
                 transition-colors duration-200 focus:outline-none
@@ -187,7 +188,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 							>
                 <SelectTrigger
                   className="w-full
-				 md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
+				 md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
       	font-lancelot text-neutral-500 text-xl pl-4 py-2
       	transition-colors duration-200 focus:outline-none
       placeholder:text-neutral-500 focus:border-neutral-900 focus:text-neutral-200"
@@ -279,15 +280,14 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
         transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
       >
         <Button
-          className="w-full bg-white 
+          className="w-full  card-background-diff-direction 
 				rounded-2xl h-14 text-3xl font-lancelot text-white
 				hover:brightness-125 transition-all duration-300"
           // className="my-10 bg-neutral-200 hover:bg-white transition-colors duration-300
           // w-full h-full py-3
           // rounded-xl font-libreFranklin text-black text-2xl duration-400"
         >
-          <p className="text-black">See fate</p>
-          {/* <p className="text-radial-gradient-middle">See fate</p> */}
+          <p className="text-radial-gradient-middle">See fate</p>
         </Button>
       </motion.div>
     </form>

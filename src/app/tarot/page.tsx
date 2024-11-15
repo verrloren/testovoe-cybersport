@@ -18,15 +18,15 @@ export default async function TarotPage() {
   return (
 	<>
 	{/* [#07050A pink 0D090E  blue040612 red0D0505 0a080d #777]  */}
-		<div className="w-full bg-gradient-to-b from-[#106667] to-white absolute inset-0 h-screen -z-10">
+		<div className="w-full bg-gradient-to-b from-[#0a080d] to-black absolute inset-0 h-screen -z-10">
 		<SparklesCore
 			id="tsparticlesfullpage"
 			background="transparent"
-			minSize={2}
-			maxSize={3}
+			minSize={0.6}
+			maxSize={1.4}
 			particleDensity={20}
 			className="w-full h-full"
-			particleColor="#F2542F"
+			particleColor="#777"
 		/>
 	</div>
     <Container>

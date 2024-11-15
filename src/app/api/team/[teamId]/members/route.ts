@@ -3,11 +3,13 @@ import { NextApiRequest } from 'next';
 import { createMember } from "@/hooks/createMember";
 import { NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
-  const { teamId } = req.query;
+export async function GET(req: NextApiRequest, { params }: { params: { teamId: string } }) {
 
-	console.log(teamId)
+	const { teamId } = params;
 
+	if (!teamId) {
+		return NextResponse.json({ error: 'Team ID is required' }, { status: 400 });
+	}
   try {
     const members = await db.member.findMany({
       where: { teamId: teamId as string },
