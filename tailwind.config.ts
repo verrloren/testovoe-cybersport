@@ -12,6 +12,7 @@ export default {
         kings: ['Kings', 'sans-serif'],
         lancelot: ['Lancelot', 'serif'],
 				libreFranklin: ['Libre_Franklin', 'sans-serif'],
+				libreBaskerville: ['Libre_Baskerville', 'serif'],
 			},
       colors: {
         background: "var(--background)",

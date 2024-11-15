@@ -170,6 +170,12 @@ body {
               linear-gradient(180deg, #312F26, #83785A) border-box;
   border: 1px solid transparent;
 }
+.card-background-border-b-none {
+  background: linear-gradient(#060606, #060606) padding-box,
+              linear-gradient(180deg, #312F26, #83785A) border-box;
+  border: 1px solid transparent;
+	border-bottom: none;
+}
 
 .card-background-diff-direction {
   background: linear-gradient(#060606, #060606) padding-box,

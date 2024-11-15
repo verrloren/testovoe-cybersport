@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
-import { TarotCard } from "@/lib/types";
+import { TarotCardType } from "@/lib/types";
 
-export default async function getTaroCards(): Promise<TarotCard[]> {
+export default async function getTaroCards(): Promise<TarotCardType[]> {
   try {
     const tarotCards = await db.taroCard.findMany();
     return tarotCards.map(card => ({

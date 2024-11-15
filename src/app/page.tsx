@@ -1,7 +1,7 @@
 import Container from "@/components/container";
 import { auth } from "../../auth";
 import { redirect } from "next/navigation";
-// import { HistoryClient } from "@/components/history-client";
+import { HistoryClient } from "@/components/history-client";
 import { TeamDashboard } from "@/components/team-dashboard";
 import { SparklesCore } from "@/components/ui/sparkles";
 
@@ -30,7 +30,7 @@ export default async function HomePage() {
 			<Container>
 				
 				<TeamDashboard  />
-				{/* <HistoryClient /> */}
+				<HistoryClient />
 
 			</Container>
     </>

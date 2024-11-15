@@ -14,9 +14,9 @@ export interface TarotCardType {
   id: string;
   name: string;
   url: string;
-  meaning?: string;
-  strength?: string;
-  weakness?: string;
+  meaning?: string | null;
+  strength?: string | null;
+  weakness?: string | null;
 }
 
 export interface MemberType {
@@ -24,4 +24,28 @@ export interface MemberType {
   name: string;
   taroCard: TarotCardType;
   dateOfBirth: Date;
+}
+
+export interface IntervieweeType {
+	id: string;
+	name: string;
+	dateOfBirth: Date;
+	teamId: string;
+}
+
+
+
+export interface ResultType {
+  id: string;
+  date: Date;
+
+  teamId: string;
+  intervieweeId: string;
+	cardId: string;
+	
+  compatibilityTaroPercent?: string | null;
+  compatibilityTaroDescription?: string | null;
+
+  compatibilityAstroPercent?: string | null;
+  compatibilityAstroDescription?: string | null;
 }

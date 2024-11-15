@@ -1,48 +1,40 @@
-'use client';
-import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { TarotResultCard } from '@/components/tarot-result-card';
+import { getIntervieweeById } from '@/hooks/getInterviewee';
+import { getResultTaro } from '@/hooks/getResult';
+import getTaroCard from '@/hooks/getTaroCard';
 
-interface FormData {
-  name: string;
-  surname: string;
-  date: string;
-	teamId: string;
-  selectedCard: { name: string };
+
+interface TarotResultPageProps {
+	searchParams: {
+		id: string;
+		teamId: string;
+	}
 }
 
-export default function TarotResultPage() {
-  const [formData, setFormData] = useState<FormData | null>(null);
+export default async function TarotResultPage({ searchParams }: TarotResultPageProps) {
 
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const name = query.get('name');
-    const surname = query.get('surname');
-    const date = query.get('date');
-    const teamId = query.get('team');
-    const selectedCard = query.get('selectedCard');
+	const { id, teamId } = await searchParams;
 
-    if (name && surname && date && selectedCard && teamId) {
-      setFormData({
-        name,
-        surname,
-        date,
-				teamId,
-        selectedCard: JSON.parse(selectedCard),
-      });
-    }
-  }, []);
+	if (!id || !teamId) {
+    return <div className="text-red-500">Missing required parameters</div>;
+  }
+
+	const result = await getResultTaro(id, teamId);
+	//@ts-expect-error
+	const cardTarot = await getTaroCard(result.cardId);
+	//@ts-expect-error
+	const interviewee = await getIntervieweeById(result.intervieweeId);
+
+	if (!result) {
+		return <div className="text-red-500">Result not found</div>;
+	}
+
+	console.log(result);
 
   return (
-    <div>
-      <h1>Tarot Result Page</h1>
-      {formData && (
-        <div>
-          <p className='text-white'>Name: {formData.name}</p>
-          <p className='text-white'>Surname: {formData.surname}</p>
-          <p className='text-white'>Date: {formData.date}</p>
-          <p className='text-white'>Team: {formData.teamId}</p>
-          <p className='text-white'>Selected Card: {formData.selectedCard.name}</p>
-        </div>
-      )}
-    </div>
+		<div className="w-full flex justify-center items-center">
+			<TarotResultCard interviewee={interviewee} result={result} cardTarot={cardTarot}  />
+	</div>
   );
 }

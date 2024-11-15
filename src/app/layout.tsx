@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Libre_Franklin, Kings, Lancelot } from "next/font/google";
+import { Libre_Franklin, Kings, Lancelot, Libre_Baskerville } from "next/font/google";
 import ToasterProvider from "@/providers/toaster-provider";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
@@ -12,6 +12,12 @@ import ConditionalHeader from "@/components/header/conditional-header";
 
 const libreFranklin = Libre_Franklin({
   weight: ["400", "500", "600", "700", "800", "900"], // if single weight, otherwise you use array like [400, 500, 700],
+  style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
+  subsets: ["latin"],
+	variable: '--font-libreFranklin',
+});
+const libreBaskerville = Libre_Baskerville({
+  weight: ["400", "700"], // if single weight, otherwise you use array like [400, 500, 700],
   style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
   subsets: ["latin"],
 	variable: '--font-libreFranklin',
@@ -59,7 +65,7 @@ export default async function RootLayout({
 	const session = await auth();
 
   return (
-    <html className={`${kings } ${libreFranklin} ${lancelot}`} lang="en">
+    <html className={`${kings } ${libreFranklin} ${lancelot} ${libreBaskerville}`} lang="en">
       <body >
       <ConditionalHeader />
 

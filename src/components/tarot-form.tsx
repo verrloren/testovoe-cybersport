@@ -22,6 +22,7 @@ import {
 
 import { TeamType } from "../lib/types";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   firstname: z.string().min(1, "Name is required"),
@@ -40,6 +41,8 @@ interface TarotFormProps {
 }
 
 export function TarotForm({ taroCards, teams }: TarotFormProps) {
+
+	const router = useRouter();
   const [cardError, setCardError] = useState<string | null>(null);
   const [selectedCard, setSelectedCard] = useState<TarotCardType | null>(null);
 
@@ -51,6 +54,8 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+
+
 
   const onSubmit = async (intervieweeData: FormData) => {
     if (!selectedCard) {
@@ -108,6 +113,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 
       console.log(responseNewInterviewee);
       toast.success("Interviewee created successfully");
+			router.push(`/tarot/result?id=${responseNewInterviewee.id}&teamId=${intervieweeData.team}`);
     } catch (error) {
       console.error("Error creating interviewee:", error);
       toast.error("Error creating interviewee");
@@ -217,20 +223,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             )}
           />
 
-          {/* <select
-            {...register("team")}
-            className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
-              font-lancelot text-neutral-500 text-xl pl-4 py-2
-              transition-colors duration-200 focus:outline-none
-              placeholder:text-neutral-500 focus:bg-neutral-950"
-          >
-            <option value="">Select a team</option>
-            {teams.map((team) => (
-              <option key={team.id} value={team.id}>
-                {team.name}
-              </option>
-            ))}
-          </select> */}
+
           {errors.team && <FormErrorMessage message={errors.team.message} />}
         </motion.div>
 
@@ -283,9 +276,6 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           className="w-full  card-background-diff-direction 
 				rounded-2xl h-14 text-3xl font-lancelot text-white
 				hover:brightness-125 transition-all duration-300"
-          // className="my-10 bg-neutral-200 hover:bg-white transition-colors duration-300
-          // w-full h-full py-3
-          // rounded-xl font-libreFranklin text-black text-2xl duration-400"
         >
           <p className="text-radial-gradient-middle">See fate</p>
         </Button>
