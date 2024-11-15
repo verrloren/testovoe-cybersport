@@ -7,9 +7,9 @@ import { usePathname } from "next/navigation";
 // import { useSession } from "next-auth/react";
 // import { MenuNavbar } from "./menu-navbar";
 import { motion } from 'framer-motion';
-import { Button } from "../ui/button";
-import { signOut } from "next-auth/react";
-import toast from "react-hot-toast";
+// import { Button } from "../ui/button";
+// import { signOut } from "next-auth/react";
+// import toast from "react-hot-toast";
 
 export default function Header() {
   // const { data: session } = useSession();

@@ -31,6 +31,7 @@ model Team {
   
 	members     Member[]
   interviewees Interviewee[]
+	results     Result[]
 }
 
 model Member {
@@ -57,6 +58,8 @@ model Interviewee {
   team      Team     @relation(fields: [teamId], references: [id])
   teamId    String
 
+	results   Result[]
+
 	compatibilityTaro String?
 	compatibilityAstro String?
 }
@@ -71,4 +74,21 @@ model TaroCard {
 	weakness String?
   members Member[]
   interviewees Interviewee[]
+}
+
+model Result {
+	id        String   @id @default(uuid())
+	date      DateTime
+
+	teamId    String
+	team      Team     @relation(fields: [teamId], references: [id])
+
+	intervieweeId String
+	interviewee Interviewee @relation(fields: [intervieweeId], references: [id])
+
+	compatibilityTaroPercent String?
+	compatibilityTaroDescription String?
+
+	compatibilityAstroPercent String?
+	compatibilityAstroDescription String?
 }

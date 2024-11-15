@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { TaroCard } from "@prisma/client";
 
 export async function createInterviewee(
+	intervieweeId: string,
   name: string,
   teamId: string,
   date: Date,
@@ -10,6 +11,7 @@ export async function createInterviewee(
   try {
     const interviewee = await db.interviewee.create({
       data: {
+				id: intervieweeId,
         name,
         dateOfBirth: date,
         taroCard: {

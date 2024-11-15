@@ -1,52 +1,45 @@
 import { db } from '@/lib/db';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
+import { createMember } from "@/hooks/createMember";
+import { NextResponse } from "next/server";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextApiRequest) {
   const { teamId } = req.query;
 
-  if (req.method === 'GET') {
-    try {
-      const members = await db.member.findMany({
-        where: { teamId: teamId as string },
-        include: {
-          taroCard: true,
-        },
-      });
+	console.log(teamId)
 
-      res.status(200).json(members);
-    } catch (error) {
-      console.error('Error fetching members:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    const members = await db.member.findMany({
+      where: { teamId: teamId as string },
+      include: {
+        taroCard: true,
+      },
+    });
+
+    return NextResponse.json(members, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching members:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { name, date, card, teamId } = body;
+
+    if (!name || !date || !card || !teamId) {
+      return NextResponse.json({ error: 'Name, surname, date, card, and teamId are required' }, { status: 400 });
     }
-  } else if (req.method === 'POST') {
-    try {
-      const { firstname, surname, date, card, teamId } = req.body;
 
-      if (!firstname || !surname || !date || !card || !teamId) {
-        return res.status(400).json({ error: 'Name, surname, date, card, and teamId are required' });
-      }
 
-      const name = `${firstname} ${surname}`;
-      const newMember = await db.member.create({
-        data: {
-          name,
-          dateOfBirth: new Date(date),
-          taroCard: {
-            connect: { id: card.id },
-          },
-          team: {
-            connect: { id: teamId },
-          },
-        },
-      });
-
-      res.status(201).json(newMember);
-    } catch (error) {
-      console.error('Error creating new member:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    const newMember = await createMember(name, date, card, teamId);
+    return NextResponse.json(newMember, { status: 201 });
+		
+  } catch (error) {
+    console.error("Error creating new member:", error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

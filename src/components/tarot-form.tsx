@@ -1,4 +1,3 @@
-
 "use client";
 
 import { z } from "zod";
@@ -12,6 +11,14 @@ import { useState } from "react";
 import { FormErrorMessage } from "./ui/form-error-message";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { TeamType } from "../lib/types";
 import { Button } from "./ui/button";
@@ -67,35 +74,38 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+      })
 
-			const fetchData = {
-				"id": "d4e8c328-e55a-43af-879b-391dac96ea26",
-				"teamId": "cm3hms7iz0000e63nasoyec1d"
-			}
-      const apiResponse = await fetch("https://2c9a-151-236-15-36.ngrok-free.app/new_member/predict", {
-        method: "POST",
-        headers: {
-					"Content-Type": "application/json",
-					"ngrok-skip-browser-warning": "any_value",
-					"API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
-				cors: "no-cors"
-        },
-        body: JSON.stringify(fetchData),
-			});
+			const responseNewInterviewee = await response.json();
 
-			if (apiResponse.ok) {
-				const {answer, percentage} = await apiResponse.json();
-				console.log(answer, percentage);
-			}
+      const fetchData = {
+        id: responseNewInterviewee.id,
+        teamId: responseNewInterviewee.teamId
+      };
+      const apiResponse = await fetch(
+        "https://still-weekly-tortoise.ngrok-free.app/new_member/predict",
+        {
+					method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "any_value",
+            "API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
+          },
+          body: JSON.stringify(fetchData),
+        }
+      );
+
+      if (apiResponse.ok) {
+        const { answer, percentage } = await apiResponse.json();
+        console.log(answer, percentage);
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create interviewee");
       }
 
-      const responseData = await response.json();
-      console.log(responseData);
+      console.log(responseNewInterviewee);
       toast.success("Interviewee created successfully");
     } catch (error) {
       console.error("Error creating interviewee:", error);
@@ -127,10 +137,10 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             {...register("firstname")}
             type="text"
             placeholder="Name"
-            className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
+            className="w-full md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
               font-lancelot text-neutral-200 text-xl pl-4 py-2
               transition-colors duration-200 focus:outline-none
-              placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:bg-neutral-950"
+              placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:border-neutral-900"
           />
           {errors.firstname && (
             <FormErrorMessage message={errors.firstname.message} />
@@ -139,10 +149,10 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             {...register("surname")}
             type="text"
             placeholder="Surname"
-            className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
+            className="w-full md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
               font-lancelot text-neutral-200 text-xl pl-4 py-2
               transition-colors duration-200 focus:outline-none
-              placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:bg-neutral-950"
+              placeholder:text-neutral-500 focus:placeholder:text-neutral-200 focus:border-neutral-900"
           />
           {errors.surname && (
             <FormErrorMessage message={errors.surname.message} />
@@ -154,11 +164,11 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             render={({ field }) => (
               <DateInput
                 {...field}
-                className="w-full md:w-[85%] border bg-black border-neutral-950 
+                className="w-full h-9 md:w-[85%] border bg-white/40 border-neutral-950 
                 rounded-xl shadow-inner
                 font-lancelot text-neutral-200 text-xl pl-4 py-2
                 transition-colors duration-200 focus:outline-none
-                placeholder:text-neutral-500 neutral-800 focus:bg-neutral-950"
+                placeholder:text-neutral-500 neutral-800 focus:border-neutral-900"
               />
             )}
           />
@@ -166,7 +176,47 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
             <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
           )}
 
-          <select
+          <Controller
+            name="team"
+            control={control}
+            rules={{ required: "This field is required" }}
+            render={({ field }) => (
+              <Select
+								value={field.value}
+								onValueChange={(value) => field.onChange(value)}
+							>
+                <SelectTrigger
+                  className="w-full
+				 md:w-[85%] border bg-white/40 border-neutral-950 rounded-xl shadow-inner
+      	font-lancelot text-neutral-500 text-xl pl-4 py-2
+      	transition-colors duration-200 focus:outline-none
+      placeholder:text-neutral-500 focus:border-neutral-900 focus:text-neutral-200"
+                >
+                  <SelectValue placeholder="Select a team" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup
+                    className="w-full ring-none border bg-black border-neutral-950 rounded-xl shadow-inner
+      	font-lancelot text-neutral-500 text-xl pl-4 py-2
+      	transition-colors duration-200 focus:outline-none
+      placeholder:text-neutral-500 focus:bg-neutral-950"
+                  >
+                    {teams.map((team) => (
+                      <SelectItem
+                        className="text-xl hover:text-neutral-400 cursor-pointer"
+                        key={team.id}
+                        value={team.id}
+                      >
+                        {team.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
+
+          {/* <select
             {...register("team")}
             className="w-full md:w-[85%] border bg-black border-neutral-950 rounded-xl shadow-inner
               font-lancelot text-neutral-500 text-xl pl-4 py-2
@@ -179,7 +229,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
                 {team.name}
               </option>
             ))}
-          </select>
+          </select> */}
           {errors.team && <FormErrorMessage message={errors.team.message} />}
         </motion.div>
 
@@ -223,23 +273,23 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
       </div>
 
       <motion.div
-				className="w-full flex justify-center mt-8"
-			  initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
-			>
-			<Button
-				className="w-full  card-background-diff-direction 
+        className="w-full flex justify-center mt-8"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
+      >
+        <Button
+          className="w-full bg-white 
 				rounded-2xl h-14 text-3xl font-lancelot text-white
 				hover:brightness-125 transition-all duration-300"
-        // className="my-10 bg-neutral-200 hover:bg-white transition-colors duration-300 
-        // w-full h-full py-3
-        // rounded-xl font-libreFranklin text-black text-2xl duration-400"
-      >
-        <p className="text-radial-gradient-middle">See fate</p>
-			</Button>
+          // className="my-10 bg-neutral-200 hover:bg-white transition-colors duration-300
+          // w-full h-full py-3
+          // rounded-xl font-libreFranklin text-black text-2xl duration-400"
+        >
+          <p className="text-black">See fate</p>
+          {/* <p className="text-radial-gradient-middle">See fate</p> */}
+        </Button>
       </motion.div>
-
     </form>
   );
 }

@@ -15,6 +15,7 @@ import { FormErrorMessage } from "./ui/form-error-message";
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const newMemberSchema = z.object({
   firstname: z.string().min(1, "Name is required"),
@@ -49,6 +50,8 @@ export function NewMemberModal({
   const [selectedCard, setSelectedCard] = useState<TarotCardType | null>(null);
   const [cardError, setCardError] = useState<string | null>(null);
 
+	const router = useRouter();
+
 	const {
     register,
     handleSubmit,
@@ -74,7 +77,7 @@ export function NewMemberModal({
 		}
 
     try {
-      const response = await fetch("/api/new-member", {
+      const response = await fetch(`/api/team/${teamId}/members`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,6 +96,7 @@ export function NewMemberModal({
       setShowModal(false);
 			onMemberAdded();
 			toast.success("Member created successfully");
+			router.refresh();
     } catch (error) {
       console.error("Error creating new member:", error);
 			toast.error("Error creating new member");
@@ -143,91 +147,92 @@ export function NewMemberModal({
 
           <div className="w-full flex flex-row h-full">
 						<div className="w-full flex flex-col mt-12 ml-8 items-start gap-y-4">
-						<h3 className="font-libreFranklin pb-4 font-bold text-5xl text-white">
+						<h3 className="font-libreFranklin pb-4 font-bold text-4xl md:text-5xl text-white">
               Member details
             </h3>
 
-								<Input
-									type="text"
-									placeholder="Name"
-									{...register("firstname")}
-									className="w-full md:w-[80%] border-none rounded-xl shadow-inner
-														font-lancelot text-neutral-200 text-lg pl-4 py-2
-														bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
-														placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
-								/>
-								{errors.firstname && (
-									<p className="text-red-500 text-xs mt-1">{errors.firstname.message}</p>
-								)}
+								<div className="flex flex-col md:flex-row w-full gap-8">
+									<div className="flex flex-col gap-4 w-[80%] xl:w-[80%] md:w-1/2">
+										<Input
+											type="text"
+											placeholder="Name"
+											{...register("firstname")}
+											className="w-full md:w-full xl:w-[80%] border-none rounded-xl shadow-inner
+																font-lancelot text-neutral-200 text-xl pl-4 py-2
+																bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
+																placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
+										/>
+										{errors.firstname && (
+											<p className="text-red-500 text-xs mt-1">{errors.firstname.message}</p>
+										)}
+										<Input
+											type="text"
+											placeholder="Surname"
+											{...register("surname")}
+											className="w-full md:w-full border-none rounded-xl shadow-inner
+																font-lancelot text-neutral-200 text-xl pl-4 py-2
+																bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
+																placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
+										/>
+										{errors.surname && (
+											<p className="text-red-500 text-xs mt-1">
+												{errors.surname.message}
+											</p>
+										)}
+										<Controller
+												name="date"
+												control={control}
+												render={({ field }) => (
+													<DateInput
+														{...field}
+														className="w-full md:w-full border-none rounded-xl shadow-inner
+															font-lancelot text-neutral-200 text-xl pl-4 py-2
+															bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
+															placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
+													/>
+												)}
+											/>
+										{errors.date && (
+											<p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
+										)}
+									</div>
+									
+									
+														{/*   	taro cards section		 */}
+														<div className="w-full flex items-start flex-col">
+									
+									
+															<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+																{taroCards.map((card) => (
+																	<div
+																		key={card.id}
+																		onClick={() => handleCardSelect(card)}
+																		className={`relative cursor-pointer rounded-xl
+										${
+																			selectedCard?.id === card.id
+											? "ring-2 ring-white radial-gradient-border-select-modal"
+																			: ""
+																		}`}
+									
+																	>
+																		<Image
+																			width={100}
+																			height={200}
+																			src={card.url}
+																			alt={card.name}
+																			className="w-full h-full rounded-xl hover:brightness-110 transition-all duration-300"
+																		/>
+																	</div>
+																))}
+															</div>
+															<div className="mt-2">
+																{cardError && <FormErrorMessage message={cardError} />}
+															</div>
+														</div>
+														</div>
 
-								<Input
-									type="text"
-									placeholder="Surname"
-									{...register("surname")}
-									className="w-full md:w-[80%] border-none rounded-xl shadow-inner
-														font-lancelot text-neutral-200 text-lg pl-4 py-2
-														bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
-														placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
-								/>
-								{errors.surname && (
-									<p className="text-red-500 text-xs mt-1">
-										{errors.surname.message}
-									</p>
-								)}
-
-								<Controller
-                  name="date"
-                  control={control}
-                  render={({ field }) => (
-                    <DateInput
-                      {...field}
-                      className="w-full md:w-[80%] border-none rounded-xl shadow-inner
-                        font-lancelot text-neutral-200 text-lg pl-4 py-2
-                        bg-[#0a0a0a] transition-colors duration-200 focus:outline-none
-                        placeholder:text-neutral-600 focus:bg-[#0e0e0e]"
-                    />
-                  )}
-                />
-								{errors.date && (
-									<p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
-								)}
-
-						</div>
-
-          {/*   	taro cards section		 */}
-          <div className="w-full flex items-start flex-col">
-            <h3 className="font-libreFranklin font-bold text-5xl text-white pt-12 pb-8">
-              Choose card
-            </h3>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-              {taroCards.map((card) => (
-                <div
-                  key={card.id}
-                  onClick={() => handleCardSelect(card)}
-                  className={`relative cursor-pointer rounded-xl 
-									${
-                    selectedCard?.id === card.id
-										? "ring-2 ring-white radial-gradient-border-select-modal"
-                    : ""
-                  }`}
-
-                >
-                  <Image
-                    width={100}
-                    height={200}
-                    src={card.url}
-                    alt={card.name}
-                    className="w-full h-full rounded-xl hover:brightness-110 transition-all duration-300"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="mt-2">
-              {cardError && <FormErrorMessage message={cardError} />}
-            </div>
-          </div>
-					</div>
+														</div>
+								</div>
 
           {/* <Button
             className="w-full py-10 absolute bottom-0 border-t border-neutral-900

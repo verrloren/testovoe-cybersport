@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
-			<div className="w-full bg-gradient-to-b from-[#0D090E] to-black absolute inset-0 h-full -z-10">
+			<div className="w-full bg-gradient-to-b from-[#0a080d] to-black absolute inset-0 h-full -z-10">
         <SparklesCore
           id="tsparticlesfullpage"
           background="transparent"

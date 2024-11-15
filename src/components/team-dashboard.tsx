@@ -12,13 +12,14 @@ export async function TeamDashboard() {
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	//@ts-expect-error
+
 	const teams: TeamType[] = await getTeams();
 	const taroCards = await getTaroCards();
 	
 
 	return (
 		<>
-			<TeamClient taroCards={taroCards} teams={teams} />
+			<TeamClient taroCards={taroCards} teams={teams}  />
 		</>
 	)
 }

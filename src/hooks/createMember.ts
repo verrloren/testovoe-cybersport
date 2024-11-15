@@ -3,9 +3,9 @@ import { TaroCard } from "@prisma/client";
 
 export async function createMember(
 	name: string, 
-	teamId: string, 
 	date: Date, 
-	card: TaroCard
+	card: TaroCard,
+	teamId: string
 ) {
   try {
     const member = await db.member.create({

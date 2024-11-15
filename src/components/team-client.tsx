@@ -15,8 +15,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 
 interface TeamClientProps {
-  teams: TeamType[];
   taroCards: TarotCardType[];
+	teams: TeamType[];
 }
 
 const teamSchema = z.object({
@@ -26,18 +26,37 @@ const teamSchema = z.object({
 type TeamFormData = z.infer<typeof teamSchema>;
 
 
-export function TeamClient({ teams, taroCards }: TeamClientProps) {
+export function TeamClient({ taroCards, teams }: TeamClientProps) {
 
 	const { register, handleSubmit, formState: { errors } } = useForm<TeamFormData>({
     resolver: zodResolver(teamSchema),
   });
   const [teamName, setTeamName] = useState("");
-	// const [reload, setReload] = useState(false);	
-  // const [teamState, setTeamState] = useState<Team | null>(null);
 	const [members, setMembers] = useState<MemberType[]>(teams[0]?.members || []);
   const router = useRouter();
   const { data: session } = useSession();
   const userId = session?.user?.id;
+	
+
+	const fetchMembers = async () => {
+		try {
+			const response = await fetch(`/api/team/${teams[0].id}/members`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.error || 'Failed to fetch members');
+			}
+			const data = await response.json();
+			setMembers(data);
+			router.refresh();
+		} catch (error) {
+			console.error('Error fetching members:', error);
+		}
+	};
 
   useEffect(() => {
     if (!userId) {
@@ -78,20 +97,10 @@ export function TeamClient({ teams, taroCards }: TeamClientProps) {
     }
   };
 
-	const fetchMembers = async () => {
-		try {
-			const response = await fetch(`/api/team/${teams[0].id}/members`);
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to fetch members');
-			}
-			const data = await response.json();
-			setMembers(data);
-			router.refresh();
-		} catch (error) {
-			console.error('Error fetching members:', error);
-		}
-	};
+	// const teamsId = teams.map((team) => team.id).join(" & ");
+
+
+
 
   if (!teams || teams.length === 0) {
     return (
@@ -152,7 +161,8 @@ export function TeamClient({ teams, taroCards }: TeamClientProps) {
           </div>
         </>
       ) : (
-        <div></div>
+        <div>
+				</div>
       )}
     </div>
   );
