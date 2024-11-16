@@ -5,13 +5,17 @@ export async function createMember(
 	name: string, 
 	date: Date, 
 	card: TaroCard,
-	teamId: string
+	teamId: string,
+	cityOfBirth: string,
+	countryOfBirth: string
 ) {
   try {
     const member = await db.member.create({
       data: {
         name,
 				dateOfBirth: date,
+				cityOfBirth,
+				countryOfBirth,
         taroCard: {
           connect: { id: card.id },
         },

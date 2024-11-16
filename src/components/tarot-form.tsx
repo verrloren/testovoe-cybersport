@@ -1,7 +1,6 @@
 "use client";
 
 import { z } from "zod";
-import { DateInput } from "rsuite";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { TarotCardType } from "@/lib/types";
@@ -23,6 +22,7 @@ import {
 import { TeamType } from "../lib/types";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { DateInput } from "rsuite";
 
 const schema = z.object({
   firstname: z.string().min(1, "Name is required"),
@@ -73,7 +73,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
     };
 
     try {
-      const response = await fetch("/api/new-interviewee", {
+      const response = await fetch("/api/new-interviewee-tarot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
         teamId: responseNewInterviewee.teamId
       };
       const apiResponse = await fetch(
-        "https://still-weekly-tortoise.ngrok-free.app/new_member/predict",
+        "https://still-weekly-tortoise.ngrok-free.app/new_member/predict/taro",
         {
 					method: "POST",
           headers: {
@@ -182,6 +182,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           {errors.date && (
             <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
           )}
+
 
           <Controller
             name="team"

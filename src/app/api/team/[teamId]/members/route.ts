@@ -30,14 +30,14 @@ export async function GET(req: NextApiRequest, { params }: { params: { teamId: s
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, date, card, teamId } = body;
+    const { name, date, card, teamId, cityOfBirth, countryOfBirth } = body;
 
-    if (!name || !date || !card || !teamId) {
-      return NextResponse.json({ error: 'Name, surname, date, card, and teamId are required' }, { status: 400 });
+    if (!name || !date || !card || !teamId || !cityOfBirth || !countryOfBirth) {
+      return NextResponse.json({ error: 'Name, surname, date, cityofbirth, countryofbirth, card, and teamId are required' }, { status: 400 });
     }
 
 
-    const newMember = await createMember(name, date, card, teamId);
+    const newMember = await createMember(name, date, card, teamId, cityOfBirth, countryOfBirth);
     return NextResponse.json(newMember, { status: 201 });
 		
   } catch (error) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { DateInput } from "rsuite";
+// import { DateInput } from "rsuite";
 import { Input } from "./ui/input";
 import { TarotCardType } from "@/lib/types";
 import { Controller, useForm } from "react-hook-form";
@@ -27,9 +27,16 @@ const schema = z.object({
   surname: z.string().min(1, "Surname is required"),
   countryOfBirth: z.string().min(1, "Country is required"),
   cityOfBirth: z.string().min(1, "City is required"),
-  date: z.date().refine((date) => !isNaN(date.getTime()), {
-    message: "Invalid date",
-  }),
+  date: z.string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: "Invalid date format"
+    })
+    .refine((val) => new Date(val) <= new Date(), {
+      message: "Date cannot be in the future"
+    })
+    .refine((val) => new Date(val).getFullYear() >= 1900, {
+      message: "Date cannot be before 1900"
+    }),
   team: z.string().min(1, "Team is required"),
 });
 
@@ -64,8 +71,11 @@ export function AstroForm({ teams }: TarotFormProps) {
       teamId: intervieweeData.team,
     };
 
+		console.log('data', data)
+
     try {
-      const response = await fetch("/api/new-interviewee", {
+			
+      const response = await fetch("/api/new-interviewee-astro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,15 +83,23 @@ export function AstroForm({ teams }: TarotFormProps) {
         body: JSON.stringify(data),
       })
 
+			
+
 			const responseNewInterviewee = await response.json();
-			console.log("interviewee created in db", intervieweeData)
+			if (response.ok) {
+				console.log("interviewee created in db", responseNewInterviewee)
+			}	else {
+				console.log("interviewee not created in db", responseNewInterviewee)
+			}
 
       const fetchData = {
         id: responseNewInterviewee.id,
-        teamId: responseNewInterviewee.teamId
       };
+			
+			console.log("fetchData", fetchData)
+
       const apiResponse = await fetch(
-        "https://still-weekly-tortoise.ngrok-free.app/new_member/predict",
+        "https://still-weekly-tortoise.ngrok-free.app/astrological_position",
         {
 					method: "POST",
           headers: {
@@ -130,7 +148,7 @@ export function AstroForm({ teams }: TarotFormProps) {
             {...register("firstname")}
             type="text"
             placeholder="Имя"
-						className="w-full md:w-[80%] rounded-xl
+						className="w-full rounded-xl
 						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 						bg-white transition-colors duration-200 focus:outline-none
 						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
@@ -142,7 +160,7 @@ export function AstroForm({ teams }: TarotFormProps) {
             {...register("surname")}
             type="text"
             placeholder="Фамилия"
-						className="w-full md:w-[80%] rounded-xl
+						className="w-full rounded-xl
 						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 						bg-white transition-colors duration-200 focus:outline-none
 						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
@@ -151,14 +169,69 @@ export function AstroForm({ teams }: TarotFormProps) {
             <FormErrorMessage message={errors.surname.message} />
           )}
 
-          <Controller
+			<Controller
+        name="date"
+        control={control}
+        defaultValue="" // Add default value here
+        render={({ field: { onChange, value } }) => (
+          <input
+            type="datetime-local"
+            value={value}
+            onChange={onChange}
+            className="w-full rounded-xl
+              text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+              bg-white transition-colors duration-200 focus:outline-none
+              placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+            step="60"
+            min="1900-01-01T00:00"
+            max={new Date().toISOString().slice(0, 16)}
+          />
+        )}
+      />
+
+{/* <Controller
+  name="date"
+  control={control}
+	defaultValue=""
+  render={({ field }) => (
+    <input
+      type="datetime-local"
+      placeholder="Дата и время рождения"
+      {...field}
+      className="w-full rounded-xl
+        text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+        bg-white transition-colors duration-200 focus:outline-none
+        placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+      step="60" // Set step to 60 seconds (1 minute)
+      min="1900-01-01T00:00" // Set minimum date
+      max={new Date().toISOString().slice(0, 16)} // Set maximum date to current date
+    />
+  )}
+  rules={{
+    required: "Date and time are required",
+    validate: (value) => {
+      const date = new Date(value);
+      if (date > new Date()) {
+        return "Date cannot be in the future";
+      }
+      if (date.getFullYear() < 1900) {
+        return "Date cannot be before 1900";
+      }
+      return true;
+    }
+  }}
+/> */}
+          {errors.date && (
+            <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
+          )}
+          {/* <Controller
             name="date"
             control={control}
             render={({ field }) => (
               <DateInput
 								placeholder="Дата рождения"
                 {...field}
-								className="w-full md:w-[80%] rounded-xl
+								className="w-full rounded-xl
 								text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 								bg-white transition-colors duration-200 focus:outline-none
 								placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
@@ -167,7 +240,7 @@ export function AstroForm({ teams }: TarotFormProps) {
           />
           {errors.date && (
             <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
-          )}
+          )} */}
 
           <Controller
             name="team"
@@ -179,7 +252,7 @@ export function AstroForm({ teams }: TarotFormProps) {
 								onValueChange={(value) => field.onChange(value)}
 							>
                 <SelectTrigger
-									className="w-full md:w-[80%] rounded-xl
+									className="w-full rounded-xl
 									text-neutral-600 text-xl pl-4 py-2 border border-neutral-300
 									bg-white transition-colors duration-200 focus:outline-none
 									placeholder:text-neutral-400 focus:bg-white focus:border-[#666]"
@@ -215,7 +288,7 @@ export function AstroForm({ teams }: TarotFormProps) {
             {...register("countryOfBirth")}
             type="text"
             placeholder="Страна рождения"
-						className="w-full md:w-[80%] rounded-xl
+						className="w-full rounded-xl
 						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 						bg-white transition-colors duration-200 focus:outline-none
 						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
@@ -228,7 +301,7 @@ export function AstroForm({ teams }: TarotFormProps) {
             {...register("cityOfBirth")}
             type="text"
             placeholder="Город рождения"
-						className="w-full md:w-[80%] rounded-xl
+						className="w-full rounded-xl
 						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 						bg-white transition-colors duration-200 focus:outline-none
 						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"

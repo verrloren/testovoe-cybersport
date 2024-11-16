@@ -1,7 +1,7 @@
 "use client";
 
 import { NewMemberCard } from "./new-member-card";
-import { TeamMemberCard } from "./team-member-card"
+import { TeamMemberCard } from "./team-member-card";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -16,7 +16,7 @@ import { Input } from "./ui/input";
 
 interface TeamClientProps {
   taroCards: TarotCardType[];
-	teams: TeamType[];
+  teams: TeamType[];
 }
 
 const teamSchema = z.object({
@@ -25,47 +25,48 @@ const teamSchema = z.object({
 
 type TeamFormData = z.infer<typeof teamSchema>;
 
-
 export function TeamClient({ taroCards, teams }: TeamClientProps) {
-
-	const { register, handleSubmit, formState: { errors } } = useForm<TeamFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TeamFormData>({
     resolver: zodResolver(teamSchema),
   });
   const [teamName, setTeamName] = useState("");
-	const [members, setMembers] = useState<MemberType[]>(teams[0]?.members || []);
+  const [members, setMembers] = useState<MemberType[]>(teams[0]?.members || []);
   const router = useRouter();
   const { data: session } = useSession();
   const userId = session?.user?.id;
-	
 
-	const fetchMembers = async () => {
-		try {
-			const response = await fetch(`/api/team/${teams[0].id}/members`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to fetch members');
-			}
-			const data = await response.json();
-			setMembers(data);
-			router.refresh();
-		} catch (error) {
-			console.error('Error fetching members:', error);
-		}
-	};
+  const fetchMembers = async () => {
+    try {
+      const response = await fetch(`/api/team/${teams[0].id}/members`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to fetch members");
+      }
+      const data = await response.json();
+      setMembers(data);
+      router.refresh();
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+  };
 
   useEffect(() => {
     if (!userId) {
-      router.push('/auth/login');
+      router.push("/auth/login");
     }
   }, [userId, router]);
 
   const handleCreateTeam = async (data: TeamFormData) => {
-		const capitalizedTeamName = capitalizeFirstLetter(data.teamName);
+    const capitalizedTeamName = capitalizeFirstLetter(data.teamName);
 
     if (userId) {
       try {
@@ -90,46 +91,51 @@ export function TeamClient({ taroCards, teams }: TeamClientProps) {
         console.error("Error creating team:", error);
       } finally {
         router.refresh();
-				toast.success('Team created!')
+        toast.success("Команда создана!");
       }
     } else {
       console.error("User ID is undefined");
     }
   };
 
-	// const teamsId = teams.map((team) => team.id).join(" & ");
-
-
-
+  // const teamsId = teams.map((team) => team.id).join(" & ");
 
   if (!teams || teams.length === 0) {
     return (
-      <motion.div 
-			initial={{ y: 50, opacity: 0 }}
-			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.4, delay: 1, ease: "easeInOut" }}
-			className="w-full flex items-center justify-center">
-        
-        <form onSubmit={handleSubmit(handleCreateTeam)} className="w-full mt-32 flex 
-				flex-col items-center justify-center gap-y-16">
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, delay: 1, ease: "easeInOut" }}
+        className="w-full flex items-center justify-center"
+      >
+        <form
+          onSubmit={handleSubmit(handleCreateTeam)}
+          className="w-full mt-32 flex 
+				flex-col items-center justify-center gap-y-16"
+        >
           <Input
             type="text"
             value={teamName}
-            {...register('teamName')}
+            {...register("teamName")}
             onChange={(e) => setTeamName(e.target.value)}
-            placeholder="TeamName"
-            className="w-full h-20 p-2 font-lancelot	text-bold border rounded
-          bg-transparent border-none text-8xl text-white focus:outline-none
-          placeholder:text-white text-center"
+            placeholder="Название Команды"
+            className="w-full h-32 p-2 py-4 text-bold border rounded
+          bg-transparent border-none shadow-none text-8xl text-black focus:outline-none
+          placeholder:text-black text-center"
           />
-          {errors.teamName && <p className="text-red-500 text-xs mt-1">{errors.teamName.message}</p>}
+          +
+          {errors.teamName && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.teamName.message}
+            </p>
+          )}
           <Button
-            className="w-full  card-background-diff-direction
-          rounded-2xl h-14 text-3xl font-lancelot text-white
-          hover:brightness-125 transition-all duration-300"
+            className="w-full py-8 mt-8 bg-[#297878]
+							rounded-2xl h-12 text-3xl text-white
+							hover:brightness-125 transition-all duration-300 shadow-xl"
             type="submit"
           >
-            <p className="text-radial-gradient-middle">Create team</p>
+            Создать команду
           </Button>
         </form>
       </motion.div>
@@ -137,31 +143,60 @@ export function TeamClient({ taroCards, teams }: TeamClientProps) {
   }
 
   return (
-    <div className="w-full h-auto relative flex flex-row items-start mt-10">
+    <div className="w-full min-h-screen p-8">
       {teams ? (
-        <div className="w-full h-auto">
+        <div className="w-full max-w-[2100px] mx-auto">
           <motion.h1
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
-            className="text-5xl 	"
+            className="text-5xl text-black mb-12 pl-4"
           >
             {teams.map((team) => team.name).join(" & ")}
           </motion.h1>
 
-          <div
-            className="w-full mt-8 h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
-						lg:grid-cols-4 xl:grid-cols-5 gap-6"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.4 }}
+            className="grid auto-rows-min grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 
+  gap-6 px-4 place-items-start"
           >
-						{members.map((member) => (
-							<TeamMemberCard key={member.id} member={member}  />
-						))}
-            <NewMemberCard teamId={teams[0].id} taroCards={taroCards} onMemberAdded={fetchMembers} />
-          </div>
+            {members.map((member, index) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 1.6 + index * 0.1,
+                  ease: "easeOut",
+                }}
+                className="w-full h-[450px]" // Set consistent height
+              >
+                <TeamMemberCard member={member} />
+              </motion.div>
+            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.4,
+                delay: 1.6 + members.length * 0.1,
+                ease: "easeOut",
+              }}
+              className="w-full h-[450px] z-10" // Set consistent height
+            >
+              <NewMemberCard
+                teamId={teams[0].id}
+                taroCards={taroCards}
+                onMemberAdded={fetchMembers}
+              />
+            </motion.div>
+          </motion.div>
         </div>
       ) : (
-        <div>
-				</div>
+        <div></div>
       )}
     </div>
   );

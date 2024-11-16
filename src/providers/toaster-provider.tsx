@@ -5,11 +5,10 @@ import { Toaster } from "react-hot-toast";
 const ToasterProvider = () => {
 	return <Toaster toastOptions={{
 		style: {
-			backgroundColor: '#0a0a0add',
-      border: '1px solid #1C1C1C',
-			backdropFilter: 'blur(24px)',
+			backgroundColor: '#fff',
+      border: '1px solid #D4D4D4',
       padding: '16px',
-      color: '#f5f5f5',
+      color: '#1e1e1e',
     } 
 	}} />;
 };

@@ -75,7 +75,7 @@ export function TarotResultCard({
               alt={cardTarot.name}
               width={500}
               height={300}
-              className="rounded-3xl"
+              className="rounded-tl-3xl rounded-bl-3xl border-r border-neutral-300"
             />
           </div>
 
@@ -134,7 +134,7 @@ export function TarotResultCard({
               </div>
 
 							
-              <div className="w-1/5 min-h-[30rem] py-10 flex items-center flex-col justify-between rounded-tr-3xl bg-[#F46645]">
+              <div className="w-1/5 min-h-[29rem] py-10 flex items-center flex-col justify-between rounded-tr-3xl bg-[#F46645]">
                 <h3 className=" text-5xl text-white writing-mode-vertical-rl">
                   {toRomanNumeral(cardTarot.id)}
                 </h3>
@@ -146,9 +146,10 @@ export function TarotResultCard({
             </div>
 
             <div className="w-full h-full py-8 px-12 flex flex-row items-center justify-between  bg-[#297878] rounded-br-3xl">
-              <h1 className="text-white font-bold text-7xl ">
+              <h1 className="text-white font-bold text-5xl ">
                 {interviewee.name}
               </h1>
+
               <h1 className="text-white font-bold text-7xl">
                 {result.compatibilityTaroPercent}%
               </h1>

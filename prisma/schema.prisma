@@ -39,6 +39,9 @@ model Member {
   name        String
   dateOfBirth DateTime
 
+	cityOfBirth String
+	countryOfBirth String
+
 	taroCard    TaroCard? @relation(fields: [taroCardid], references: [id])
 	taroCardid String?
 
@@ -52,8 +55,11 @@ model Interviewee {
   name      String
   dateOfBirth DateTime
 
-  taroCard  TaroCard @relation(fields: [taroCardId], references: [id])
-  taroCardId String
+	cityOfBirth String?
+	countryOfBirth String?
+
+  taroCard  TaroCard? @relation(fields: [taroCardId], references: [id])
+  taroCardId String?
 
   team      Team     @relation(fields: [teamId], references: [id])
   teamId    String
