@@ -9,10 +9,9 @@ export default {
   theme: {
     extend: {
 			fontFamily: {
-        kings: ['Kings', 'sans-serif'],
-        lancelot: ['Lancelot', 'serif'],
-				libreFranklin: ['Libre_Franklin', 'sans-serif'],
-				libreBaskerville: ['Libre_Baskerville', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        spaceGrotesk: ['Schibsted_Grotesk'],
+				andika: ['Andika'],
 			},
       colors: {
         background: "var(--background)",

@@ -2,20 +2,31 @@
 
 import { getInterviewees } from "@/hooks/getInterviewee";
 import { HistoryTable } from "./history-table";
-import { getResultTaro } from "@/hooks/getResult";
+import { getResultById } from "@/hooks/getResult";
+import { getTeamNameById } from "@/hooks/getTeams";
 
 
 
 export async function HistoryClient() {
 
 	const interviewees = await getInterviewees();
-	const id = interviewees[0].id;
-	const teamId = interviewees[0].teamId;
-	const taroResult = await getResultTaro(id, teamId);
+	const teamId = interviewees[0]?.teamId;
+	const teamsName = teamId ? await getTeamNameById(teamId) : '';
 
+  const results = await Promise.all(
+    interviewees.map(async (interviewee) => 
+      getResultById(interviewee.id, interviewee.teamId)
+    )
+  );
+
+	console.log(results);
   return (
-		<div>
-			<HistoryTable taroResult={taroResult} interviewees={interviewees} />
-    </div>
+		<>
+			<HistoryTable 
+				teamsName={teamsName} t
+				aroResult={results} 
+				interviewees={interviewees} 
+			/>
+		</>
   );
 }

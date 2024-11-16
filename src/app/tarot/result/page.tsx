@@ -27,7 +27,7 @@ export default async function TarotResultPage({ searchParams }: TarotResultPageP
 	const interviewee = await getIntervieweeById(result.intervieweeId);
 
 	if (!result) {
-		return <div className="text-red-500">Result not found</div>;
+		return <div className="text-red-500">Результат не найден</div>;
 	}
 
 	console.log(result);

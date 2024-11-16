@@ -9,47 +9,52 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { IntervieweeType, ResultType } from "@/lib/types";
+import Container from "./container";
 
 interface HistoryTableProps {
 	interviewees: IntervieweeType[],
-	taroResult: ResultType[]
+	taroResult: ResultType,
+	teamsName: string
 }
 
-export function HistoryTable({ interviewees, taroResult }: HistoryTableProps) {
+export function HistoryTable({ interviewees, taroResult, teamsName }: HistoryTableProps) {
 	return (
-		<div>
-      <h1 className="font-libreFranklin font-bold text-5xl text-white pt-12 pb-4">
-        History
-      </h1>
-
-      <Table className="card-background rounded-2xl text-white">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Interviewee</TableHead>
-            <TableHead>Team</TableHead>
-            <TableHead>Tarot</TableHead>
-            <TableHead>Astro</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-
-          {interviewees.map((interviewee) => (
-            <TableRow key={interviewee.id}>
-              <TableCell>{interviewee.name}</TableCell>
-              <TableCell>{interviewee.teamId}</TableCell>
-              {/* {taroResult.map((result) => {
-                if (result.intervieweeId === interviewee.id) {
-                  return (
-                    <TableCell key={result.id}>{result.cardId}</TableCell>
-                  );
-                }
-                return null;
-              })} */}
-            </TableRow>
-          ))}
-
-        </TableBody>
-      </Table>
-		</div>
+		<Container>
+			<div>
+			
+						<Table className="bg-white border mt-16 border-neutral-300 rounded-2xl text-black">
+							<TableHeader>
+								<TableRow>
+									<TableHead className="text-white font-semibold bg-[#297878]">Собеседуемый</TableHead>
+									<TableHead className="text-white font-semibold bg-[#297878]">Команда</TableHead>
+									<TableHead className="text-white font-semibold bg-[#297878]">Таро</TableHead>
+									<TableHead className="text-white font-semibold bg-[#297878]">Астро</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+			
+							{interviewees.map((interviewee) => (
+              <TableRow key={interviewee.id}>
+                <TableCell className="bg-white">{interviewee.name}</TableCell>
+                <TableCell className="bg-white">{teamsName}</TableCell>
+                <TableCell className="bg-white">
+                  {taroResult && taroResult.intervieweeId === interviewee.id ? 
+                    `${taroResult.compatibilityTaroPercent}%` : 
+                    '-'
+                  }
+                </TableCell>
+								<TableCell className="bg-white">
+							  {taroResult?.[interviewee.id]?.compatibilityTaroPercent 
+							    ? `${taroResult[interviewee.id].compatibilityTaroPercent}%` 
+							    : '-'
+							  }
+							</TableCell>
+              </TableRow>
+            ))}
+			
+							</TableBody>
+						</Table>
+			</div>
+		</Container>
 	)
 }

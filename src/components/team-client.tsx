@@ -139,19 +139,18 @@ export function TeamClient({ taroCards, teams }: TeamClientProps) {
   return (
     <div className="w-full h-auto relative flex flex-row items-start mt-10">
       {teams ? (
-        <>
+        <div className="w-full h-auto">
           <motion.h1
-            initial={{ y: -30, opacity: 0 }}
+            initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1.8, ease: "easeInOut" }}
-            className="font-libreFrankline text-5xl font-bold absolute bottom-0 -left-16 
-					text-[#fff] writing-mode-vertical-rl"
+            transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
+            className="text-5xl 	"
           >
             {teams.map((team) => team.name).join(" & ")}
           </motion.h1>
 
           <div
-            className="w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
+            className="w-full mt-8 h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 
 						lg:grid-cols-4 xl:grid-cols-5 gap-6"
           >
 						{members.map((member) => (
@@ -159,7 +158,7 @@ export function TeamClient({ taroCards, teams }: TeamClientProps) {
 						))}
             <NewMemberCard teamId={teams[0].id} taroCards={taroCards} onMemberAdded={fetchMembers} />
           </div>
-        </>
+        </div>
       ) : (
         <div>
 				</div>

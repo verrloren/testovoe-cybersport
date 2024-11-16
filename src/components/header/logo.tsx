@@ -1,31 +1,30 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 
-interface LogoProps {
-  isActive: boolean;
-}
 
-export function Logo({ isActive }: LogoProps) {
+export function Logo() {
   const router = useRouter();
 
   return (
     <motion.div
-      initial={{ scale: isActive ? 1.1 : 1 }}
-      animate={{ scale: isActive ? 1 : 1.1 }}
-      transition={{ duration: 0.6, ease: "easeInOut", delay: 1.8 }}
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut", delay: 0.4 }}
+			className="flex items-center justify-center cursor-pointer hover:brightness-110 transition-all duration-300"
     >
-      <Image
-        src="/images/logo.svg"
-        className={`rounded-full cursor-pointer ring-[3px] ring-black hover:scale-110 duration-500 transition-transform `}
-        alt="logo"
-        width={80}
-        height={80}
-        onClick={() => router.push("/")}
-        priority
-      />
+			<h1
+			className="text-3xl text-neutral-800 hover:brightness-110 pr-2 transition-colors"
+			onClick={() => router.push('/')}
+				>
+				НАЙМИКС
+			</h1>
+
+			<div className="px-3 py-2 flex items-center justify-center bg-[#F46645] rounded-[8px]">
+				<h1 className="text-white">ВАНГА</h1>
+			</div>
+			
     </motion.div>
   );
 }

@@ -16,29 +16,29 @@ const cardVariants = {
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
   return (
     <motion.div
-      className="h-auto flex flex-row items-start justify-between"
+      className="h-auto relative flex flex-row items-start justify-between"
       initial="hidden"
       animate="visible"
       variants={cardVariants}
       transition={{ duration: 0.6, delay: 1.4, ease: "easeInOut" }}
     >
-      <div
-        className="relative flex flex-col items-center w-52 h-auto group cursor-pointer"
-      >
-        <div className="w-[95%] h-60 flex justify-center -z-10 card-background rounded-2xl absolute">
-					<h5 className="font-lancelot text-radial-gradient-light text-lg mt-1 group-hover:brightness-150 transition-all duration-300">
+
+
+        <div className="w-full flex flex-col bg-[#297878] -z-10 border border-[#666] rounded-2xl absolute hover:brightness-110 transition-all">
+					<h5 className="text-center text-xl font-bold text-white my-2 group-hover:brightness-150 transition-all duration-300">
             {member.name}
           </h5>
-        </div>
 
         <Image
           src={member.taroCard.url}
           width={300}
           height={500}
           alt="team member"
-          className="rounded-3xl w-52 mt-9 shadow-xl"
+          className="w-full rounded-br-2xl rounded-bl-2xl"
         /> 
-      </div>
+				
+        </div>
+
     </motion.div>
   )
 }

@@ -3,11 +3,9 @@
 import { z } from "zod";
 import { DateInput } from "rsuite";
 import { Input } from "./ui/input";
-import Image from "next/image";
 import { TarotCardType } from "@/lib/types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { FormErrorMessage } from "./ui/form-error-message";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -27,10 +25,12 @@ import { useRouter } from "next/navigation";
 const schema = z.object({
   firstname: z.string().min(1, "Name is required"),
   surname: z.string().min(1, "Surname is required"),
-  team: z.string().min(1, "Team is required"),
+  countryOfBirth: z.string().min(1, "Country is required"),
+  cityOfBirth: z.string().min(1, "City is required"),
   date: z.date().refine((date) => !isNaN(date.getTime()), {
     message: "Invalid date",
   }),
+  team: z.string().min(1, "Team is required"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -40,11 +40,9 @@ interface TarotFormProps {
   teams: TeamType[];
 }
 
-export function TarotForm({ taroCards, teams }: TarotFormProps) {
+export function AstroForm({ teams }: TarotFormProps) {
 
 	const router = useRouter();
-  const [cardError, setCardError] = useState<string | null>(null);
-  const [selectedCard, setSelectedCard] = useState<TarotCardType | null>(null);
 
   const {
     register,
@@ -58,17 +56,11 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 
 
   const onSubmit = async (intervieweeData: FormData) => {
-    if (!selectedCard) {
-      setCardError("Пожалуйста выберите карту");
-      return;
-    }
-    setCardError(null);
 
     const fullName = `${intervieweeData.firstname} ${intervieweeData.surname}`;
     const data = {
       ...intervieweeData,
       name: fullName,
-      card: selectedCard,
       teamId: intervieweeData.team,
     };
 
@@ -120,13 +112,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
     }
   };
 
-  const handleCardSelect = (card: TarotCardType) => {
-    if (selectedCard?.id === card.id) {
-      setSelectedCard(null);
-    } else {
-      setSelectedCard(card);
-    }
-  };
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -193,10 +179,10 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 								onValueChange={(value) => field.onChange(value)}
 							>
                 <SelectTrigger
-											className="w-full md:w-[80%] rounded-xl
-											text-neutral-600 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-400 focus:bg-white focus:border-[#666]"
+									className="w-full md:w-[80%] rounded-xl
+									text-neutral-600 text-xl pl-4 py-2 border border-neutral-300
+									bg-white transition-colors duration-200 focus:outline-none
+									placeholder:text-neutral-400 focus:bg-white focus:border-[#666]"
                 >
                   <SelectValue placeholder="Команда" />
                 </SelectTrigger>
@@ -224,46 +210,37 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 
 
           {errors.team && <FormErrorMessage message={errors.team.message} />}
-        </motion.div>
 
-        {/* Tarot cards section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
-          className="w-full flex items-start flex-col"
-        >
-          <h1 className="font-libreFranklin font-bold text-5xl text-white pt-12 pb-8">
-            Выберите карту
-          </h1>
+					<Input
+            {...register("countryOfBirth")}
+            type="text"
+            placeholder="Страна рождения"
+						className="w-full md:w-[80%] rounded-xl
+						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+						bg-white transition-colors duration-200 focus:outline-none
+						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+          />
+          {errors.countryOfBirth && (
+            <FormErrorMessage message={errors.countryOfBirth.message} />
+					)}
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-            {taroCards.map((card, index) => (
-              <motion.div
-                key={index}
-                onClick={() => handleCardSelect(card)}
-                className={`relative cursor-pointer rounded-xl
-                  ${
-                    selectedCard?.id === card.id
-                      ? "ring-4 ring-[#F46645] radial-gradient-border-select"
-                      : ""
-                  }`}
-              >
-                <Image
-                  width={100}
-                  height={200}
-                  src={card.url}
-                  alt={card.name}
-                  className="w-full h-full rounded-xl hover:brightness-110 transition-all duration-300"
-                />
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-2">
-            {cardError && <FormErrorMessage message={cardError} />}
-          </div>
-        </motion.div>
-      </div>
+					<Input
+            {...register("cityOfBirth")}
+            type="text"
+            placeholder="Город рождения"
+						className="w-full md:w-[80%] rounded-xl
+						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+						bg-white transition-colors duration-200 focus:outline-none
+						placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+          />
+          {errors.cityOfBirth && (
+            <FormErrorMessage message={errors.cityOfBirth.message} 
+						/>
+          )}
+          </motion.div>
+        </div>
+
+        
 
       <motion.div
         className="w-full flex justify-center mt-8"

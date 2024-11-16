@@ -1,94 +1,87 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { Logo } from "./logo";
-import { usePathname } from "next/navigation";
-
 // import { useSession } from "next-auth/react";
 // import { MenuNavbar } from "./menu-navbar";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 // import { Button } from "../ui/button";
-// import { signOut } from "next-auth/react";
-// import toast from "react-hot-toast";
+import { signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+import { MenuIcon } from "lucide-react";
+import { Button } from "../ui/button";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Header() {
   // const { data: session } = useSession();
   // const menuDropdown = useMenuDropdown();
 
-  const pathname = usePathname();
-
-  const isActive = (path: string) => pathname === path;
-
-	const linkVariants = {
+  const linkVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
 
   return (
     <motion.header
-		initial={{ height: '50%', opacity: 0 }}
-		animate={{ height: 100, opacity: 1 }}
-		transition={{ duration: 0.8, ease: "easeInOut" }}
+      initial={{ height: "50%", opacity: 0 }}
+      animate={{ height: 100, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
       className="w-full h-24 relative z-20
-			 bg-black flex items-center justify-center shadow-xl
-			 header-background"
+			 bg-white flex items-center justify-center border-b border-neutral-300"
     >
-      <nav className="flex items-center justify-center gap-x-8">
-			<motion.div
+      <nav className="w-full mx-12 sm:mx-16 md:mx-24 lg:mx-32 xl:mx-40 2xl:mx-48 flex items-center justify-between ">
+        <Logo />
+        <motion.div
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.4, ease: "easeInOut", delay: 1.2 }}
+          transition={{ duration: 0.4, ease: "easeInOut", delay: 0.8 }}
+          className="flex items-center justify-center gap-x-8 xl:gap-12 2xl:gap-16"
           variants={linkVariants}
         >
           <Link
-            className={`font-lancelot text-2xl text-white hover:text-white transition-colors
-              ${isActive('/tarot') ? "underline-gradient" : ""}`}
+            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
             href="/tarot"
           >
-            Tarot
+            Таро
           </Link>
-        </motion.div>
-        <motion.div
-									initial="hidden"
-					animate="visible"
-					transition={{ duration: 0.4, ease: "easeInOut", delay: 1 }}
-					variants={linkVariants} 
-					className={`relative  rounded-full w-14 h-14
-					${isActive('/') && "radial-gradient-border" }`}
-				>
-          <Logo isActive={isActive('/')} />
-        </motion.div>
-				
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.4, ease: "easeInOut", delay: 1.2	 }}
-          variants={linkVariants}
-        >
           <Link
-            className={`font-lancelot text-2xl text-white hover:text-white transition-colors
-              ${isActive('/astro') ? "underline-gradient" : ""}`}
+            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
             href="/astro"
           >
-            Astro
+            Астро
           </Link>
-        </motion.div>
+          <Link
+            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
+            href="/history"
+          >
+            История
+          </Link>
 
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <MenuIcon size={20} className="text-neutral-800" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="rounded-3xl bg-white">
+              <DropdownMenuItem>
+                <Button
+                  className="w-full shadow-none"
+                  onClick={() => {
+                    signOut().then(() => toast.success("Logged out"));
+                  }}
+                >
+									Выйти
+								</Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </motion.div>
       </nav>
-			{/* <Button
-        className="w-14 bg-white text-textGrayDark dark:text-textGray  
-			dark:hover:text-white hover:text-neutral-900 transition-colors hover:bg-transparent 
-			shadow-none gap-x-2 justify-start ml-3 text-base"
-        onClick={() => {
-          signOut().then(() => toast.success("Logged out"));
-        }}
-      >
-        Log out
-      </Button> */}
-      {/* <div className="flex flex-row gap-x-3 items-center"> */}
-      {/* <MenuNavbar /> */}
-      {/* </div> */}
-      {/* {menuDropdown.isOpen && <MenuDropdown />} */}
     </motion.header>
   );
 }

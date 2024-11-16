@@ -1,9 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'Andika';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('https://fonts.gstatic.com/s/andika/v13/mem4YaWwznmLx-lzGfN7MdRy1g.woff2') format('woff2');
+}
+
 body {
-	background-color: black;
+	font-family: 'Andika', sans-serif;
+	font-weight: 400;
+	font-size: 1rem;
+	line-height: 1.5;
+	background-color: #000;
+	background-color: white;
 }
 
 @layer base {
@@ -39,6 +54,7 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+
 
 
 

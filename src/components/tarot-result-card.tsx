@@ -2,7 +2,6 @@
 
 import { IntervieweeType, ResultType, TarotCardType } from "@/lib/types";
 import Image from "next/image";
-import { SparklesCore } from "./ui/sparkles";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
@@ -67,20 +66,10 @@ export function TarotResultCard({
 
   return (
     <>
-      <div className="w-full bg-gradient-to-b from-[#0a080d] to-black absolute inset-0 h-full -z-10">
-        <SparklesCore
-          id="tsparticlesfullpage"
-          background="transparent"
-          minSize={0.6}
-          maxSize={1.4}
-          particleDensity={15}
-          className="w-full h-full"
-          particleColor="#f5f5f5"
-        />
-      </div>
-      <div className="w-[80%] lg:w-[60%] h-[35rem] mt-20 rounded-3xl card-background ">
+
+      <div className="w-[80%] lg:w-[60%] h-auto mt-20 rounded-3xl bg-white border border-neutral-300 ">
         <div className="w-full h-full relative flex flex-row items-start">
-          <div className="w-1/2 -translate-y-6 flex flex-row justify-center items-start">
+          <div className="w-1/2 flex h-full flex-row justify-center items-start">
             <Image
               src={cardTarot.url}
               alt={cardTarot.name}
@@ -90,89 +79,83 @@ export function TarotResultCard({
             />
           </div>
 
-          <div className="w-full h-full flex flex-col items-start">
-            <div className="w-full h-full flex items-start">
+					{/* tabs section and bottom div */}
+          <div className="w-full h-full relative flex flex-col items-start">
+
+						{/* tabs and pane */}
+            <div className="w-full h-2/3 flex flex-row items-start">
+
+							{/* tabs */}
               <div className="w-full h-full flex flex-col items-start">
-                <div className="w-full border-b border-[#312F26]">
-                  <Image
-                    className="object-cover"
-                    src="/images/lilias.svg"
-                    alt="Lilias"
-                    width={800}
-                    height={100}
-                  />
-                </div>
-
-                <div className="w-full h-full pl-10 pt-8">
-
-								<Tabs defaultValue="compatibility" className="w-5/6">
+								<Tabs defaultValue="compatibility" className="w-5/6 pt-24 pl-8">
 								  <TabsList className="pb-8">
-								    <TabsTrigger className="text-[#6A6A6A] text-xl data-[state=active]:text-white 
-										font-lancelot data-[state=active]:text-2xl "  
+								    <TabsTrigger className="text-[#666] text-xl data-[state=active]:text-black data-[state=active]:shadow-none
+										 data-[state=active]:text-2xl "  
 										value="compatibility"> 
-											Compatibility 
+											Совместимость 
 										</TabsTrigger> 
-								    <TabsTrigger className="text-[#6A6A6A] text-xl data-[state=active]:text-white 
-										font-lancelot data-[state=active]:text-2xl "  
+								    <TabsTrigger className="text-[#666] text-xl data-[state=active]:text-black data-[state=active]:shadow-none
+										 data-[state=active]:text-2xl "  
 										value="meaning"> 
-											Meaning 
+											Значение 
 										</TabsTrigger> 
-								    <TabsTrigger className="text-[#6A6A6A] text-xl data-[state=active]:text-white 
-										font-lancelot data-[state=active]:text-2xl "  
-										value="strengness"> 
-											Strengness 
+								    <TabsTrigger className="text-[#666] text-xl data-[state=active]:text-black data-[state=active]:shadow-none
+										 data-[state=active]:text-2xl "  
+										value="stregth"> 
+											Сила 
 										</TabsTrigger> 
-								    <TabsTrigger className="text-[#6A6A6A] text-xl data-[state=active]:text-white 
-										font-lancelot data-[state=active]:text-2xl " 
+								    <TabsTrigger className="text-[#666] text-xl data-[state=active]:text-black data-[state=active]:shadow-none
+										 data-[state=active]:text-2xl " 
 										value="weakness">
-											Weakness
+											Слабость
 										</TabsTrigger>
 								  </TabsList>
-
 								  <TabsContent 
-									className="text-[#999] font-lancelot text-base [text-indent:1.5rem]" 
+									className="text-[#666]  text-base [text-indent:1.5rem]" 
 									value="compatibility">
 										{result.compatibilityTaroDescription}
 									</TabsContent>
 								  <TabsContent 
-									className="text-[#999] font-lancelot text-base [text-indent:1.5rem]" 
+									className="text-[#666]  text-base [text-indent:1.5rem]" 
 									value="meaning">
 										{cardTarot.meaning}
 									</TabsContent>
 								  <TabsContent 
-									className="text-[#999] font-lancelot text-base [text-indent:1.5rem]" 
-									value="strengness">
+									className="text-[#666]  text-base [text-indent:1.5rem]" 
+									value="stregth">
 										{cardTarot.strength}
 									</TabsContent>
 								  <TabsContent 
-									className="text-[#999] font-lancelot text-base [text-indent:1.5rem]" 
+									className="text-[#666]  text-base [text-indent:1.5rem]" 
 									value="weakness">
 										{cardTarot.weakness}
 									</TabsContent>
-
-
 								</Tabs>
-                </div>
               </div>
-              <div className="w-1/6 py-10 flex items-center flex-col justify-between h-full rounded-tr-3xl card-background-border-b-none">
-                <h3 className="font-libreBaskerville text-5xl text-radial-gradient-dark writing-mode-vertical-rl">
+
+							
+              <div className="w-1/5 min-h-[30rem] py-10 flex items-center flex-col justify-between rounded-tr-3xl bg-[#F46645]">
+                <h3 className=" text-5xl text-white writing-mode-vertical-rl">
                   {toRomanNumeral(cardTarot.id)}
                 </h3>
-                <h3 className="font-kings text-5xl text-radial-gradient-dark writing-mode-vertical-rl ">
+                <h3 className="text-white text-5xl  writing-mode-vertical-rl ">
                   {cardTarot.name}
                 </h3>
               </div>
+
             </div>
 
-            <div className="w-full px-12 flex flex-row items-center justify-between h-1/3 card-background-diff-direction  rounded-br-3xl">
-              <h1 className="font-lancelot text-7xl text-radial-gradient-light">
+            <div className="w-full h-full py-8 px-12 flex flex-row items-center justify-between  bg-[#297878] rounded-br-3xl">
+              <h1 className="text-white font-bold text-7xl ">
                 {interviewee.name}
               </h1>
-              <h1 className="font-kings text-7xl text-radial-gradient-light">
+              <h1 className="text-white font-bold text-7xl">
                 {result.compatibilityTaroPercent}%
               </h1>
             </div>
+
           </div>
+
         </div>
       </div>
     </>
