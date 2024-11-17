@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion } from 'framer-motion';
 import Link from "next/link";
+import { Logo } from "../header/logo";
 
 export default function RegisterForm() {
   const [isPending, setTransition] = useTransition();
@@ -48,15 +49,14 @@ export default function RegisterForm() {
   };
   return (
     <>
-			<motion.h1
+			<motion.div
 				initial={{ opacity: 0, y: 50 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="font-lancelot  text-8xl md:text-8xl lg:text-8xl xl:text-8xl
-				text-radial-gradient-middle pb-6"
+        className="pb-12 text-2xl"
       >
-        Complexity
-      </motion.h1>
+				<Logo />
+      </motion.div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div 
@@ -71,12 +71,12 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="bg-[#0a0a0a] border-none 
-																						transition-colors font-libreFranklin
-																						rounded-2xl pl-6 h-12 text-neutral-400
-																						placeholder:text-neutral-600 text-lg"
+                      className="w-full rounded-xl
+											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+											bg-white transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
                       disabled={isPending}
-                      placeholder="name"
+                      placeholder="имя"
                       {...field}
                     />
                   </FormControl>
@@ -97,13 +97,13 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="bg-[#0a0a0a] border-none 
-																						transition-colors font-libreFranklin
-																						rounded-2xl pl-6 h-12 text-neutral-400
-																						placeholder:text-neutral-600 text-lg"
+                      className="w-full rounded-xl
+											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+											bg-white transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
                       disabled={isPending}
                       type="email"
-                      placeholder="email"
+                      placeholder="мейл"
                       {...field}
                     />
                   </FormControl>
@@ -124,13 +124,13 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="bg-[#0a0a0a] border-none 
-																						transition-colors font-libreFranklin
-																						rounded-2xl pl-6 h-12 text-neutral-400
-																						placeholder:text-neutral-600 text-lg"
+                      className="w-full rounded-xl
+											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
+											bg-white transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
                       disabled={isPending}
                       type="password"
-                      placeholder="password"
+                      placeholder="пароль"
                       {...field}
                     />
                   </FormControl>
@@ -149,12 +149,12 @@ export default function RegisterForm() {
 
             <Button
               disabled={isPending}
-              className="w-full  card-background-diff-direction 
-							rounded-2xl h-12 text-3xl font-lancelot text-white
-							hover:brightness-125 transition-all duration-300"
+              className="w-[95%] mt-20 py-10 bg-[#297878]
+							rounded-3xl h-12 text-3xl text-white
+							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
-              <p className="text-radial-gradient-middle">Sign up</p>
+              Регистрация
             </Button>
           </motion.div>
         </form>
@@ -171,7 +171,7 @@ export default function RegisterForm() {
 		hover:text-neutral-400 transition-colors duration-300 "
         href="/auth/login"
       >
-        sign in
+        уже есть аккаунт?
       </Link>
 			</motion.div>
     </>

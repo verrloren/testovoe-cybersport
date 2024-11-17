@@ -1,32 +1,62 @@
 'use server'
 
-import { getInterviewees } from "@/hooks/getInterviewee";
+import { db } from "@/lib/db";
 import { HistoryTable } from "./history-table";
-import { getResultById } from "@/hooks/getResult";
-import { getTeamNameById } from "@/hooks/getTeams";
 
 
 
 export async function HistoryClient() {
 
-	const interviewees = await getInterviewees();
-	const teamId = interviewees[0]?.teamId;
-	const teamsName = teamId ? await getTeamNameById(teamId) : '';
+  const interviewee = await db.interviewee.findMany({
+    include: {
+      results: {
+        select: {
+          compatibilityTaroPercent: true,
+          compatibilityAstroPercent: true,
+        }
+      }
+    }
+  });
 
-  const results = await Promise.all(
-    interviewees.map(async (interviewee) => 
-      getResultById(interviewee.id, interviewee.teamId)
-    )
-  );
+	// const teams = await db.team.findMany({
+	// 	where: {
+	// 		id: interviewee.teamId
+	// 	},
+	// 	select: {
+	// 		id: true,
+	// 		name: true,
+	// 	}
+	// });
+	const teamIds = [...new Set(interviewee.map(i => i.teamId))]
 
-	console.log(results);
+	const teamName = await db.team.findMany({
+    where: {
+      id: {
+        in: teamIds
+      }
+    },
+		select: {
+			id: true,
+			name: true,
+		}
+	});
+	const results = await db.result.findMany({
+		where: {
+			//@ts-ignore
+			intervieweeId: interviewee.id,
+			//@ts-ignore
+			teamId: interviewee.teamId
+		},
+		select: {
+			compatibilityTaroPercent: true,
+			compatibilityAstroPercent: true,
+		}
+	});
+
   return (
 		<>
-			<HistoryTable 
-				teamsName={teamsName} t
-				aroResult={results} 
-				interviewees={interviewees} 
-			/>
+		{/* @ts-ignore */}
+			<HistoryTable teamName={teamName} interviewee={interviewee} results={results} />
 		</>
   );
 }

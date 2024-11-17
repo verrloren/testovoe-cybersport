@@ -141,65 +141,85 @@ export function TeamClient({ taroCards, teams }: TeamClientProps) {
       </motion.div>
     );
   }
-
-  return (
-    <div className="w-full min-h-screen p-8">
-      {teams ? (
-        <div className="w-full max-w-[2100px] mx-auto">
-          <motion.h1
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1.2, ease: "easeInOut" }}
-            className="text-5xl text-black mb-12 pl-4"
-          >
-            {teams.map((team) => team.name).join(" & ")}
-          </motion.h1>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.4 }}
-            className="grid auto-rows-min grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 
-  gap-6 px-4 place-items-start"
-          >
-            {members.map((member, index) => (
-              <motion.div
-                key={member.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: 1.6 + index * 0.1,
-                  ease: "easeOut",
-                }}
-                className="w-full h-[450px]" // Set consistent height
-              >
-                <TeamMemberCard member={member} />
-              </motion.div>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                delay: 1.6 + members.length * 0.1,
-                ease: "easeOut",
-              }}
-              className="w-full h-[450px] z-10" // Set consistent height
-            >
-              <NewMemberCard
-                teamId={teams[0].id}
-                taroCards={taroCards}
-                onMemberAdded={fetchMembers}
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      ) : (
-        <div></div>
-      )}
-    </div>
-  );
+  // grid auto-rows-min grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
+	return (
+		<div className="relative w-full min-h-screen p-8">
+			{teams && teams.length > 0 ? (
+				<div className="w-full max-w-[2100px] mx-auto">
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.6, delay: 0.2 }}
+						className="flex flex-col gap-y-16" // Increased gap for proper spacing
+					>
+						{teams.map((team, teamIndex) => (
+							<div
+								key={team.id}
+								className="w-full h-auto " // Ensure spacing between teams
+							>
+								{/* Team Name */}
+								<motion.h1
+									initial={{ y: 20, opacity: 0 }}
+									animate={{ y: 0, opacity: 1 }}
+									transition={{ duration: 0.4, delay: 0.5 + teamIndex * 0.2 }}
+									className="text-5xl text-black mb-12"
+								>
+									{team.name}
+								</motion.h1>
+	
+								{/* Member Cards and New Member Card Grid */}
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{
+										duration: 0.6,
+										delay: 0.7 + teamIndex * 0.2,
+									}}
+									className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+								>
+									{team.members.map((member) => (
+										<motion.div
+											key={member.id}
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{
+												duration: 0.4,
+												delay: 1.0,
+											}}
+											className="min-h-[30rem]"
+										>
+											<TeamMemberCard member={member} />
+										</motion.div>
+									))}
+	
+									{/* New Member Card */}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{
+											duration: 0.4,
+											delay: 1.1,
+										}}
+										className="min-h-[30rem]"
+									>
+										<NewMemberCard
+											teamId={team.id}
+											taroCards={taroCards}
+											onMemberAdded={fetchMembers}
+										/>
+									</motion.div>
+								</motion.div>
+							</div>
+						))}
+					</motion.div>
+				</div>
+			) : (
+				<div className="flex items-center justify-center h-full">
+					<p className="text-2xl">No teams available</p>
+				</div>
+			)}
+		</div>
+	);
 }
 
 function capitalizeFirstLetter(string: string) {

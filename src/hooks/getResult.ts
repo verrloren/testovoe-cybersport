@@ -20,7 +20,7 @@ export async function getResultById(id: string, teamId: string) {
     const result = await db.result.findFirst({
       where: {
         intervieweeId: id,
-        teamId: teamId,
+        teamId,
       },
       select: {
         id: true,
@@ -34,9 +34,10 @@ export async function getResultById(id: string, teamId: string) {
         date: true,
       },
     });
+		if(!result) return null;
 
     // Return null instead of throwing error
-    return result || null;
+    return result;
 
   } catch (error) {
     console.error("Error fetching result:", error);

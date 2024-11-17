@@ -107,7 +107,6 @@ export function NewMemberModal({
 
       const responseData = await response.json();
 
-      console.log(responseData);
       setShowModal(false);
       onMemberAdded();
       toast.success("Участник создан!");
@@ -134,12 +133,12 @@ export function NewMemberModal({
         exit={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
         className="fixed h-screen inset-0 bg-opacity-75 
-			flex justify-center items-center 
-			cursor-default backdrop-blur-sm z-30"
+			flex justify-center items-center
+			cursor-default backdrop-blur-sm z-50"
       >
         <div
           className="bg-white border border-[#666] w-[80%] h-[80%] rounded-3xl
-				flex-col justify-center gap-y-4 shadow-xl"
+				flex-col justify-center gap-y-4 shadow-xl overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <form
@@ -298,7 +297,7 @@ export function NewMemberModal({
 
             <Button
               className="w-[95%] mt-20 py-10 bg-[#297878]
-							rounded-3xl h-12 text-3xl text-white
+							rounded-3xl h-12 text-3xl text-white mb-8
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >

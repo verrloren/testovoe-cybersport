@@ -1,9 +1,7 @@
 "use client";
 
 import { z } from "zod";
-// import { DateInput } from "rsuite";
 import { Input } from "./ui/input";
-import { TarotCardType } from "@/lib/types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormErrorMessage } from "./ui/form-error-message";
@@ -43,7 +41,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 interface TarotFormProps {
-  taroCards: TarotCardType[];
   teams: TeamType[];
 }
 
@@ -71,7 +68,6 @@ export function AstroForm({ teams }: TarotFormProps) {
       teamId: intervieweeData.team,
     };
 
-		console.log('data', data)
 
     try {
 			
@@ -86,23 +82,34 @@ export function AstroForm({ teams }: TarotFormProps) {
 			
 
 			const responseNewInterviewee = await response.json();
-			if (response.ok) {
-				console.log("interviewee created in db", responseNewInterviewee)
-			}	else {
-				console.log("interviewee not created in db", responseNewInterviewee)
-			}
 
+			const fetchData = {
+        id: responseNewInterviewee.id,
+        teamId: responseNewInterviewee.teamId
+      };
+			const apiResponse = await fetch(
+        "https://still-weekly-tortoise.ngrok-free.app/new_member/predict/astro",
+        {
+					method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": "any_value",
+            "API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
+          },
+          body: JSON.stringify(fetchData),
+        }
+      );
 
-			
-
-      
+      if (apiResponse.ok) {
+				const prediction = await apiResponse.json();
+        console.log(prediction);
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to create interviewee");
       }
 
-      console.log(responseNewInterviewee);
       toast.success("Собеседуемый создан");
 			router.push(`/astro/result?id=${responseNewInterviewee.id}&teamId=${intervieweeData.team}`);
     } catch (error) {
@@ -170,58 +177,11 @@ export function AstroForm({ teams }: TarotFormProps) {
         )}
       />
 
-{/* <Controller
-  name="date"
-  control={control}
-	defaultValue=""
-  render={({ field }) => (
-    <input
-      type="datetime-local"
-      placeholder="Дата и время рождения"
-      {...field}
-      className="w-full rounded-xl
-        text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-        bg-white transition-colors duration-200 focus:outline-none
-        placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
-      step="60" // Set step to 60 seconds (1 minute)
-      min="1900-01-01T00:00" // Set minimum date
-      max={new Date().toISOString().slice(0, 16)} // Set maximum date to current date
-    />
-  )}
-  rules={{
-    required: "Date and time are required",
-    validate: (value) => {
-      const date = new Date(value);
-      if (date > new Date()) {
-        return "Date cannot be in the future";
-      }
-      if (date.getFullYear() < 1900) {
-        return "Date cannot be before 1900";
-      }
-      return true;
-    }
-  }}
-/> */}
+
           {errors.date && (
             <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
           )}
-          {/* <Controller
-            name="date"
-            control={control}
-            render={({ field }) => (
-              <DateInput
-								placeholder="Дата рождения"
-                {...field}
-								className="w-full rounded-xl
-								text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-								bg-white transition-colors duration-200 focus:outline-none
-								placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
-              />
-            )}
-          />
-          {errors.date && (
-            <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
-          )} */}
+
 
           <Controller
             name="team"
@@ -268,7 +228,7 @@ export function AstroForm({ teams }: TarotFormProps) {
 					<Input
             {...register("countryOfBirth")}
             type="text"
-            placeholder="Страна рождения"
+            placeholder="Страна рождения. Формат: RU"
 						className="w-full rounded-xl
 						text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
 						bg-white transition-colors duration-200 focus:outline-none

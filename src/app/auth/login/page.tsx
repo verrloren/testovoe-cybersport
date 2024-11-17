@@ -13,7 +13,7 @@ export default async function LoginPage() {
 	}
 
 	return (
-		<main className="w-full h-screen relative flex flex-col justify-center items-center">
+		<main className="w-full bg-white h-screen relative flex flex-col justify-center items-center">
 
 		<Suspense>
 			<LoginForm />

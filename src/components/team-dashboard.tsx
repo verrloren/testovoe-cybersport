@@ -4,6 +4,7 @@ import { getTeams } from '@/hooks/getTeams';
 import { TeamClient } from './team-client';
 import { TeamType } from '@/lib/types';
 import getTaroCards from '@/hooks/getTaroCards';
+import { CreateTeamButton } from './ui/create-team-button';
 
 
 // interface TeamDashboardProps {}
@@ -18,9 +19,10 @@ export async function TeamDashboard() {
 	
 
 	return (
-		<>
+		<div className='relative min-h-screen'>
+			<CreateTeamButton />
 			<TeamClient taroCards={taroCards} teams={teams}  />
-		</>
+		</div>
 	)
 }
 

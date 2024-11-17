@@ -1,11 +1,11 @@
 import { db } from "@/lib/db";
-import { TaroCard } from "@prisma/client";
+import { TarotCardType } from "@/lib/types";
 
 export async function createIntervieweeTarot(
   name: string,
   teamId: string,
   date: Date,
-  card: TaroCard
+  taroCard: TarotCardType
 ) {
   try {
     const interviewee = await db.interviewee.create({
@@ -13,7 +13,7 @@ export async function createIntervieweeTarot(
         name,
         dateOfBirth: date,
         taroCard: {
-          connect: { id: card.id },
+          connect: { id: taroCard.id },
         },
         team: {
           connect: { id: teamId },

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Table,
@@ -8,53 +8,73 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { IntervieweeType, ResultType } from "@/lib/types";
 import Container from "./container";
 
 interface HistoryTableProps {
-	interviewees: IntervieweeType[],
-	taroResult: ResultType,
-	teamsName: string
+  teamName: {
+    id: string;
+    name: string;
+  };
+  interviewee: {
+    id: string;
+    teamId: string;
+    results: {
+      compatibilityTaroPercent: string;
+      compatibilityAstroPercent: string;
+    };
+  }[];
 }
 
-export function HistoryTable({ interviewees, taroResult, teamsName }: HistoryTableProps) {
-	return (
-		<Container>
-			<div>
-			
-						<Table className="bg-white border mt-16 border-neutral-300 rounded-2xl text-black">
-							<TableHeader>
-								<TableRow>
-									<TableHead className="text-white font-semibold bg-[#297878]">Собеседуемый</TableHead>
-									<TableHead className="text-white font-semibold bg-[#297878]">Команда</TableHead>
-									<TableHead className="text-white font-semibold bg-[#297878]">Таро</TableHead>
-									<TableHead className="text-white font-semibold bg-[#297878]">Астро</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>
-			
-							{interviewees.map((interviewee) => (
-              <TableRow key={interviewee.id}>
-                <TableCell className="bg-white">{interviewee.name}</TableCell>
-                <TableCell className="bg-white">{teamsName}</TableCell>
-                <TableCell className="bg-white">
-                  {taroResult && taroResult.intervieweeId === interviewee.id ? 
-                    `${taroResult.compatibilityTaroPercent}%` : 
-                    '-'
-                  }
-                </TableCell>
-								<TableCell className="bg-white">
-							  {taroResult?.[interviewee.id]?.compatibilityTaroPercent 
-							    ? `${taroResult[interviewee.id].compatibilityTaroPercent}%` 
-							    : '-'
-							  }
-							</TableCell>
-              </TableRow>
-            ))}
-			
-							</TableBody>
-						</Table>
-			</div>
-		</Container>
-	)
+export function HistoryTable({ teamName, interviewee }: HistoryTableProps) {
+
+  return (
+    <Container>
+      <div>
+        <Table className="bg-white border mt-16 border-neutral-300 rounded-2xl text-black">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-white font-semibold bg-[#297878]">
+                Собеседуемый
+              </TableHead>
+              <TableHead className="text-white font-semibold bg-[#297878]">
+                Команда
+              </TableHead>
+              <TableHead className="text-white font-semibold bg-[#297878]">
+                Таро
+              </TableHead>
+              <TableHead className="text-white font-semibold bg-[#297878]">
+                Астро
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {interviewee.map((person) => {
+							//@ts-ignore
+              const team = teamName.find((t) => t.id === person.teamId);
+							//@ts-ignore
+              const latestResult = person.results[0]; // Get the first result if exists
+
+              return (
+                <TableRow key={person.id}>
+									{/* @ts-ignore */}
+                  <TableCell className="font-medium">{person.name}</TableCell>
+                  <TableCell>{team?.name || "N/A"}</TableCell>
+                  <TableCell>
+                    {latestResult?.compatibilityTaroPercent
+                      ? `${latestResult.compatibilityTaroPercent}%`
+                      : "-"}
+                  </TableCell>
+                  <TableCell>
+                    {latestResult?.compatibilityAstroPercent
+                      ? `${Math.floor(Number(latestResult.compatibilityAstroPercent) * 100)}%`
+                      : "-"}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </Container>
+  );
 }

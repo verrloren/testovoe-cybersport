@@ -8,7 +8,6 @@ import { AstroForm } from "@/components/astro-form";
 
 export default async function AstroPage() {
 
-	const taroCards: TarotCardType[] = await getTaroCards();
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	//@ts-expect-error
 	const teams: TeamType[] = await getTeams();
@@ -19,7 +18,7 @@ export default async function AstroPage() {
     <Container>
       <div>
 				{teams ? (
-					<AstroForm teams={teams} taroCards={taroCards} />
+					<AstroForm teams={teams} />
 				) : (
 					<h3 className="text-white text-3xl text-bold mt-8 text-center">Сначала нужно создать команду</h3>
 				)}

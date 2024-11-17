@@ -20,35 +20,3 @@ export const getUserById = async (id: string) => {
 	return null;
 }}
 
-export const createNotification = async (data: { userId: string, message: string }) => {
-
-	const notification = await db.notification.create({ data });
-
-	return notification;
-}
-
-
-export const getNotificationsByUser = async (userId: string) => {
-	const notifications = await db.notification.findMany({ where: { userId }});
-
-	return notifications;
-}
-
-export const getPriceDifference = async (userId: string) => {
-	const notifications = await db.notification.findMany({
-		where: {
-			userId,
-			message: {
-				contains: "Price has increased"
-			}
-		}
-	});
-
-	return notifications;
-}
-
-export const deleteNotification = async (id: string) => {
-	const notification = await db.notification.delete({ where: { id }});
-
-	return notification;
-}

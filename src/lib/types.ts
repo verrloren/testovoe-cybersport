@@ -31,6 +31,8 @@ export interface IntervieweeType {
 	name: string;
 	dateOfBirth: Date;
 	teamId: string;
+	countryOfBirth?: string;
+	cityOfBirth?: string;
 }
 
 

@@ -28,7 +28,7 @@ export function NewMemberCard({ taroCards, teamId, onMemberAdded }: NewMemberCar
 
   return (
     <motion.div
-      className="h-auto w-full flex flex-row items-start justify-between"
+      className="h-auto relative z-20 w-full flex flex-row items-start justify-between"
       initial="hidden"
       animate="visible"
       variants={cardVariants}
@@ -39,23 +39,7 @@ export function NewMemberCard({ taroCards, teamId, onMemberAdded }: NewMemberCar
         className="relative flex flex-col items-center w-full h-auto group cursor-pointer"
         variants={cardVariants}
       >
-         {/* <div
-				className="w-full h-auto flex flex-col justify-center bg-[#297878] -z-10 border border-[#666] rounded-2xl absolute hover:brightness-110 transition-all">
-          <h5 className="text-center text-xl font-bold text-white my-2 group-hover:brightness-150 transition-all duration-300">
-						New member
-          </h5>
 
-					<div className="w-full bg-white border-t border-[#666] rounded-br-2xl rounded-bl-2xl flex justify-center items-center">
-					<Image
-          src="/images/tarot-cards/the-fool.jpg"
-          width={300}
-          height={500}
-          alt="team member"
-          className="w-full rounded-br-2xl rounded-bl-2xl bg-cover "
-        /> 
-							<PlusIcon className='w-12 h-12 text-[#666]' />
-					</div>
-        </div> */}
 
 				<div className="w-full flex flex-col bg-[#297878] -z-10 border border-[#666] rounded-2xl absolute hover:brightness-110 transition-all">
 					<h5 className="text-center text-xl font-bold text-white my-2 group-hover:brightness-150 transition-all duration-300">

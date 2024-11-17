@@ -66,8 +66,6 @@ model Interviewee {
 
 	results   Result[]
 
-	compatibilityTaro String?
-	compatibilityAstro String?
 }
 
 
@@ -94,8 +92,8 @@ model Result {
 	intervieweeId String
 	interviewee Interviewee @relation(fields: [intervieweeId], references: [id])
 
-	cardId    String
-	card      TaroCard @relation(fields: [cardId], references: [id])
+	cardId    String?
+	card      TaroCard? @relation(fields: [cardId], references: [id])
 
 	compatibilityTaroPercent String?
 	compatibilityTaroDescription String?

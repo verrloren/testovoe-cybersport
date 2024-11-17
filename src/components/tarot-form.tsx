@@ -68,7 +68,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
     const data = {
       ...intervieweeData,
       name: fullName,
-      card: selectedCard,
+      taroCard: selectedCard,
       teamId: intervieweeData.team,
     };
 
@@ -82,7 +82,6 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
       })
 
 			const responseNewInterviewee = await response.json();
-			console.log("interviewee created in db", intervieweeData)
 
       const fetchData = {
         id: responseNewInterviewee.id,
@@ -111,7 +110,6 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
         throw new Error(errorData.error || "Failed to create interviewee");
       }
 
-      console.log(responseNewInterviewee);
       toast.success("Собеседуемый создан");
 			router.push(`/tarot/result?id=${responseNewInterviewee.id}&teamId=${intervieweeData.team}`);
     } catch (error) {
@@ -120,13 +118,14 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
     }
   };
 
-  const handleCardSelect = (card: TarotCardType) => {
-    if (selectedCard?.id === card.id) {
-      setSelectedCard(null);
-    } else {
-      setSelectedCard(card);
-    }
-  };
+	const handleCardSelect = (card: TarotCardType) => {
+		if (selectedCard?.id === card.id) {
+			setSelectedCard(null);
+		} else {
+			setSelectedCard(card);
+		}
+	};
+	
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -275,7 +274,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 					<Button
               className="w-full py-8 mt-8 bg-[#297878]
 							rounded-2xl h-12 text-3xl text-white
-							hover:brightness-125 transition-all duration-300 shadow-xl"
+							hover:brightness-125 transition-all duration-300 shadow-xl mb-12"
               type="submit"
             >
               Решить судьбу
