@@ -92,29 +92,10 @@ export function AstroForm({ teams }: TarotFormProps) {
 				console.log("interviewee not created in db", responseNewInterviewee)
 			}
 
-      const fetchData = {
-        id: responseNewInterviewee.id,
-      };
+
 			
-			console.log("fetchData", fetchData)
 
-      const apiResponse = await fetch(
-        "https://still-weekly-tortoise.ngrok-free.app/astrological_position",
-        {
-					method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "ngrok-skip-browser-warning": "any_value",
-            "API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
-          },
-          body: JSON.stringify(fetchData),
-        }
-      );
-
-      if (apiResponse.ok) {
-        const { answer, percentage } = await apiResponse.json();
-        console.log(answer, percentage);
-      }
+      
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -123,7 +104,7 @@ export function AstroForm({ teams }: TarotFormProps) {
 
       console.log(responseNewInterviewee);
       toast.success("Собеседуемый создан");
-			router.push(`/tarot/result?id=${responseNewInterviewee.id}&teamId=${intervieweeData.team}`);
+			router.push(`/astro/result?id=${responseNewInterviewee.id}&teamId=${intervieweeData.team}`);
     } catch (error) {
       console.error("Error creating interviewee:", error);
       toast.error("Error creating interviewee");
@@ -327,7 +308,7 @@ export function AstroForm({ teams }: TarotFormProps) {
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
-              Определить судьбу
+              Решить судьбу
             </Button>
       </motion.div>
     </form>

@@ -278,7 +278,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
-              Определить судьбу
+              Решить судьбу
             </Button>
       </motion.div>
     </form>

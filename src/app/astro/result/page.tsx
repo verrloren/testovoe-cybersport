@@ -1,11 +1,17 @@
 'use server';
 
-import { AstrogramaClient } from "@/components/astrograma-client";
+import { getIntervieweeById } from '@/hooks/getInterviewee';
+import { AstrogramaClient } from '../../../components/astrograma-client';
 
-export function AstroResultPage() {
+export default async function AstroResultPage({ searchParams }: { searchParams: { id: string; teamId: string } }): Promise<JSX.Element> {
+
+	const { id, teamId } = await searchParams;
+
+	const interviewee = await getIntervieweeById(id);
+
 	return (
 		<div>
-			<AstrogramaClient />
+			<AstrogramaClient interviewee={interviewee} id={id} teamId={teamId} />
 		</div>
 	)
 }
