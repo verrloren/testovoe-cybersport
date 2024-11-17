@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Проект "Наймикс.ванга" от CodeCatchers
 
-## Getting Started
+Наш проект представляет собой веб-приложение, в основу которого легли такие технологии как: nextjs, typescript, prisma orm, postgress db, sqlalchemy, lamma 3.2, flask, kerykeion.
 
-First, run the development server:
+## Запуск Проекта 🚀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Для запуска проекта достаточно просто пройти по [этой ссылке]([(https://verrloren-hackaton-tarot-white.vercel.app/)]).
+Аккаунт для входа на сайт: 
+логин: admin@gmail.com
+пароль: 123123
+Важно!!
+На вкладке Астро в полях страна рождения и город данные должны быть следуеющего формата: 
+страна рождения (тоесть код региона): RU
+город рождения(тоесть на английском с большой буквы): Moscow
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Благодарности 🙏
 
-To learn more about Next.js, take a look at the following resources:
+Благодарим организаторов хакатона за возможность участвовать. Надеемся, что наш проект вам понравится!😊
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![{FB521CA4-4958-4765-8DA4-0BBFE47618A4}](https://github.com/user-attachments/assets/3cb49783-9992-40ea-b446-ebf596800c2a)
