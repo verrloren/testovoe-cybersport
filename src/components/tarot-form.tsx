@@ -94,7 +94,7 @@ export function TarotForm({ taroCards, teams }: TarotFormProps) {
           headers: {
             "Content-Type": "application/json",
             "ngrok-skip-browser-warning": "any_value",
-            "API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
+            "API-key": process.env.NEXT_PUBLIC_API_KEY as string,
           },
           body: JSON.stringify(fetchData),
         }

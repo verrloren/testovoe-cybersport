@@ -1,8 +1,8 @@
 "use client";
 
 import { Chart } from "@astrodraw/astrochart";
-import { useEffect, useState, useRef } from "react";
-import { IntervieweeType, ResultType, TeamType } from "@/lib/types";
+import { useEffect, useState } from "react";
+import {  ResultType, TeamType } from "@/lib/types";
 
 export function AstrogramaClient({
   id,
@@ -22,29 +22,11 @@ export function AstrogramaClient({
 	},
   team: TeamType;
 }) {
-  const chartRef = useRef<Chart | null>(null);
   const [planets, setPlanets] = useState([]);
   const [cusps, setCusps] = useState([]);
 
   const percent = Math.floor(Number(result.compatibilityAstroPercent) * 100);
-  // const [birthChartSVG, setBirthChartSVG] = useState("");
-  // const [synastryChartSVG, setSynastryChartSVG] = useState("");
 
-  // const { name, dateOfBirth, countryOfBirth, cityOfBirth } = interviewee;
-
-  // const destructureDateOfBirth = (dateString: string) => {
-  //   const date = new Date(dateString);
-
-  //   return {
-  //     year: date.getUTCFullYear(),
-  //     month: date.getUTCMonth() + 1,
-  //     day: date.getUTCDate(),
-  //     hour: date.getUTCHours(),
-  //     minute: date.getUTCMinutes(),
-  //   };
-  // };);
-
-  // const { year, month, day, hour, minute } = destructureDateOfBirth(dateOfBirth.toString()
 
   useEffect(() => {
     const fetchBackendAPI = async () => {
@@ -60,7 +42,7 @@ export function AstrogramaClient({
             headers: {
               "Content-Type": "application/json",
               "ngrok-skip-browser-warning": "any_value",
-              "API-key": "gn94bgy3ruodcmknf3ob2ieposqld",
+              "API-key": process.env.NEXT_PUBLIC_API_KEY as string,
             },
             body: JSON.stringify(fetchData),
           }
@@ -78,103 +60,7 @@ export function AstrogramaClient({
     fetchBackendAPI();
   }, [id, teamId]);
 
-  // useEffect(() => {
-  //   const fetchRapidBirthChart = async () => {
-  //     const url = "https://astrologer.p.rapidapi.com/api/v4/birth-chart";
-  //     const options = {
-  //       method: "POST",
-  //       headers: {
-  //         "x-rapidapi-key":
-  //           "ff0f4947c2msh9348f3f2a1ef925p1085cfjsn868fb2ce6f89",
-  //         "x-rapidapi-host": "astrologer.p.rapidapi.com",
-  //         "Content-Type": "application/json",
-  // 				"lang": "RU"
-  //       },
-  //       body: JSON.stringify({
-  //         // Convert body object to string
-  //         subject: {
-  //           name: name,
-  //           year: year,
-  //           month: month,
-  //           day: day,
-  //           hour: hour,
-  //           minute: minute,
-  //           longitude: 12.4963655,
-  //           latitude: 41.9027835,
-  //           city: cityOfBirth as string,
-  //           nation: "RU",
-  //           timezone: "Europe/Rome",
-  //           zodiac_type: "Tropic",
-  //         },
-  //       }),
-  //     };
-
-  //     try {
-  //       const response = await fetch(url, options);
-  //       const result = await response.json();
-  //       console.log(result);
-  //       setBirthChartSVG(result.chart);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchRapidBirthChart();
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchRapidSynastry = async () => {
-  //     const url = "https://astrologer.p.rapidapi.com/api/v4/synastry-chart";
-  //     const options = {
-  //       method: "POST",
-  //       headers: {
-  //         "x-rapidapi-key":
-  //           "ff0f4947c2msh9348f3f2a1ef925p1085cfjsn868fb2ce6f89",
-  //         "x-rapidapi-host": "astrologer.p.rapidapi.com",
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         first_subject: {
-  //           name: "Paul",
-  //           year: 1994,
-  //           month: 10,
-  //           day: 11,
-  //           hour: 9,
-  //           minute: 11,
-  //           longitude: 12.4963655,
-  //           latitude: 41.9027835,
-  //           city: "Roma",
-  //           nation: "IT",
-  //           timezone: "Europe/Rome",
-  //           zodiac_type: "Tropic",
-  //         },
-  //         second_subject: {
-  //           name: "Sarah",
-  //           year: 1998,
-  //           month: 11,
-  //           day: 10,
-  //           hour: 9,
-  //           minute: 0,
-  //           longitude: 12.4963655,
-  //           latitude: 41.9027835,
-  //           city: "Roma",
-  //           nation: "IT",
-  //           timezone: "Europe/Rome",
-  //           zodiac_type: "Tropic",
-  //         },
-  //       }),
-  //     };
-
-  //     try {
-  //       const response = await fetch(url, options);
-  //       const result = await response.json();
-  //       console.log('synastry',result);
-  // 			setSynastryChartSVG(result.chart);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchRapidSynastry();
-  // }, []);
+  
 
   if (planets.length === 0 || cusps.length === 0) {
     return (
@@ -193,7 +79,8 @@ export function AstrogramaClient({
     const chart = new Chart("paper", 600, 600, {
 			MARGIN: 100
 		});
-    //@ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-expect-error
     const radix = chart.radix(data);
     radix.aspects();
 

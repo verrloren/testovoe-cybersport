@@ -105,7 +105,6 @@ export function NewMemberModal({
         throw new Error(errorData.error || "Failed to create member");
       }
 
-      const responseData = await response.json();
 
       setShowModal(false);
       onMemberAdded();
