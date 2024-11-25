@@ -15,15 +15,13 @@ export function Logo() {
 			className="flex items-center justify-center cursor-pointer hover:brightness-110 transition-all duration-300"
     >
 			<h1
-			className="text-3xl text-neutral-800 hover:brightness-110 pr-2 transition-colors"
+			className="text-3xl text-neutral-200 font-ibmPlexMono hover:brightness-110 pr-2 transition-colors"
 			onClick={() => router.push('/')}
 				>
-				НАЙМИКС
+				evrz
 			</h1>
 
-			<div className="px-3 py-2 flex items-center justify-center bg-[#F46645] rounded-[8px]">
-				<h1 className="text-white">ВАНГА</h1>
-			</div>
+
 			
     </motion.div>
   );

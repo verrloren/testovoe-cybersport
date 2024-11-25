@@ -2,41 +2,50 @@
 
 import * as z from "zod";
 import { RegisterSchema } from "../schemas";
-import bcrypt from "bcryptjs";
-import { db } from "@/lib/db";
-import { getUserByEmail } from "@/utils/getUserBy";
+
+type DataType = {
+	success: boolean;
+	response: string;
+}
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
-	// Vaieldate fields
-	const validateFields = RegisterSchema.safeParse(values);
+	const validatedFields = RegisterSchema.safeParse(values);
 
-	
-	if(!validateFields.success) {
-		return { error: "Invalid fields"}
+	if (!validatedFields.success) {
+		return { error: "Invalid fields" };
 	}
 
-	const { email, password, name } = validateFields.data;
-	const hashedPassword = await bcrypt.hash(password, 10);
+	const { email, password, name } = validatedFields.data;
 
-	// Check if email already exists
-	const existingUser = await getUserByEmail(email);
-	
-	if(existingUser) {
-		return { error: "Email already exists" }
-	};
 
-	// Create user
+	try {
+		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/create`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'API-Key': process.env.BACKEND_API_KEY as string
+			},
+			body: JSON.stringify({ name, email, password })
+		})
 
-	await db.user.create({
-		data: {
-			email,
-			name,
-			password: hashedPassword
+		const { success, response } = await result.json();
+
+
+
+		
+		const data: DataType = {
+			success,
+			response
 		}
-	});
 
-	// TODO: send verification token email
+		if(!success || !response) {
+			return data
+		}
 
+		return data;
 
-	return { success: "Email created!" }
+	} catch (error) {
+		console.error(error);
+		return { error: "Failed to create user" }
+	}
 }

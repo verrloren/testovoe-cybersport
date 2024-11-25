@@ -17,12 +17,14 @@ import { ExclamationMark } from "../ui/exclamation-mark";
 import { LoginSchema } from "@/schemas";
 import {  useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { getSession, signIn } from "next-auth/react";
 import { motion } from 'framer-motion';
 import Link from "next/link";
-import { Logo } from "../header/logo";
+import { login } from "@/action/login";
 
-
+type LoginData = {
+	success: boolean;
+	response: string;
+}
 
 export default function LoginForm() {
 
@@ -40,44 +42,41 @@ export default function LoginForm() {
 	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
 	
 		setTransition(async () => {
-				const result = await signIn("credentials", {
-					email: values.email,
-					password: values.password,
-					redirect: false, // Disable automatic redirect for manual control
-				});
+				login(values)
+					.then((data: LoginData) =>{
+						console.log(data)
+						if(data.success) {
+							console.log(data.success)
+							toast.success("Login successful!");
+							router.push("/start");
+						}
+
+					})
+					.catch((error) => {
+						console.log(error)
+						toast.error("Login failed!");
+					})
 	
-				if (result?.error) {
-					toast.error("Failed to log in!");
-					form.reset();
-				} else {
-					toast.success("Logged in successfully!");
-	
-					// Now manually fetch the session and redirect
-					const session = await getSession();
-					if (session) {
-						router.push("/"); // Redirect to main page after session is fetched
-					}
-				}
+
 		});
 	};
   return (
     <>
-		  <motion.div
-				initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="pb-12 text-2xl"
-      >
-        <Logo />
-      </motion.div>
+
+		<motion.div
+		 className=""
+		 >
+			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Welcome</h1>
+		</motion.div>
+
 
       <Form {...form}>
-        <form className="" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
-					className="w-[20rem] md:w-[25rem] xl:w-[30rem]  flex justify-center flex-col gap-y-6">
+					className="w-[20rem] z-20 md:w-[25rem] xl:w-[30rem]  flex justify-center flex-col gap-y-6">
             <FormField
               control={form.control}
               name="email"
@@ -85,13 +84,13 @@ export default function LoginForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl
-											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+                      className="w-full rounded-xl font-poppins
+											text-white text-lg pl-4 py-6 border border-neutral-800
+											bg-black transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
                       type="email"
-                      placeholder="логин"
+                      placeholder="email"
                       {...field}
                     />
                   </FormControl>
@@ -112,13 +111,13 @@ export default function LoginForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl
-											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+                      className="w-full rounded-xl font-poppins 
+											text-white text-lg pl-4 py-6 border border-neutral-800
+											bg-black transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
                       type="password"
-                      placeholder="пароль"
+                      placeholder="password"
                       {...field}
                     />
                   </FormControl>
@@ -137,30 +136,33 @@ export default function LoginForm() {
 
             <Button
 							disabled={isPending}
-              className="w-[95%] mt-20 py-10 bg-[#297878]
-							rounded-3xl h-12 text-3xl text-white
+              className="w-full py-4 bg-white
+							rounded-xl h-12 text-xl text-black font-poppins
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
-              Войти
+              Submit
             </Button>
           </motion.div>
         </form>
       </Form>
 
 			<motion.div
-			className="fixed bottom-12 flex justify-center font-semibold text-base"
+			className=" fixed flex items-center justify-center bottom-12"
 			initial={{ opacity: 0, y: 30 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
 			>
+
+
 				<Link 
 					className=" font-semibold text-base 
-					text-neutral-600 font-libreFranklin
+					text-neutral-600 font-poppins
 						hover:text-neutral-400 transition-colors duration-300" 
 						href="/auth/register">
-						создать аккаунт
+						create account
 						</Link>
+
 			</motion.div>
     </>
   );

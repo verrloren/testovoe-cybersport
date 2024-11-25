@@ -1,12 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { Logo } from "./logo";
-// import { useSession } from "next-auth/react";
-// import { MenuNavbar } from "./menu-navbar";
 import { motion } from "framer-motion";
-// import { Button } from "../ui/button";
-import { signOut } from "next-auth/react";
 import toast from "react-hot-toast";
 import { MenuIcon } from "lucide-react";
 import { Button } from "../ui/button";
@@ -17,10 +12,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { logout } from "@/action/logout";
+import { useRouter } from "next/navigation";
+
+type LogoutData = {
+	success: boolean;
+	response: string;
+}
 
 export default function Header() {
   // const { data: session } = useSession();
   // const menuDropdown = useMenuDropdown();
+
+	const router = useRouter();
 
   const linkVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -33,7 +37,7 @@ export default function Header() {
       animate={{ height: 100, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
       className="w-full h-24 relative z-10
-			 bg-white flex items-center justify-center border-b border-neutral-300"
+			 bg-transparent flex items-center justify-center"
     >
       <nav className="w-full mx-12 sm:mx-16 md:mx-24 lg:mx-32 xl:mx-40 2xl:mx-48 flex items-center justify-between ">
         <Logo />
@@ -44,38 +48,29 @@ export default function Header() {
           className="flex items-center justify-center gap-x-8 xl:gap-12 2xl:gap-16"
           variants={linkVariants}
         >
-          <Link
-            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
-            href="/tarot"
-          >
-            Таро
-          </Link>
-          <Link
-            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
-            href="/astro"
-          >
-            Астро
-          </Link>
-          <Link
-            className=" font-light text-xl text-neutral-800 hover:text-black transition-colors"
-            href="/history"
-          >
-            История
-          </Link>
 
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <MenuIcon size={20} className="text-neutral-800" />
+              <MenuIcon size={20} className="text-neutral-200" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="rounded-3xl bg-white">
+            <DropdownMenuContent className="rounded-3xl bg-black border-neutral-800">
               <DropdownMenuItem>
                 <Button
-                  className="w-full shadow-none"
-                  onClick={() => {
-                    signOut().then(() => toast.success("Logged out"));
+                  className="w-full bg-black text-neutral-200 shadow-none"
+                  onClick={ async () => {
+                     await logout()
+										 	.then((data: LogoutData) => {
+												if (data.success) {
+													console.log(data)
+													toast.success(data.response)
+													router.push("/auth/login");
+												} else {
+													toast.error(data.response)
+												}
+											})
                   }}
                 >
-									Выйти
+									Sign out
 								</Button>
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -1,7 +1,0 @@
-Imagine you are a tarot reader. An IT recruiter asks for your insights about a new team member based on the major arcana of tarot cards. 
-The existing team members are represented by {cards}. The new member chose {new_member}.
-Provide a brief description of their potential in the position based on the interaction between their card and the existing team members' cards. 
-Include both positive and negative aspects of these interactions.
-Your description should be concise, no longer than 300 characters, and conclude with a percentage rating of their suitability(but do not write 'percentage rating' words). 
-The response should consist of a single short paragraph with a truthful analysis.
-Always include a percentage rating. Please do not forget to keep the answer short. Write only a short paragraph and percentage, nothing more(do not write any helper words).

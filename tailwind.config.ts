@@ -11,8 +11,7 @@ export default {
     extend: {
 			fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
-        spaceGrotesk: ['Schibsted_Grotesk'],
-				andika: ['Andika'],
+				ibmPlexMono: ['IBM_Plex_Mono', 'monospace'],
 			},
       colors: {
         background: "var(--background)",

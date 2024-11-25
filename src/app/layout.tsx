@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poppins, Schibsted_Grotesk, Andika } from "next/font/google";
+import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import ToasterProvider from "@/providers/toaster-provider";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "../../auth";
 // import Header from "@/components/header/header";
 import ConditionalHeader from "@/components/header/conditional-header";
 
@@ -17,11 +15,11 @@ const poppins = Poppins({
   subsets: ["latin"],
 	variable: '--font-poppins',
 });
-const andika = Andika({
+const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "700"], // if single weight, otherwise you use array like [400, 500, 700],
   style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
   subsets: ["latin"],
-	variable: '--font-poppins',
+	variable: '--font-ibmPlexMono',
 });
 
 
@@ -37,20 +35,15 @@ export default async function RootLayout({
 }>) {
 	
 
-	const session = await auth();
 
   return (
-    <html className={`${poppins } ${andika}`} lang="en">
-      <body >
-      <ConditionalHeader />
-
-				{/* <ModalProvider /> */}
-        <ToasterProvider />
-
-          <SessionProvider session={session}>
-						{children}
-					</SessionProvider>
-      </body>
-    </html>
+			<html className={`${poppins } ${ibmPlexMono}`} lang="en">
+				<body >
+					<ConditionalHeader />
+					{/* <ModalProvider /> */}
+					<ToasterProvider />
+					{children}
+				</body>
+			</html>
   );
 }

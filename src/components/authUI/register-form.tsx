@@ -20,7 +20,11 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion } from 'framer-motion';
 import Link from "next/link";
-import { Logo } from "../header/logo";
+
+type RegisterData = {
+  success: boolean;
+  response: string;
+};
 
 export default function RegisterForm() {
   const [isPending, setTransition] = useTransition();
@@ -41,24 +45,30 @@ export default function RegisterForm() {
       //data send to server
       register(values)
         //data received from server
-        .then(() => {
-          toast.success("Account created successfully!");
-          router.push("/auth/login");
+				
+        .then((data: RegisterData ) => {
+					if(data.success) {
+						console.log(data.success)
+						toast.success("Account created successfully!");
+						router.push("/auth/login");
+					} else if (data.response && data.response.includes("already exists")) {
+						toast.error("User with this username already exists.");
+					}
         })
+
     });
   };
   return (
     <>
-			<motion.div
-				initial={{ opacity: 0, y: 50 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="pb-12 text-2xl"
-      >
-				<Logo />
-      </motion.div>
+				<motion.div
+		 className=""
+		 >
+			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Sign up</h1>
+		</motion.div>
+
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div 
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -71,12 +81,12 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl
-											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+                      className="w-full rounded-xl font-poppins
+											text-white text-lg pl-4 py-6 border border-neutral-800
+											bg-black transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
-                      placeholder="имя"
+                      placeholder="name"
                       {...field}
                     />
                   </FormControl>
@@ -97,13 +107,13 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl
-											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+                      className="w-full rounded-xl font-poppins
+											text-white text-lg pl-4 py-6 border border-neutral-800
+											bg-black transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
                       type="email"
-                      placeholder="мейл"
+                      placeholder="email"
                       {...field}
                     />
                   </FormControl>
@@ -124,13 +134,13 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl
-											text-neutral-950 text-xl pl-4 py-2 border border-neutral-300
-											bg-white transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-white focus:border-[#666]"
+                      className="w-full rounded-xl font-poppins
+											text-white text-lg pl-4 py-6 border border-neutral-800
+											bg-black transition-colors duration-200 focus:outline-none
+											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
                       type="password"
-                      placeholder="пароль"
+                      placeholder="password"
                       {...field}
                     />
                   </FormControl>
@@ -149,12 +159,12 @@ export default function RegisterForm() {
 
             <Button
               disabled={isPending}
-              className="w-[95%] mt-20 py-10 bg-[#297878]
-							rounded-3xl h-12 text-3xl text-white
+              className="w-full py-4 bg-white
+							rounded-xl h-12 text-xl text-black font-poppins
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
-              Регистрация
+              Create an account
             </Button>
           </motion.div>
         </form>
@@ -171,7 +181,7 @@ export default function RegisterForm() {
 		hover:text-neutral-400 transition-colors duration-300 "
         href="/auth/login"
       >
-        уже есть аккаунт?
+        already have one?
       </Link>
 			</motion.div>
     </>
