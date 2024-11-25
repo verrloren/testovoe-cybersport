@@ -81,8 +81,8 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl font-poppins
-											text-white text-lg pl-4 py-6 border border-neutral-800
+                      className="w-full rounded-2xl font-poppins 
+											text-white text-lg pl-4 py-6 border-none
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -107,8 +107,8 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl font-poppins
-											text-white text-lg pl-4 py-6 border border-neutral-800
+                      className="w-full rounded-2xl font-poppins
+											text-white text-lg pl-4 py-6 border-none
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -134,8 +134,8 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl font-poppins
-											text-white text-lg pl-4 py-6 border border-neutral-800
+                      className="w-full rounded-2xl font-poppins
+											text-white text-lg pl-4 py-6 border-none
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -159,8 +159,8 @@ export default function RegisterForm() {
 
             <Button
               disabled={isPending}
-              className="w-full py-4 bg-white
-							rounded-xl h-12 text-xl text-black font-poppins
+              className="w-full py-4 bg-white border-none
+							rounded-2xl h-12 text-xl text-black font-poppins
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
@@ -177,8 +177,8 @@ export default function RegisterForm() {
 			transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
 			>
 			<Link
-        className="font-semibold text-base text-neutral-600
-		hover:text-neutral-400 transition-colors duration-300 "
+        className="text-base text-neutral-200
+		hover:text-neutral-50 transition-colors duration-300 "
         href="/auth/login"
       >
         already have one?

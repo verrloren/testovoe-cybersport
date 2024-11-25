@@ -36,7 +36,7 @@ export default function Header() {
       initial={{ height: "50%", opacity: 0 }}
       animate={{ height: 100, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
-      className="w-full h-24 relative z-10
+      className="w-full h-24 z-10 fixed top-0 left-0
 			 bg-transparent flex items-center justify-center"
     >
       <nav className="w-full mx-12 sm:mx-16 md:mx-24 lg:mx-32 xl:mx-40 2xl:mx-48 flex items-center justify-between ">

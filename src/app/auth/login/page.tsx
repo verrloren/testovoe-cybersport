@@ -3,11 +3,13 @@ import { Suspense } from "react";
 
 export default async function LoginPage() {
   return (
-    <main className="w-full h-screen relative flex flex-col justify-center items-center">
+    <main className="w-full h-screen relative flex flex-col justify-center items-center overflow-hidden">
       
+
+
 			<div
-        className="noise w-full aspect-square -z-10 absolute 
-				-top-[50%] sm:-top-[80%] md:-top-[100%] lg:-top-[120%] xl:-top-[170%] left-0
+        className="noise w-full xl:w-[100vh] aspect-square -z-10 absolute 
+				top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
 				radial-ellipse 
 				bg-gradient-to-r overflow-hidden"
       ></div>

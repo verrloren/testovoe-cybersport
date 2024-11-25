@@ -84,7 +84,7 @@ export default function LoginForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl font-poppins
+                      className="w-full rounded-2xl font-poppins border-none
 											text-white text-lg pl-4 py-6 border border-neutral-800
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
@@ -111,7 +111,7 @@ export default function LoginForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-xl font-poppins 
+                      className="w-full rounded-2xl font-poppins border-none
 											text-white text-lg pl-4 py-6 border border-neutral-800
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
@@ -137,7 +137,7 @@ export default function LoginForm() {
             <Button
 							disabled={isPending}
               className="w-full py-4 bg-white
-							rounded-xl h-12 text-xl text-black font-poppins
+							rounded-2xl h-12 text-xl text-black font-poppins border-none
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
             >
@@ -156,9 +156,9 @@ export default function LoginForm() {
 
 
 				<Link 
-					className=" font-semibold text-base 
-					text-neutral-600 font-poppins
-						hover:text-neutral-400 transition-colors duration-300" 
+					className="text-base 
+					text-neutral-200 font-poppins
+						hover:text-neutral-50 transition-colors duration-300" 
 						href="/auth/register">
 						create account
 						</Link>
