@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react';
-import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { message, Upload } from 'antd';
+import { motion } from 'framer-motion';
 
 const { Dragger } = Upload;
 
@@ -28,15 +28,25 @@ const props: UploadProps = {
 };
 
 const UploadComponent: React.FC = () => (
-  <Dragger style={{ border: "none" }} className="radial-ellipse-upload" {...props}>
-    <div className="rotating-background"></div>
-    <p className="ant-upload-drag-icon">
-      <InboxOutlined style={{ color: "#E5E5E5" }} />
-    </p>
-    <p className="text-neutral-200 font-poppins">
-      Drag & Drop <br /> your project here
-    </p>
-  </Dragger>
+  <motion.div 
+	initial={{ opacity: 0, y: 0 }}
+	animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 1.2, delay: 0.2, ease: "easeIn" }}
+		className='w-full aspect-square'>
+		<Dragger style={{ border: "none" }} className="radial-ellipse-upload" {...props}>
+			<div className="rotating-background"></div>
+			{/* <p className="ant-upload-drag-icon text-radial-gradient">
+				<InboxOutlined className='text-radial-gradient' />
+			</p> */}
+			<motion.p
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6, delay: 0.4, ease: "easeIn" }}
+			className="text-radial-gradient font-poppins">
+				Drag & Drop <br /> your project here
+			</motion.p>
+		</Dragger>
+	</motion.div>
 );
 
 export default UploadComponent;

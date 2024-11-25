@@ -61,7 +61,11 @@ export default function RegisterForm() {
   return (
     <>
 				<motion.div
-		 className=""
+
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+					 className=""
 		 >
 			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Sign up</h1>
 		</motion.div>

@@ -15,20 +15,19 @@ import { Button } from "../ui/button";
 import { useTransition } from "react";
 import { ExclamationMark } from "../ui/exclamation-mark";
 import { LoginSchema } from "@/schemas";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { login } from "@/action/login";
 
 type LoginData = {
-	success: boolean;
-	response: string;
-}
+  success: boolean;
+  response: string;
+};
 
 export default function LoginForm() {
-
-	const router = useRouter();
+  const router = useRouter();
   const [isPending, setTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -39,44 +38,44 @@ export default function LoginForm() {
     },
   });
 
-	const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-	
-		setTransition(async () => {
-				login(values)
-					.then((data: LoginData) =>{
-						console.log(data)
-						if(data.success) {
-							console.log(data.success)
-							toast.success("Login successful!");
-							router.push("/start");
-						}
-
-					})
-					.catch((error) => {
-						console.log(error)
-						toast.error("Login failed!");
-					})
-	
-
-		});
-	};
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setTransition(async () => {
+      login(values)
+        .then((data: LoginData) => {
+          console.log(data);
+          if (data.success) {
+            console.log(data.success);
+            toast.success("Login successful!");
+            router.push("/start");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Login failed!");
+        });
+    });
+  };
   return (
     <>
-
-		<motion.div
-		 className=""
-		 >
-			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Welcome</h1>
-		</motion.div>
-
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+        className=""
+      >
+        <h1 className="font-poppins text-7xl xl:text-8xl text-white">
+          Welcome
+        </h1>
+      </motion.div>
 
       <Form {...form}>
         <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
-					className="w-[20rem] z-20 md:w-[25rem] xl:w-[30rem]  flex justify-center flex-col gap-y-6">
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
+            className="w-[20rem] z-20 md:w-[25rem] z-20 xl:w-[30rem]  flex justify-center flex-col gap-y-6"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -95,11 +94,11 @@ export default function LoginForm() {
                     />
                   </FormControl>
                   {form.formState.errors.email && (
-										<div className="flex flex-row items-end gap-x-2 mt-4">
-											<ExclamationMark />
-											<FormMessage className="text-xs text-neutral-600" />
-										</div>
-									)}
+                    <div className="flex flex-row items-end gap-x-2 mt-4">
+                      <ExclamationMark />
+                      <FormMessage className="text-xs text-neutral-600" />
+                    </div>
+                  )}
                 </FormItem>
               )}
             />
@@ -121,21 +120,21 @@ export default function LoginForm() {
                       {...field}
                     />
                   </FormControl>
-									{form.formState.errors.password && (
-										<div className="flex flex-row items-end gap-x-2 mt-4">
-											<ExclamationMark />
-											<FormMessage className="text-xs  text-neutral-600" />
-										</div>
-									)}
+                  {form.formState.errors.password && (
+                    <div className="flex flex-row items-end gap-x-2 mt-4">
+                      <ExclamationMark />
+                      <FormMessage className="text-xs  text-neutral-600" />
+                    </div>
+                  )}
                 </FormItem>
               )}
             />
 
-						{/* <FormError message={error || urlError} />
+            {/* <FormError message={error || urlError} />
 						<FormSuccess message={success} /> */}
 
             <Button
-							disabled={isPending}
+              disabled={isPending}
               className="w-full py-4 bg-white
 							rounded-2xl h-12 text-xl text-black font-poppins border-none
 							hover:brightness-125 transition-all duration-300 shadow-xl"
@@ -147,23 +146,21 @@ export default function LoginForm() {
         </form>
       </Form>
 
-			<motion.div
-			className=" fixed flex items-center justify-center bottom-12"
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
-			>
-
-
-				<Link 
-					className="text-base 
+      <motion.div
+        className=" fixed flex items-center justify-center bottom-12"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
+      >
+        <Link
+          className="text-base 
 					text-neutral-200 font-poppins
-						hover:text-neutral-50 transition-colors duration-300" 
-						href="/auth/register">
-						create account
-						</Link>
-
-			</motion.div>
+						hover:text-neutral-50 transition-colors duration-300"
+          href="/auth/register"
+        >
+          create account
+        </Link>
+      </motion.div>
     </>
   );
 }
