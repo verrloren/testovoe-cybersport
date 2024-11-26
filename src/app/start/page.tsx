@@ -12,7 +12,7 @@ export default async function StartPage() {
   return (
     <Container>
 			<main className="w-full h-screen relative flex flex-col md:flex-row 
-			justify-center items-center xl:gap-x-12 2xl:gap-x-20 md:gap-x-8">
+			justify-center items-center xl:gap-x-12 2xl:gap-x-20 md:gap-x-8 overflow-x-hidden">
 			
 						<div className="md:block md:w-1/3 h-full hidden"></div>
 			

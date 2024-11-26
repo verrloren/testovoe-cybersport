@@ -6,6 +6,7 @@ import * as z from "zod";
 type DataType = {
 	success: boolean;
 	response: string;
+	cookieHeader: string;
 }
 
 
@@ -24,19 +25,23 @@ type DataType = {
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
-					'API-Key': process.env.BACKEND_API_KEY as string
+					'API-Key': process.env.BACKEND_API_KEY as string,
+					'Accept': 'application/json',
 				},
 				body: JSON.stringify({ email, password })
 			})
+
+			const cookieHeader = result.headers.get('set-cookie');
 
 			const { success, response } = await result.json();
 
 			const data: DataType = {
 				success,
-				response
+				response,
+				cookieHeader
 			}
 
-			if(!success || !response) {
+			if(!success || !response || !cookieHeader) {
 				return data
 			}
 	

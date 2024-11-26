@@ -43,6 +43,7 @@ export default async function RootLayout({
 					{/* <ModalProvider /> */}
 					<ToasterProvider />
 					{children}
+
 				</body>
 			</html>
   );

@@ -31,7 +31,7 @@ export default function Header() {
     <motion.header
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: "easeIn" }}
+      transition={{ duration: 0.8 }}
       className="w-full h-24 z-10 fixed top-0 left-0
 			 bg-transparent flex items-center justify-center"
     >
@@ -43,7 +43,7 @@ export default function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <MenuIcon size={20} className="text-neutral-200" />
+              <MenuIcon size={20} className="text-neutral-400" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="rounded-3xl bg-black border-neutral-800">
               <DropdownMenuItem>

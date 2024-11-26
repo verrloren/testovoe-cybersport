@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { login } from "@/action/login";
+// import { getCookie } from "@/action/getCookie";
 
 type LoginData = {
   success: boolean;
@@ -41,9 +42,16 @@ export default function LoginForm() {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setTransition(async () => {
       login(values)
-        .then((data: LoginData) => {
-          console.log(data);
+        .then(async (data: LoginData) => {
+          console.log('Set-Cookie Header:', data);
           if (data.success) {
+						// const cookie = await getCookie();
+						// if (!cookie) {
+						// 	console.log("No cookie found");
+						// }
+						// const cookieData = await cookie.json();
+						// console.log(cookieData);
+
             console.log(data.success);
             toast.success("Login successful!");
             router.push("/start");
@@ -74,7 +82,7 @@ export default function LoginForm() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
-            className="w-[20rem] z-20 md:w-[25rem] z-20 xl:w-[30rem]  flex justify-center flex-col gap-y-6"
+            className="w-[20rem] md:w-[25rem] z-20 xl:w-[30rem]  flex justify-center flex-col gap-y-6"
           >
             <FormField
               control={form.control}
