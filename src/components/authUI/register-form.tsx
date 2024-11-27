@@ -47,6 +47,7 @@ export default function RegisterForm() {
         //data received from server
 				
         .then((data: RegisterData ) => {
+					console.log(data)
 					if(data.success) {
 						console.log(data.success)
 						toast.success("Account created successfully!");
