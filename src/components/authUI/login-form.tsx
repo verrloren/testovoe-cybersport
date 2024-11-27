@@ -48,9 +48,9 @@ export default function LoginForm() {
 
           if (data.success) {
 
-						data.cookies.forEach(cookie => {
-							document.cookie = cookie;
-						})
+						// data.cookies.forEach(cookie => {
+						// 	document.cookie = cookie;
+						// })
 
             console.log(data.success);
             toast.success("Login successful!");
