@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { StatusIndicator } from "./status-indicator"
 
 const frameworks = [
   {
@@ -47,12 +48,17 @@ export function ProjectsCombobox() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
+	const status = "error";
+
   return (
     <motion.div 
 		initial={{ opacity: 0, y: 15 }}
 		animate={{ opacity: 1, y: 0 }}
 		transition={{ duration: 0.5, delay: 0.6 }}
-		className="">
+		className="flex justify-center items-center">
+
+			<StatusIndicator status={status} />
+
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<Button
@@ -99,6 +105,8 @@ export function ProjectsCombobox() {
 					</Command>
 				</PopoverContent>
 			</Popover>
+			
+
 		</motion.div>
   )
 }

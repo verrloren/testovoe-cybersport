@@ -9,10 +9,11 @@ export default async function HomePage() {
 		cache: 'force-cache',
 		headers: {
 			'Content-Type': 'application/json',
-
 		}
 	})
 	console.log(result)
+
+	
 
 
 
@@ -33,11 +34,11 @@ export default async function HomePage() {
 					<ActionButtons />
 				</div>
 
-				{/* <div className="h-full w-full">
-					<div className="w-full min-h-[50rem] bg-black rounded-3xl border border-neutral-600">
+				 <div className="h-full w-full">
+					<div className="w-full min-h-80 bg-black rounded-3xl border border-neutral-600">
 
 					</div>
-				</div> */}
+				</div> 
 
 
 			</div>
