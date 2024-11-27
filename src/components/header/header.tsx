@@ -32,7 +32,7 @@ export default function Header() {
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="w-full h-24 z-10 fixed top-0 left-0
+      className="w-full h-24 z-10 absolute top-0 left-0
 			 bg-transparent flex items-center justify-center"
     >
       <nav className="w-full mx-12 sm:mx-16 md:mx-24 lg:mx-32 xl:mx-40 2xl:mx-48 flex items-center justify-between ">

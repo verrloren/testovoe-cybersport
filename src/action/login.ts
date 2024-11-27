@@ -6,7 +6,7 @@ import * as z from "zod";
 type DataType = {
 	success: boolean;
 	response: string;
-	cookieHeader: string;
+	cookies: string[];
 }
 
 
@@ -32,16 +32,18 @@ type DataType = {
 			})
 
 			const cookieHeader = result.headers.get('set-cookie');
+			
+			const cookies = cookieHeader ? cookieHeader.split(',').map(cookie => cookie.split(';')[0]) : [];
 
 			const { success, response } = await result.json();
 
 			const data: DataType = {
 				success,
 				response,
-				cookieHeader
+				cookies
 			}
 
-			if(!success || !response || !cookieHeader) {
+			if(!success || !response || !cookies) {
 				return data
 			}
 	

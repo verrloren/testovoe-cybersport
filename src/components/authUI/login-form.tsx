@@ -25,6 +25,7 @@ import { login } from "@/action/login";
 type LoginData = {
   success: boolean;
   response: string;
+	cookies: string[];
 };
 
 export default function LoginForm() {
@@ -41,16 +42,15 @@ export default function LoginForm() {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setTransition(async () => {
-      login(values)
-        .then(async (data: LoginData) => {
+      await login(values)
+        .then((data: LoginData) => {
           console.log('Set-Cookie Header:', data);
+
           if (data.success) {
-						// const cookie = await getCookie();
-						// if (!cookie) {
-						// 	console.log("No cookie found");
-						// }
-						// const cookieData = await cookie.json();
-						// console.log(cookieData);
+
+						data.cookies.forEach(cookie => {
+							document.cookie = cookie;
+						})
 
             console.log(data.success);
             toast.success("Login successful!");
