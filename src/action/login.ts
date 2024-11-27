@@ -19,10 +19,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password } = validatedFields.data;
 
   try {
-    const result = await fetch("/api/proxy", {
+    const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/login`, {
       method: "POST",
+			credentials: "include",
       headers: {
         "Content-Type": "application/json",
+				"API-Key": process.env.BACKEND_API_KEY as string,
+				'Accept': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
