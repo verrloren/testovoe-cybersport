@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { Check, ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -20,35 +19,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { StatusIndicator } from "./status-indicator"
+import { useEffect, useState } from "react";
+import { Project } from "@/lib/types";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+interface ProjectComboboxProps {
+	projects: Project[];
+}
 
-export function ProjectsCombobox() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
 
-	const status = "error";
+export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState(projects[0]?.value || "")
+
+	const status = projects.find((project) => project.value === value)?.status || "default";
+
+	useEffect(() => {
+    const selectedProject = projects.find((project) => project.value === value);
+    if (selectedProject) {
+      document.dispatchEvent(new CustomEvent('projectSelected', { detail: selectedProject }));
+    }
+  }, [value, projects]);
 
   return (
     <motion.div 
@@ -57,7 +47,7 @@ export function ProjectsCombobox() {
 		transition={{ duration: 0.5, delay: 0.6 }}
 		className="flex justify-center items-center">
 
-			<StatusIndicator status={status} />
+			<StatusIndicator size="lg" status={status} />
 
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
@@ -68,7 +58,7 @@ export function ProjectsCombobox() {
 						className="text-7xl font-poppins flex justify-center items-center text-white gap-x-4"
 					>
 						{value
-							? frameworks.find((framework) => framework.value === value)?.label
+							? projects.find((project) => project.value === value)?.label
 							: "Projects"}
 						<ChevronDown className={`text-white opacity-75 transition-transform duration-200 pl-0
 									${open ? "rotate-180" : ""}`} />
@@ -81,21 +71,21 @@ export function ProjectsCombobox() {
 								<CommandList >
 							<CommandEmpty className="text-neutral-200 pl-4 py-2">No project found.</CommandEmpty>
 							<CommandGroup >
-								{frameworks.map((framework) => (
+								{projects.map((project) => (
 									<CommandItem
-												className="text-neutral-400 font-poppins cursor-pointer hover:text-white transition-colors"
-										key={framework.value}
-										value={framework.value}
+										className="text-neutral-400 font-poppins cursor-pointer hover:text-white transition-colors"
+										key={project.value}
+										value={project.value}
 										onSelect={(currentValue) => {
 											setValue(currentValue === value ? "" : currentValue)
 											setOpen(false)
 										}}
 									>
-										{framework.label}
+										{project.label}
 										<Check
 											className={cn(
 												"ml-auto",
-												value === framework.value ? "opacity-100" : "opacity-0"
+												value === project.value ? "opacity-100" : "opacity-0"
 											)}
 										/>
 									</CommandItem>

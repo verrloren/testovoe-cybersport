@@ -6,7 +6,7 @@ import * as z from "zod";
 type DataType = {
   success: boolean;
   response: string;
-  cookies: string[];
+	accessToken?: string;
 };
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -30,22 +30,17 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       body: JSON.stringify({ email, password }),
     });
 
-    const cookieHeader = result.headers.get("set-cookie");
-    const cookies = cookieHeader
-      ? cookieHeader.split(",").map((cookie) => cookie.split(";")[0])
-      : [];
-
-    const { success, response } = await result.json();
+    const { success, response, access_token } = await result.json();
 
     const data: DataType = {
       success,
       response,
-      cookies,
+			accessToken: access_token
     };
 
 
 
-    if (!success || !response || !cookies) {
+    if (!success || !response) {
       return data;
     }
 

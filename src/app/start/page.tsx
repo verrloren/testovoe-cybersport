@@ -16,11 +16,11 @@ export default async function StartPage() {
 			
 						<div className="md:block md:w-1/3 h-full hidden"></div>
 			
-						<div className="w-full md:w-1/3 mt-28 md:mt-0 h-full flex flex-row items-center justify-center relative">
+						<div className="w-2/3 sm:w-1/2 md:w-2/3 mt-28 md:mt-0 h-full flex flex-row items-center justify-center relative">
 							<UploadComponent />
 						</div>
 
-							<div className="w-full md:w-1/3 h-full flex flex-col justify-center items-start">
+							<div className="w-full  md:w-1/3 h-full flex flex-col justify-center items-center md:items-start">
 								<NpxInfo />
 							</div>
 			</main>

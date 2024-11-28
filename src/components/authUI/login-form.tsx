@@ -25,7 +25,7 @@ import { login } from "@/action/login";
 type LoginData = {
   success: boolean;
   response: string;
-	cookies: string[];
+	accessToken?: string;
 };
 
 export default function LoginForm() {
@@ -48,9 +48,10 @@ export default function LoginForm() {
 
           if (data.success) {
 
-						// data.cookies.forEach(cookie => {
-						// 	document.cookie = cookie;
-						// })
+						if (data.accessToken) {
+							document.cookie = `access_token=${data.accessToken}`
+							console.log('Access Token:', data.accessToken);
+						}
 
             console.log(data.success);
             toast.success("Login successful!");

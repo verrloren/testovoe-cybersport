@@ -24,8 +24,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Complexity",
-  description: "Tarot and astrology calculation app between interviewees and interviewers",
+  title: "evrz",
+  description: "Developer tools for modern web development.",
 };
 
 export default async function RootLayout({
@@ -33,11 +33,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-	
-
 
   return (
 			<html className={`${poppins } ${ibmPlexMono}`} lang="en">
+				<head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (window.history.scrollRestoration) {
+                window.history.scrollRestoration = 'manual';
+              }
+              window.scrollTo(0, 0);
+            `,
+          }}
+        />
+      </head>
 				<body >
 					<ConditionalHeader />
 					{/* <ModalProvider /> */}

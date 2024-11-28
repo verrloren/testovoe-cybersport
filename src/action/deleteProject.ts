@@ -1,38 +1,33 @@
-// 'use server';
+'use server';
 
-// type DataType = {
-// 	success: boolean;
-// 	response: string;
-// }
+import { fetchWithAuth } from "./fetchWithAuth";
 
-//  export const getProjects = async () => {
+type DataType = {
+	success: boolean;
+	response: string;
+}
+
+ export const getProjects = async () => {
 
 
-// 		try {
-// 			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects`, {
-// 				method: 'DELETE',
-// 				credentials: 'include',
-// 				cache: 'force-cache',
-// 				headers: {
-// 					'Content-Type': 'application/json',
-// 					'API-Key': process.env.BACKEND_API_KEY as string
-// 				},
-// 			})
 
-// 			const { success, response } = await result.json();
+		try {
+			const result = await fetchWithAuth(`${process.env.BACKEND_API_URL}/projects/delete`, { method: 'DELETE' });
 
-// 			const data: DataType = {
-// 				success,
-// 				response
-// 			}
+			const { success, response } = await result.json();
 
-// 			if(!success || !response) {
-// 				return data
-// 			}
+			const data: DataType = {
+				success,
+				response
+			}
+
+			if(!success || !response) {
+				return data
+			}
 	
-// 			return data;
+			return data;
 
-// 		} catch (error) {
-// 			console.error(error)
-// 		}
-//  }
+		} catch (error) {
+			console.error(error)
+		}
+ }

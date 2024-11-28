@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 body {
 	background-color: #000;
 }
@@ -11,7 +13,6 @@ body {
 	--radial-ellipse-background: linear-gradient(270deg, #f9e7bb 0%, #e97cbb 50%, #3d47d9 100%);
 	/* --radial-ellipse-background: linear-gradient(270deg, #87698A 0%, #3B2D8F 50%, #110567 100%); */
 }
-
 @keyframes rotate {
 	0% {
 		transform: rotate(0deg);
@@ -31,6 +32,8 @@ body {
 }
 
 
+
+
 /* .radial-ellipse {	
 	background: var(--radial-ellipse-background);
 	border-radius: 50%;
@@ -40,6 +43,8 @@ body {
   border-radius: 50%;
   overflow: hidden;
   box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.5), inset 10px 10px 30px rgba(255, 255, 255, 0.2);
+		animation: saturation 5s ease-in-out, rotate 120s linear infinite;
+		background: radial-gradient(circle at 30% 30%, #87698A, #3B2D8F, #110567);
 }
 
 .radial-ellipse-dashboard {
