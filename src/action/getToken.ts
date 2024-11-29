@@ -3,17 +3,24 @@
 import { cookies } from "next/headers";
 import { fetchWithAuth } from "./fetchWithAuth";
 
-export const getToken = async () => {
-	const cookieStore = await cookies();
-	const token = cookieStore.get('access_token')?.value;
-
-	if (!token) {
-		return { success: false, response: "No access token" };
-	}
-	return token;
+interface TokenResponse {
+  token?: string;
 }
 
+export const getToken = async (): Promise<TokenResponse> => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('access_token')?.value;
 
+  if (!token) {
+    return { 
+      token
+    };
+  }
+  
+  return { 
+    token 
+  };
+};
 
 
 export const getValidatedToken = async () => {

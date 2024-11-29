@@ -1,7 +1,7 @@
 'use server';
 
-import { cookies } from "next/headers";
 import { redirect } from 'next/navigation';
+import { getToken } from "./getToken";
 
 type DataType = {
     success: boolean;
@@ -11,12 +11,11 @@ type DataType = {
 
 export const validateToken = async (): Promise<DataType> => {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('access_token')?.value;
+			const { token } = await getToken();
 
-        if (!token) {
-            redirect('/auth/login');
-        }
+			if (!token) {
+				return { success: false, response: "No access token" };
+			}
 
         const result = await fetch(`${process.env.BACKEND_API_URL}/api/users`, {
             method: 'GET',

@@ -24,21 +24,19 @@ type LogoutData = {
 export default function Header() {
   const router = useRouter();
 
-
-
+	
   const onLogout = async () => {
-
-		// const response = await fetch("/api/logout", {
-    //   method: "POST",
-		// 	credentials: 'include'
-    // });
-
 		const response: LogoutData = await logout();
 
+		console.log("logout:", response)
 
     if (response.success) {
-      toast.success(response.response);
-      router.push("/auth/login");
+			document.cookie = "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+
+		toast.success(response.response);
+		router.push("/auth/login");
+		window.location.reload();
+		
     } else {
       toast.error(response.response);
     }

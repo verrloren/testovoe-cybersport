@@ -1,4 +1,3 @@
-import { validateToken } from "@/action/validateToken";
 import { ActionButtons } from "@/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsTable } from "@/components/projects-table";
@@ -8,11 +7,6 @@ import { projects } from "@/lib/data";
 
 export default async function HomePage() {
 
-	const { success, response } = await validateToken();
-
-
-
-	console.log('Validated token:', success, response);
 
   return (
 		<>

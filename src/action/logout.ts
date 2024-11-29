@@ -2,8 +2,12 @@
 import { cookies } from "next/headers";
 import { validateToken } from "./validateToken";
 
+interface LogoutResponse {
+	success: boolean;
+	response: string;
+}
 
-export const logout = async () => {
+export const logout = async (): Promise<LogoutResponse> => {
 	try {
 		const cookieStore = await cookies();
 		const token = cookieStore.get('access_token')?.value;
@@ -15,13 +19,11 @@ export const logout = async () => {
 				return { success: false, response: "Invalid token" };
 			}
 
-			if (success) {
-				cookieStore.delete('access_token');
-			}
+			cookieStore.delete('access_token');
 
 		}
 
-		return Response.json({ success: true, response: "Logged out successfully" });
+		return { success: true, response: "Logged out successfully" };
 	} catch (error) {
 		console.error(error);
 		return { success: false, response: "Error occurred" };
