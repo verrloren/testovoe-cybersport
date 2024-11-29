@@ -1,31 +1,27 @@
 'use server';
 import { cookies } from "next/headers";
+import { validateToken } from "./validateToken";
+
 
 export const logout = async () => {
 	try {
 		const cookieStore = await cookies();
 		const token = cookieStore.get('access_token')?.value;
 
-		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/logout`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"API-Key": process.env.BACKEND_API_KEY as string,
-				"Authorization": `Bearer ${token}`
-			},
-		});
+		if (token) {
+			const { success } = await validateToken();
 
-		const { success, response } = await result.json();
+			if (!success) {
+				return { success: false, response: "Invalid token" };
+			}
 
-		if (!success || !response) {
-			return { success: false, response: "Error occurred" };
+			if (success) {
+				cookieStore.delete('access_token');
+			}
+
 		}
 
-		if (success) {
-			cookieStore.delete('access_token');
-		}
-
-		return { success, response };
+		return Response.json({ success: true, response: "Logged out successfully" });
 	} catch (error) {
 		console.error(error);
 		return { success: false, response: "Error occurred" };

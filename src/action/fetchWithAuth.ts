@@ -14,7 +14,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
 		...options.headers,
 		"Content-Type": "application/json",
 		"API-Key": process.env.BACKEND_API_KEY as string,
-		'Authorization': `Bearer ${token}`
+		'Authorization': `Bearer ${token}`,
 	}
 
 	const response = await fetch(url, {
@@ -22,5 +22,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
 		headers
 	})
 
-  return response;
+	const responseJSON = await response.json();
+
+  return responseJSON;
 };

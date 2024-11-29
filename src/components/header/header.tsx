@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { logout } from "@/action/logout";
 
 
 type LogoutData = {
@@ -23,21 +24,23 @@ type LogoutData = {
 export default function Header() {
   const router = useRouter();
 
-  const handleLogout = async () => {
-    const response = await fetch("/api/logout", {
-      method: "POST",
-    });
-    const data: LogoutData = await response.json();
-    return data;
-  };
+
 
   const onLogout = async () => {
-    const data = await handleLogout();
-    if (data.success) {
-      toast.success(data.response);
+
+		// const response = await fetch("/api/logout", {
+    //   method: "POST",
+		// 	credentials: 'include'
+    // });
+
+		const response: LogoutData = await logout();
+
+
+    if (response.success) {
+      toast.success(response.response);
       router.push("/auth/login");
     } else {
-      toast.error(data.response);
+      toast.error(response.response);
     }
   };
 

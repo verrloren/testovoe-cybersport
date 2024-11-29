@@ -25,7 +25,7 @@ import { login } from "@/action/login";
 type LoginData = {
   success: boolean;
   response: string;
-	accessToken?: string;
+	token: string;
 };
 
 export default function LoginForm() {
@@ -44,14 +44,14 @@ export default function LoginForm() {
     setTransition(async () => {
       await login(values)
         .then((data: LoginData) => {
-          console.log('Set-Cookie Header:', data);
+          console.log('Data:', data);
 
           if (data.success) {
 
-						if (data.accessToken) {
-							document.cookie = `access_token=${data.accessToken}`
-							console.log('Access Token:', data.accessToken);
-						}
+						// if (data.accessToken) {
+						// 	document.cookie = `access_token=${data.accessToken}`
+						// 	console.log('Access Token:', data.accessToken);
+						// }
 
             console.log(data.success);
             toast.success("Login successful!");

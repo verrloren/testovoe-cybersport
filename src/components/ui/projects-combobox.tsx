@@ -29,12 +29,12 @@ interface ProjectComboboxProps {
 
 export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(projects[0]?.value || "")
+  const [value, setValue] = useState(projects[0]?.label.toLowerCase() || "")
 
-	const status = projects.find((project) => project.value === value)?.status || "default";
+	const status = projects.find((project) => project.label.toLowerCase() === value)?.status || "default";
 
 	useEffect(() => {
-    const selectedProject = projects.find((project) => project.value === value);
+    const selectedProject = projects.find((project) => project.label.toLowerCase() === value);
     if (selectedProject) {
       document.dispatchEvent(new CustomEvent('projectSelected', { detail: selectedProject }));
     }
@@ -58,7 +58,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 						className="text-7xl font-poppins flex justify-center items-center text-white gap-x-4"
 					>
 						{value
-							? projects.find((project) => project.value === value)?.label
+							? projects.find((project) => project.label.toLowerCase() === value)?.label
 							: "Projects"}
 						<ChevronDown className={`text-white opacity-75 transition-transform duration-200 pl-0
 									${open ? "rotate-180" : ""}`} />
@@ -74,8 +74,8 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 								{projects.map((project) => (
 									<CommandItem
 										className="text-neutral-400 font-poppins cursor-pointer hover:text-white transition-colors"
-										key={project.value}
-										value={project.value}
+									key={project.label}
+										value={project.label.toLowerCase()}
 										onSelect={(currentValue) => {
 											setValue(currentValue === value ? "" : currentValue)
 											setOpen(false)
@@ -85,7 +85,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 										<Check
 											className={cn(
 												"ml-auto",
-												value === project.value ? "opacity-100" : "opacity-0"
+												value === project.label.toLowerCase() ? "opacity-100" : "opacity-0"
 											)}
 										/>
 									</CommandItem>

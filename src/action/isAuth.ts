@@ -10,7 +10,7 @@ export const isAuth = async () => {
 			return { success: false, response: "No access token" };
 		}
 
-		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/is-auth`, {
+		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

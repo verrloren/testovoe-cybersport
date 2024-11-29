@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { languagesStyleGuides } from "@/lib/data";
-import { AiOutlineSetting } from "react-icons/ai";
+import { AiOutlineEdit } from "react-icons/ai";
+
 
 import {
   Sheet,
@@ -23,27 +24,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export function SheetComponent() {
+export function SheetEdit() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button
-          className="w-12 h-12 py-2 px-2 bg-black rounded-full border
-					border-neutral-600 hover:border-neutral-200 transition-colors peer"
-        >
-          <AiOutlineSetting className="text-white peer-hover:text-white" />
-        </Button>
+			<Button
+				className="w-12 h-12 py-2 px-2 bg-black rounded-full border 
+				border-neutral-600 hover:border-neutral-200 transition-colors peer"
+			>	
+				<AiOutlineEdit size={16} className="text-white peer-hover:text-white" />
+			</Button>
       </SheetTrigger>
 
       <SheetContent
-        className="w-full bg-black xl:px-16 backdrop-blur-lg border-l-neutral-800 rounded-xl 
+        className="w-full bg-black/80 xl:px-16 backdrop-blur-lg border-l-neutral-800 rounded-xl 
 								flex flex-col  items-center overflow-y-scroll"
-								
       >
-							<div className="radial-ellipse-dashboard w-[70%] aspect-square
-			fixed right-0 bottom-0  "></div>
         <SheetHeader>
-          <SheetTitle className="text-white py-2 text-center text-5xl lg:text-5xl xl:text-5xl 2xl:text-7xl mt-4 2xl:mt-12 font-poppins z-40">
+          <SheetTitle className="text-radial-gradient-style-guide py-2 text-center text-5xl lg:text-5xl xl:text-5xl 2xl:text-7xl mt-4 2xl:mt-12 font-poppins">
             Choose your <br /> <span className="">style guide</span>
           </SheetTitle>
         </SheetHeader>
@@ -57,7 +55,7 @@ export function SheetComponent() {
 													{language.name}
 												</h3> */}
               <Select>
-                <SelectTrigger className="w-full text-neutral-400 hover:text-neutral-400 transition-colors bg-black rounded-xl font-poppins text-sm z-40">
+                <SelectTrigger className="w-full text-neutral-400 hover:text-neutral-400 transition-colors bg-black rounded-xl font-poppins text-sm">
                   <SelectValue
                     className="font-poppins"
                     placeholder={language.styleGuide}
@@ -89,7 +87,7 @@ export function SheetComponent() {
         <SheetFooter className="mt-8 w-full flex justify-center items-center">
           <SheetClose asChild>
             <Button
-              className="py-6 w-full text-xl bg-white text-black font-poppins rounded-xl z-40"
+              className="py-6 w-full text-xl bg-white text-black font-poppins rounded-xl"
               type="submit"
             >
               Save changes

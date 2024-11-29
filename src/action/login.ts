@@ -2,11 +2,12 @@
 
 import { LoginSchema } from "@/schemas";
 import * as z from "zod";
+import { setSession } from "./setSession";
 
 type DataType = {
   success: boolean;
   response: string;
-	accessToken?: string;
+	token: string;
 };
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -30,12 +31,19 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       body: JSON.stringify({ email, password }),
     });
 
-    const { success, response, access_token } = await result.json();
+    const { success, response, access_token: token } = await result.json();
+
+		if (success && token) {
+			await setSession(token);
+			return { success: true };
+	} else {
+			return { success: false, message: 'Login failed' };
+	}
 
     const data: DataType = {
       success,
       response,
-			accessToken: access_token
+			token
     };
 
 

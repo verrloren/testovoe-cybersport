@@ -22,8 +22,8 @@ import { Project } from "./types"
 export const projects: Project[] = [
   {
     label: "Next.js",
-    value: "next.js",
 		status: "error",
+		lastEditDate: new Date(),
 		codeReview: "Code review next.",
 		recommendations: "Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times.Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. Consider using a monorepo structure to manage multiple packages within a single repository. This can help with code sharing and dependency management. Additionally, implement server-side rendering (SSR) for better SEO and faster initial load times. ",
 		logs: [
@@ -54,8 +54,8 @@ export const projects: Project[] = [
   },
   {
     label: "Astro",
-    value: "astro",
 		status: "warning",
+		lastEditDate: new Date(),
 		codeReview: "Code review astro.",
 		recommendations: "Leverage Astro's partial hydration feature to improve performance by only hydrating the necessary parts of the page. Additionally, consider using a static site generation (SSG) approach for faster load times and better SEO.",
 		logs: [
@@ -74,13 +74,7 @@ export const projects: Project[] = [
 ]
 
 export const languagesStyleGuides = [
-	{
-		id: "javascript",
-		name: "JavaScript",
-		styleGuide: [
-			"JavaScript Style Guide",
-		]
-	},
+
 	{
 		id: "typescript",
 		name: "TypeScript",
@@ -96,113 +90,16 @@ export const languagesStyleGuides = [
 		]
 	},
 	{
-		id: "java",
-		name: "Java",
-		styleGuide: [
-			"Java Style Guide",
-		]
-	},
-	{
 		id: "csharp",
 		name: "C#",
 		styleGuide: [
 			"C# Style Guide",
 		]
 	},
-  {
-		id: "go",
-		name: "Go",
-		styleGuide: [
-			"Go Style Guide",
-		]
-	},
-	{
-		id: "swift",
-		name: "Swift",
-		styleGuide: [
-			"Swift Style Guide",
-		]
-	},
-	{
-		id: "cplusplus",
-		name: "C++",
-		styleGuide: [
-			"C++ Style Guide",
-		]
-	},
-	{
-		id: "angular",
-		name: "AngularJS",
-		styleGuide: [
-			"AngularJS Style Guide",
-		]
-	},
-	{
-		id: "commonlisp",
-		name: "Common Lisp",
-		styleGuide: [
-			"Common Lisp Style Guide",
-		]
-	},
-	{
-		id: "htmlcss",
-		name: "HTML/CSS",
-		styleGuide: [
-			"HTML/CSS Style Guide",
-		]
-	},
-	{
-		id: "json",
-		name: "JSON",
-		styleGuide: [
-			"JSON Style Guide",
-		]
-	},
-	{
-		id: "markdown",
-		name: "Markdown",
-		styleGuide: [
-			"Markdown Style Guide",
-		]
-	},
-	{
-		id: "objectivec",
-		name: "Objective-C",
-		styleGuide: [
-			"Objective-C Style Guide",
-		]
-	},
-	{
-		id: "r",
-		name: "R",
-		styleGuide: [
-			"R Style Guide",
-		]
-	},
-	{
-		id: "shell",
-		name: "Shell",
-		styleGuide: [
-			"Shell Style Guide",
-		]
-	},
-	{
-		id: "dart",
-		name: "Dart",
-		styleGuide: [
-			"Dart Style Guide",
-		]
-	},
-	{
-		id: "cotlin",
-		name: "Cotlin",
-		styleGuide: [
-			"Cotlin Style Guide",
-		]
-	},
-
 	
 ]
+
+
 
 
 
