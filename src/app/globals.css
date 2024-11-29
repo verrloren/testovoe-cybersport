@@ -145,3 +145,12 @@ body {
   background-clip: text;
   color: transparent;
 }
+
+
+
+.upload-style-guide:hover {
+	backgroundColor: #000000 !important;
+}
+.upload-style-guide {
+	width: 100% !important;
+}

@@ -55,7 +55,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 						variant="ghost"
 						role="combobox"
 						aria-expanded={open}
-						className="text-7xl font-poppins flex justify-center items-center text-white gap-x-4"
+						className="text-7xl 2xl:text-8xl font-poppins flex justify-center items-center text-white gap-x-4"
 					>
 						{value
 							? projects.find((project) => project.label.toLowerCase() === value)?.label

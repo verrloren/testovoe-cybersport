@@ -35,15 +35,15 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.8 }}
+      transition={{ duration: 1, delay: 0.8 }}
       className="w-full min-h-80"
     >
       <Tabs defaultValue="logs" className="w-full pb-8 text-white">
 
-        <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-600">
-          <TabsList className=" text-base border-b pl-4 py-6 border-neutral-600 w-full justify-start">
+        <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-800">
+          <TabsList className=" text-base border-b pl-4 py-6 border-neutral-800 w-full justify-start">
             <TabsTrigger
               className="text-neutral-600 data-[state=active]:text-white font-poppins text-base"
               value="logs"
@@ -81,7 +81,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                     <StatusIndicator size="sm" status={log.status} />
                   </div>
                   <CodeBlock
-                    theme={themes.duotoneDark}
+                    theme={themes.github}
                     code={log.code}
                     language="javascript"
                   >

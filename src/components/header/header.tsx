@@ -60,7 +60,7 @@ export default function Header() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent 
-						className="rounded-2xl bg-black border-neutral-600">
+						className="rounded-2xl bg-black border-neutral-800">
               <DropdownMenuItem>
                 <Button
                   className="w-full bg-black text-neutral-200 shadow-none"

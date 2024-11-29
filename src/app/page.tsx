@@ -14,12 +14,13 @@ export default async function HomePage() {
 
 			{/* sphere */}
 			<div className="radial-ellipse-dashboard w-full aspect-square
-			fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[50%]
+			fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
 			  xl:-top-[60%] "></div>
 
 			<Container>
 				
-			<div className="w-full relative pt-44 flex flex-col justify-center gap-y-6 md:gap-y-16">
+			<div className="w-full relative pt-44 2xl:pt-72 flex flex-col justify-center 
+			gap-y-6 md:gap-y-16 xl:gap-y-20">
 			
 				<div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
 					<ProjectsCombobox projects={projects} />

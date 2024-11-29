@@ -21,7 +21,7 @@ export function ActionButtons() {
 			<Button
 				onClick={() => router.push('/start')}
 				className="w-12 h-12 py-2 px-2 bg-black rounded-full border 
-				border-neutral-600 hover:border-neutral-200 transition-colors peer"
+				border-neutral-800 hover:border-neutral-200 transition-colors peer"
 			>	
 				<PlusIcon className="text-white peer-hover:text-white" />
 			</Button>
@@ -33,7 +33,7 @@ export function ActionButtons() {
 
 			<Button
 				className="w-12 h-12 py-2 px-2 bg-black rounded-full border 
-				border-neutral-600 hover:border-neutral-200 transition-colors peer"
+				border-neutral-800 hover:border-neutral-200 transition-colors peer"
 			>	
 				<TrashIcon className="text-white peer-hover:text-white" />
 			</Button>

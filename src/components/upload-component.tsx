@@ -22,7 +22,7 @@ export default function UploadComponent() {
 	const props: UploadProps = {
 		name: 'file',
 		multiple: true,
-		showUploadList: false, // Hide the upload list
+		showUploadList: true, // Hide the upload list
 		// headers: {
 		// 	"Content-Type": "multipart/form-data",
 		// 	"API-Key": process.env.BACKEND_API_KEY as string,
