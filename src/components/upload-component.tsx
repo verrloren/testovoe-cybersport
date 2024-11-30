@@ -22,11 +22,7 @@ export default function UploadComponent() {
 	const props: UploadProps = {
 		name: 'file',
 		multiple: true,
-		showUploadList: true, // Hide the upload list
-		// headers: {
-		// 	"Content-Type": "multipart/form-data",
-		// 	"API-Key": process.env.BACKEND_API_KEY as string,
-		// },
+		showUploadList: false, // Hide the upload list
 		directory: true, // Allow directory upload
 		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar', // Specify accepted file types
 		itemRender: (originNode, file, currFileList) => {
@@ -76,112 +72,6 @@ export default function UploadComponent() {
 	}
 		},
 
-	
-// 	customRequest: async (options) => {
-//     try {
-//         if (!options.file || options.file.size === 0) {
-//             alert('Cannot upload empty file');
-//             return;
-//         }
-
-//         const formData = new FormData();
-        
-//         // Add file
-//         formData.append('files', options.file);
-
-//         // Derive subject from filename
-//         const fileName = options.file.name;
-//         const subject = fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
-
-//         if (!subject.trim()) {
-//             alert("File name cannot be empty for subject.");
-//             return;
-//         }
-
-//         formData.append('subject', subject.trim());
-
-//         console.log('Uploading:', { filename: options.file.name, subject, size: options.file.size });
-
-//         const result = await sendProjectFiles(formData);
-
-//         if (!result.success) {
-//             console.error('Upload failed:', result.response);
-//             alert(result.response || "Unknown error during upload.");
-//             options.onError?.(new Error(result.response || "Upload failed"), options.file);
-//             return;
-//         }
-
-//         console.log('Upload successful');
-//         alert('File uploaded successfully');
-//         options.onSuccess?.(result, options.file);
-//         router.push('/');
-//     } catch (error) {
-//         console.error('Error during upload:', error);
-//         const errorMessage = error instanceof Error ? error.message : "Upload failed";
-//         alert(errorMessage);
-//         options.onError?.(error instanceof Error ? error : new Error(errorMessage), options.file);
-//     }
-// },
-// 	customRequest: async (options) => {
-//     try {
-//         if (!options.file || options.file.size === 0) {
-//             alert('Cannot upload empty file');
-//             return;
-//         }
-
-//         const formData = new FormData();
-//         formData.append('files', options.file);
-        
-//         // Format subject as plain string
-//         const subject = String(options.file.name.split('.')[0] || 'untitled').trim();
-//         formData.append('subject', subject);
-
-//         console.log('Uploading file:', {
-//             name: options.file.name,
-//             subject: subject,
-//             size: options.file.size
-//         });
-
-//         const result = await sendProjectFiles(formData);
-
-//         if (!result?.success) {
-//             const error = new Error(String(result?.response || 'Upload failed'));
-//             if (options.onError) {
-//                 options.onError(error, options.file);
-//             }
-//             alert(error.message);
-//             return;
-//         }
-
-//         if (options.onSuccess) {
-//             options.onSuccess(result, options.file);
-//             alert('File uploaded successfully');
-//             router.push('/');
-//         }
-//     } catch (error) {
-//         const errorMessage = error instanceof Error ? error.message : 'Upload failed';
-//         alert(errorMessage);
-//         if (options.onError) {
-//             options.onError(error instanceof Error ? error : new Error(errorMessage), options.file);
-//         }
-//     }
-// },
-		
-
-
-
-		// action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-		// onChange(info) {
-		// 	const { status } = info.file;
-		// 	if (status !== 'uploading') {
-		// 		console.log(info.file, info.fileList);
-		// 	}
-		// 	if (status === 'done') {
-		// 		message.success(`${info.file.name} file uploaded successfully.`);
-		// 	} else if (status === 'error') {
-		// 		message.error(`${info.file.name} file upload failed.`);
-		// 	}
-		// },
 		onChange(info) {
 			const { status } = info.file;
 			if (status === 'done') {
