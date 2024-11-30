@@ -78,13 +78,15 @@ export const languagesStyleGuides = [
 	{
 		id: "typescript",
 		name: "TypeScript",
+		selectedFile: File,
 		styleGuide: [
 			"TypeScript Style Guide",
-		]
+		],
 	},
 	{
 		id: "python",
 		name: "Python",
+		selectedFile: File,
 		styleGuide: [
 			"Python Style Guide",
 		]
@@ -92,6 +94,7 @@ export const languagesStyleGuides = [
 	{
 		id: "csharp",
 		name: "C#",
+		selectedFile: File,
 		styleGuide: [
 			"C# Style Guide",
 		]

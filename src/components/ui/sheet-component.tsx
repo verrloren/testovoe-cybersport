@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { languagesStyleGuides } from "@/lib/data";
 import { AiOutlineSetting } from "react-icons/ai";
+
+import { Language, StyleGuide } from '@/lib/types';
 
 import {
   Sheet,
@@ -22,9 +25,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UploadStyleGuide } from "./upload-style-guide";
+import { UploadStyleGuide } from './upload-style-guide';
+
 
 export function SheetComponent() {
+
+	const [languages, setLanguages] = useState<Language[]>(languagesStyleGuides);
+
+  const handleFileSelection = (languageId: string, file: StyleGuide) => {
+    setLanguages(prev => prev.map(lang => 
+      lang.id === languageId 
+        ? { ...lang, selectedFile: file }
+        : lang
+    ));
+  };
+	
   return (
     <Sheet >
       <SheetTrigger asChild>
@@ -45,7 +60,7 @@ export function SheetComponent() {
       >
 				{/* sphere */}
 					<div className="radial-ellipse-dashboard w-full aspect-square
-			fixed left-0 -bottom-[20%] md:-bottom-1/4 lg:-bottom-1/4
+			fixed left-0 -bottom-[20%] md:-bottom-1/4 lg:-bottom-1/4 -z-50
 			  xl:-bottom-1/4 "></div>
 
         <SheetHeader>
@@ -54,46 +69,59 @@ export function SheetComponent() {
             Choose your <br /> <span className="">style guide</span>
           </SheetTitle>
         </SheetHeader>
-        <div className="w-full flex flex-col items-center gap-y-4">
-          {languagesStyleGuides.map((language) => (
-            <div
-              className="w-full flex items-center justify-between gap-x-2"
-              key={language.id}
-            >
-              {/* <h3 className="font-poppins text-md text-neutral-200">
-													{language.name}
-												</h3> */}
-              <Select>
-                <SelectTrigger className="w-full py-6 text-neutral-400 hover:text-neutral-400 transition-colors bg-black 
-								rounded-2xl font-poppins text-sm z-40 border border-neutral-800">
-                  <SelectValue
-                    className="font-poppins"
-                    placeholder={language.styleGuide}
-                  />
-                </SelectTrigger>
-                <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
-                  <SelectGroup className="w-full">
-                    {language.styleGuide.map((styleGuide) => (
-                      <SelectItem
-                        key={language.id}
-                        className="text-neutral-400 cursor-pointer hover:text-neutral-200 
-												transition-colors font-poppins text-sm font-light"
-                        value={language.id}
-                      >
-												{styleGuide}
-                      </SelectItem>
-                    ))}
-                      <UploadStyleGuide />
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
-        </div>
+
+				<div className="w-full flex flex-col items-center gap-y-4">
+  {languages.map((language) => (
+    <div
+      className="w-full flex items-center justify-between gap-x-2"
+      key={language.id}
+    >
+      <Select>
+        <SelectTrigger className="w-full py-6 text-neutral-400 hover:text-neutral-400 
+          transition-colors bg-black rounded-2xl font-poppins text-sm 
+          font-light z-40 border border-neutral-800">
+          <SelectValue
+            className="font-poppins"
+            placeholder={language.name}
+          />
+        </SelectTrigger>
+        <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
+          <SelectGroup className="w-full">
+            {language.styleGuide.map((styleGuide) => (
+              <SelectItem
+                key={styleGuide}
+                className="text-neutral-400 cursor-pointer hover:text-neutral-200 
+                  transition-colors font-poppins text-sm font-light"
+                value={styleGuide}
+              >
+                {styleGuide}
+              </SelectItem>
+            ))}
+            {language.selectedFile && (
+              <SelectItem
+                value={language.selectedFile.name}
+                className="text-neutral-400 cursor-pointer hover:text-neutral-200 
+                  transition-colors font-poppins text-sm font-light"
+              >
+                {language.selectedFile.name}
+              </SelectItem>
+            )}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      <UploadStyleGuide 
+        languageId={language.id}
+        onFileSelect={(file) => handleFileSelection(language.id, file)} 
+      />
+    </div>
+  ))}
+</div>
+
         <SheetFooter className="w-full flex justify-center items-center">
           <SheetClose asChild>
             <Button
-              className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40"
+              className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 transition-colors"
               type="submit"
             >
               Save changes

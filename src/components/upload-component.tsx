@@ -25,12 +25,6 @@ export default function UploadComponent() {
 		showUploadList: false, // Hide the upload list
 		directory: true, // Allow directory upload
 		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar', // Specify accepted file types
-		itemRender: (originNode, file, currFileList) => {
-			console.log('originNode', originNode);
-			console.log('file', file);
-			console.log('currFileList', currFileList);
-			return originNode;
-		},
 
 		customRequest: async (options) => {
 			console.log('options', options);

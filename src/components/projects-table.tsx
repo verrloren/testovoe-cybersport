@@ -45,20 +45,20 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
         <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-800">
           <TabsList className=" text-base border-b pl-4 py-6 border-neutral-800 w-full justify-start">
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base"
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
               value="logs"
             >
               Logs
             </TabsTrigger>
 
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base"
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
               value="codeReview"
             >
               Code review
             </TabsTrigger>
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base"
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
               value="recommendations"
             >
               Recommendations

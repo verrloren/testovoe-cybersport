@@ -21,6 +21,7 @@ import {
 import { StatusIndicator } from "./status-indicator"
 import { useEffect, useState } from "react";
 import { Project } from "@/lib/types";
+import { PopoverAnchor } from "@radix-ui/react-popover";
 
 interface ProjectComboboxProps {
 	projects: Project[];
@@ -64,7 +65,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 									${open ? "rotate-180" : ""}`} />
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className="mt-8 border border-neutral-600 rounded-xl bg-black p-0">
+				<PopoverContent className="mt-8 border border-neutral-800 rounded-xl bg-black p-0">
 					<Command>
 						<CommandInput className="text-white placeholder:text-white font-poppins" placeholder="Search project..." />
 						

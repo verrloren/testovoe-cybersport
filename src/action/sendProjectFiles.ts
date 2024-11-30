@@ -21,11 +21,11 @@ import { getToken } from "./getToken";
 
 			const response = await fetch(`${process.env.BACKEND_API_URL}/api/upload/files`, {
 				method: 'POST',
-				body: formData,
 				headers: {
 					'Authorization': `Bearer ${token}`,
 					'API-Key': process.env.BACKEND_API_KEY as string
 				},
+				body: formData,
 			});
 
 			const responseJSON = await response.json();
@@ -45,52 +45,3 @@ import { getToken } from "./getToken";
 			}
 		}
  }
-
-
-// 'use server'
-
-// import { cookies } from "next/headers";
-
-// export const sendProjectFiles = async (formData: FormData): Promise<UploadResponse> => {
-// 	try {
-// 			const cookieStore = await cookies();
-// 			const token = cookieStore.get('access_token')?.value;
-
-// 			if (!token) {
-// 					return { success: false, response: "No access token" };
-// 			}
-
-// 			// Ensure subject is explicitly a string
-// 			const subject = formData.get('subject');
-// 			if (!subject || typeof subject !== 'string') {
-// 					return { success: false, response: "Subject must be a string" };
-// 			}
-
-// 			const response = await fetch(`${process.env.BACKEND_API_URL}/api/upload/files`, {
-// 					method: 'POST',
-// 					body: formData,
-// 					headers: {
-// 							'Authorization': `Bearer ${token}`,
-// 							'API-Key': process.env.BACKEND_API_KEY as string,
-// 							// Explicitly set content type
-// 							'Accept': 'application/json', // Ensure backend expects JSON response
-// 					},
-// 			});
-
-// 			if (!response.ok) {
-// 					const errorText = await response.text();
-// 					return { 
-// 							success: false, 
-// 							response: `Upload failed: ${response.status} - ${errorText}` 
-// 					};
-// 			}
-
-// 			const data = await response.json();
-// 			return { success: true, response: data };
-// 	} catch (error) {
-// 			return { 
-// 					success: false, 
-// 					response: error instanceof Error ? error.message : "Upload failed" 
-// 			};
-// 	}
-// };

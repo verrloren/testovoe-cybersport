@@ -75,3 +75,17 @@ export interface IError {
 	solution?: string;
 	code?: string;
 }
+
+// types.ts
+export interface StyleGuide {
+  id: string;
+  name: string;
+  file?: File;
+}
+
+export interface Language {
+  id: string;
+  name: string;
+  styleGuide: string;
+  selectedFile?: StyleGuide;
+}
