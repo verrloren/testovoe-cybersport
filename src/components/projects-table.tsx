@@ -80,7 +80,7 @@ export function ProjectsTable() {
                   >
                     {/* File info */}
                     <div className="flex items-center gap-4 mb-6 text-sm ">
-                      <h5 className="text-xl text-white">
+                      <h5 className="text-2xl text-white">
                         {issue.type_of_issue}
                       </h5>
                       <p className="text-sm font-ibmPlexMono text-neutral-600">

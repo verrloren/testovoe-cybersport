@@ -19,14 +19,14 @@ export default function UploadComponent() {
 	
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-  const { setSelectedProject, selectedProject } = useProjectStore();
+  const { setSelectedProject } = useProjectStore();
 
 	const props: UploadProps = {
 		name: 'file',
 		multiple: true,
     showUploadList: false,
 		directory: true, // Allow directory upload
-		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar', // Specify accepted file types
+		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb',
 
 
 
