@@ -41,10 +41,15 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
   }, [selectedProject]);
 
   useEffect(() => {
-    if (!selectedProject && projects.length > 0) {
-      const defaultProject = projects[0];
-      setSelectedProject(defaultProject);
-      setValue(defaultProject.name);
+    if (selectedProject) {
+      const projectExists = projects.some(p => p.id === selectedProject.id);
+      if (!projectExists && projects.length > 0) {
+        setSelectedProject(projects[0]);
+        setValue(projects[0].name);
+      }
+    } else if (projects.length > 0) {
+      setSelectedProject(projects[0]);
+      setValue(projects[0].name);
     }
   }, [projects, selectedProject, setSelectedProject]);
 

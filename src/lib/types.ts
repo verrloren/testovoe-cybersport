@@ -151,8 +151,9 @@ export interface UserStyleGuide {
   is_default: boolean;
 }
 export interface StyleGuideUpload {
-	id: number;
+	id: string;
 	name: string;
-	projectId: number;
+	codelang_code: string;
+	projectId: string;
 	file: File;
 }

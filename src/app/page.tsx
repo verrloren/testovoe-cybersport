@@ -4,8 +4,6 @@ import { ActionButtons } from "@/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsTable } from "@/components/projects-table";
 import { ProjectsCombobox } from "@/components/ui/projects-combobox";
-// import { projects } from "@/lib/data";
-// import { redirect } from "next/navigation";
 
 export default async function HomePage() {
 
@@ -44,7 +42,7 @@ export default async function HomePage() {
 
 			<Container>
 				
-			<div className="w-full relative pt-44 2xl:pt-72 flex flex-col justify-center 
+			<div className="w-full relative pt-44 md:pt-52 lg:pt-60 2xl:pt-72 flex flex-col justify-center 
 			gap-y-6 md:gap-y-16 xl:gap-y-20">
 			
 				<div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
@@ -54,7 +52,7 @@ export default async function HomePage() {
 
 				 <div className="h-full w-full">
 						{transformedProjects.length > 0 && (
-							<ProjectsTable projects={transformedProjects} />
+							<ProjectsTable />
 						)}
 				</div> 
 

@@ -10,7 +10,8 @@ import { sendStyleGuide } from '@/action/sendStyleGuide';
 interface UploadStyleGuideProps {
   onFileSelect: (file: StyleGuideUpload) => void;
 	styleGuideId: string;
-	projectId: string;
+	// projectId: string;
+	codelang_code: string;
 }
 
 
@@ -18,7 +19,7 @@ interface UploadStyleGuideProps {
 
 
 
-export function UploadStyleGuide ({ onFileSelect, styleGuideId, projectId }: UploadStyleGuideProps) {
+export function UploadStyleGuide ({ onFileSelect, styleGuideId, codelang_code }: UploadStyleGuideProps) {
 	
 
   const props: UploadProps = {
@@ -31,7 +32,8 @@ export function UploadStyleGuide ({ onFileSelect, styleGuideId, projectId }: Upl
       try {
         const newFile: StyleGuideUpload = {
           id: styleGuideId,
-					projectId: projectId,
+					// projectId: projectId,
+					codelang_code: codelang_code,
           name: file.name,
           file
         };
@@ -39,8 +41,9 @@ export function UploadStyleGuide ({ onFileSelect, styleGuideId, projectId }: Upl
 
         // Create FormData
         const formData = new FormData();
-        formData.append('id', styleGuideId);
-        formData.append('projectId', projectId);
+        // formData.append('id', styleGuideId);
+        // formData.append('projectId', projectId);
+        formData.append('codelang_code', codelang_code);
         formData.append('subject', file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
         formData.append('file', file);
 

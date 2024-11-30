@@ -141,8 +141,9 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
               </Select>
 
               <UploadStyleGuide
+								codelang_code={language}
                 styleGuideId={selectedStyleGuides[language]?.id || ""}
-                projectId={selectedProject?.id}
+                // projectId={selectedProject?.id}
                 onFileSelect={handleFileSelection}
               />	
             </div>

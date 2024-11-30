@@ -28,7 +28,7 @@ export function DeleteProjectDialog() {
 
 
   const router = useRouter();
-	const { selectedProject } = useProjectStore();
+	const { selectedProject, clearSelectedProject } = useProjectStore();
 
   const onDelete = async () => {
     if (!selectedProject) {
@@ -40,6 +40,7 @@ export function DeleteProjectDialog() {
       const result = await deleteProject(Number(selectedProject.id));
 
       if (result?.success) {
+				clearSelectedProject();
         toast.success('Project deleted successfully');
         router.refresh();
         document.getElementById('dialog-close-button')?.click();
