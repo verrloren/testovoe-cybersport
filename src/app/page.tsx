@@ -10,7 +10,8 @@ import { ProjectsCombobox } from "@/components/ui/projects-combobox";
 export default async function HomePage() {
 
 	const projectsResponse = await getProjects();
-	const styleGuides = await getStyleGuides();
+	const styleGuidesResponse = await getStyleGuides();
+	const styleGuides = styleGuidesResponse?.response;
 
 	console.log(projectsResponse);
 	console.log(styleGuides);
@@ -24,17 +25,10 @@ export default async function HomePage() {
   const transformedProjects = projectsResponse.success 
     ? projectsResponse.response.map((project) => ({
         id: project.id,
-        label: project.name,
-        status: project.project_status || 'default',
-        code: project.code,
-        logs: [{
-          id: '1',
-          header: 'Project Files',
-          code: project.code,
-          status: project.project_status || 'default'
-        }],
-        codeReview: 'Code review will be available soon.',
-        recommendations: 'Recommendations will be available soon.'
+        name: project.name,
+        project_status: project.project_status || 'warning',
+				last_edit_date: project.last_edit_date,
+        code_reviews: project.code_reviews,
       }))
     : [];
 

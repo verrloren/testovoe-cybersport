@@ -21,26 +21,6 @@ export default function UploadComponent() {
 	const [loading, setLoading] = useState(false);
   const { setSelectedProject, selectedProject } = useProjectStore();
 
-  // const [spinning, setSpinning] = useState(false);
-  // const [percent, setPercent] = useState(0);
-
-	// const showLoader = () => {
-  //   setSpinning(true);
-  //   let ptg = -10;
-
-  //   const interval = setInterval(() => {
-  //     ptg += 5;
-  //     setPercent(ptg);
-
-  //     if (ptg > 120) {
-  //       clearInterval(interval);
-  //       setSpinning(false);
-  //       setPercent(0);
-  //     }
-  //   }, 100);
-  // };
-
-
 	const props: UploadProps = {
 		name: 'file',
 		multiple: true,
@@ -53,58 +33,83 @@ export default function UploadComponent() {
 		customRequest: async (options) => {
 			
 			setLoading(true)
-			console.log('options', options);
 		
+			// try {
+			// 	const file = options.file as File;
+			// 	const formData = new FormData();
+				
+			// 	// Check if file is already zipped
+			// 	const isZipFile = file.name.toLowerCase().endsWith('.zip');
+		
+			// 	if (isZipFile) {
+			// 		// If already zipped, send as is
+			// 		formData.append('file', file, file.name);
+			// 		console.log('File is already zipped, sending as is:', file.name);
+			// 	} else {
+			// 		// If not zipped, create zip file
+			// 		const zip = new JSZip();
+			// 		zip.file(file.name, file);
+			// 		const content = await zip.generateAsync({ type: 'blob' });
+			// 		formData.append('file', content, 'uploaded_files.zip');
+			// 		console.log('Created zip file for:', file.name);
+			// 	}
+		
+			// 	console.log('Uploading file:', options.file);
+			// 	const result = await sendProjectFiles(formData);
+			// 	console.log('Upload result:', result);
+		
+			// 	if (!result.success) {
+			// 		console.error('Error:', result.response);
+			// 		if (options.onError) {
+			// 			options.onError(new Error(result.response), options.file);
+			// 		}
+			// 		console.log(`Upload failed: ${result.response}`);
+			// 	} else {
+			// 		if (options.onSuccess) {
+						
+			// 			console.log('Success:', result);
+
+			// 			const newProject = result.response;
+			// 			setSelectedProject(newProject);
+			// 			console.log('Selected Project:', selectedProject);
+
+			// 			options.onSuccess(result, options.file);
+			// 			router.push('/');
+			// 		}
+			// 	}
 			try {
 				const file = options.file as File;
 				const formData = new FormData();
 				
-				// Check if file is already zipped
 				const isZipFile = file.name.toLowerCase().endsWith('.zip');
 		
 				if (isZipFile) {
-					// If already zipped, send as is
 					formData.append('file', file, file.name);
-					console.log('File is already zipped, sending as is:', file.name);
 				} else {
-					// If not zipped, create zip file
 					const zip = new JSZip();
 					zip.file(file.name, file);
 					const content = await zip.generateAsync({ type: 'blob' });
 					formData.append('file', content, 'uploaded_files.zip');
-					console.log('Created zip file for:', file.name);
 				}
 		
-				console.log('Uploading file:', options.file);
 				const result = await sendProjectFiles(formData);
-				console.log('Upload result:', result);
 		
-				if (!result.success) {
-					console.error('Error:', result.response);
-					if (options.onError) {
-						options.onError(new Error(result.response), options.file);
-					}
-					console.log(`Upload failed: ${result.response}`);
-				} else {
+				if (result.success) {
+					const newProject = result.response;
+					setSelectedProject(newProject);
 					if (options.onSuccess) {
-						
-						console.log('Success:', result);
-
-						const newProject = result.response;
-						setSelectedProject(newProject);
-						console.log('Selected Project:', selectedProject);
-
 						options.onSuccess(result, options.file);
-						router.push('/');
 					}
+					router.push('/');
+				} else {
+					console.error('Upload failed:', result.response);
+					options.onError?.(new Error(result.response), options.file);
 				}
 			} catch (error) {
 				console.error('Error:', error);
-				if (options.onError) {
-					options.onError(error as Error, options.file);
-				}
+				options.onError?.(error as Error, options.file);
 			} finally {
-				setLoading(false)
+				setLoading(false);
 			}
 		},
 

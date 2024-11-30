@@ -29,36 +29,28 @@ interface ProjectComboboxProps {
 
 
 export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
-  const [open, setOpen] = useState(false)
-	const [value, setValue] = useState(projects[0]?.label || ""); 
 	const { selectedProject, setSelectedProject } = useProjectStore();
+  const [open, setOpen] = useState(false)
+	const [value, setValue] = useState(selectedProject?.name || projects[0]?.name || "");
 
-	useEffect(() => {
-    if (projects.length > 0) {
-      const defaultProject = projects[0];
-      setValue(defaultProject.label);
-      setSelectedProject(defaultProject);
+
+  useEffect(() => {
+    if (selectedProject) {
+      setValue(selectedProject.name);
     }
-  }, [projects, setSelectedProject]);
+  }, [selectedProject]);
 
-	const status = selectedProject?.status || "default";
+  useEffect(() => {
+    if (!selectedProject && projects.length > 0) {
+      const defaultProject = projects[0];
+      setSelectedProject(defaultProject);
+      setValue(defaultProject.name);
+    }
+  }, [projects, selectedProject, setSelectedProject]);
 
-	// useEffect(() => {
-  //   const selectedProject = projects.find((project) => project.label === value);
-  //   if (selectedProject) {
-  //     document.dispatchEvent(new CustomEvent('projectSelected', { detail: selectedProject }));
-  //   }
-  // }, [value, projects]);
 
+	const status = selectedProject?.project_status || "default";
 
-	// useEffect(() => {
-	// 	if (projects.length > 0) {
-	// 		const selectedProject = projects[0];
-	// 		setValue(selectedProject.label); // ✅ Set default value
-	// 		console.log("Dispatching default project:", selectedProject); // Debugging
-	// 		document.dispatchEvent(new CustomEvent('projectSelected', { detail: selectedProject }));
-	// 	}
-	// }, [projects]);
 
   return (
     <motion.div 
@@ -77,9 +69,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 						aria-expanded={open}
 						className="text-7xl 2xl:text-8xl font-poppins flex justify-center items-center text-white gap-x-4"
 					>
-						{/* {value
-							? projects.find((project) => project.label === value)?.label
-							: "Projects"} */}
+
 						{value || "Projects"}
 						<ChevronDown className={`text-white opacity-75 transition-transform duration-200 pl-0
 									${open ? "rotate-180" : ""}`} />
@@ -97,7 +87,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 										className="text-neutral-400 font-poppins cursor-pointer hover:text-white transition-colors"
 										key={project.id}
 										onSelect={() => {
-											setValue(project.label);
+											setValue(project.name);
 											setSelectedProject(project);
 											setOpen(false);
 										}}
@@ -111,11 +101,11 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 											setOpen(false)
 										}}
 									> */}
-										{project.label}
+										{project.name}
 										<Check
 											className={cn(
 												"ml-auto",
-												value === project.label ? "opacity-100" : "opacity-0"
+												value === project.name ? "opacity-100" : "opacity-0"
 											)}
 										/>
 									</CommandItem>

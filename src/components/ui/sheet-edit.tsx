@@ -25,7 +25,7 @@ export function SheetEdit() {
 
 
 	const router = useRouter();
-	const { selectedProject } = useProjectStore();
+	const { selectedProject, updateProjectName} = useProjectStore();
 	const [newProjectName, setNewProjectName] = useState('');
 	
 
@@ -44,6 +44,7 @@ export function SheetEdit() {
       const result = await editProjectName(Number(selectedProject.id), newProjectName);
 
       if (result?.success) {
+				updateProjectName(selectedProject.id, newProjectName);
         toast.success('Project name updated successfully');
         router.refresh();
         document.getElementById('dialog-close-button')?.click();

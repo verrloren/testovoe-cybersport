@@ -4,12 +4,13 @@ import type { UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { Button } from './button';
 import { UploadIcon } from '@radix-ui/react-icons';
-import { StyleGuide } from '@/lib/types';
+import { StyleGuideUpload } from '@/lib/types';
 import { sendStyleGuide } from '@/action/sendStyleGuide';
 
 interface UploadStyleGuideProps {
-  onFileSelect: (file: StyleGuide) => void;
-	languageId: string;
+  onFileSelect: (file: StyleGuideUpload) => void;
+	styleGuideId: string;
+	projectId: string;
 }
 
 
@@ -17,7 +18,7 @@ interface UploadStyleGuideProps {
 
 
 
-export function UploadStyleGuide ({ onFileSelect, languageId }: UploadStyleGuideProps) {
+export function UploadStyleGuide ({ onFileSelect, styleGuideId, projectId }: UploadStyleGuideProps) {
 	
 
   const props: UploadProps = {
@@ -28,8 +29,9 @@ export function UploadStyleGuide ({ onFileSelect, languageId }: UploadStyleGuide
     
     beforeUpload: async (file: File) => {
       try {
-        const newFile: StyleGuide = {
-          id: languageId,
+        const newFile: StyleGuideUpload = {
+          id: styleGuideId,
+					projectId: projectId,
           name: file.name,
           file
         };
@@ -37,9 +39,10 @@ export function UploadStyleGuide ({ onFileSelect, languageId }: UploadStyleGuide
 
         // Create FormData
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('languageId', languageId);
+        formData.append('id', styleGuideId);
+        formData.append('projectId', projectId);
         formData.append('subject', file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+        formData.append('file', file);
 
 				console.log('before fetch', formData);
 				console.log('file:', formData.get('file'))

@@ -1,13 +1,8 @@
-// import { getUser } from "@/action/getUser";
-
 import Container from "@/components/container";
 import { NpxInfo } from "@/components/npx-info";
 import UploadComponent from "@/components/upload-component";
 
 export default async function StartPage() {
-
-	// const currentUser = await getUser();
-	// console.log(currentUser)
 
   return (
     <Container>

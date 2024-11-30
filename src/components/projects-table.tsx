@@ -42,28 +42,23 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
       transition={{ duration: 1, delay: 0.8 }}
       className="w-full min-h-80"
     >
-      <Tabs defaultValue="logs" className="w-full pb-8 text-white">
+      <Tabs defaultValue="overview" className="w-full pb-8 text-white">
 
         <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-800">
           <TabsList className=" text-base border-b pl-4 py-6 border-neutral-800 w-full justify-start">
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
-              value="logs"
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
+							hover:text-neutral-400"
+              value="overview"
             >
-              Logs
+              Overview
             </TabsTrigger>
-
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
+							hover:text-neutral-400"
               value="codeReview"
             >
               Code review
-            </TabsTrigger>
-            <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base hover:text-neutral-400"
-              value="recommendations"
-            >
-              Recommendations
             </TabsTrigger>
           </TabsList>
 
@@ -71,20 +66,43 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
 
           <TabsContent
             className="text-neutral-300 font-ibmPlexMono  my-8 w-full"
-            value="logs"
+            value="overview"
           >
-						<ol className="w-full flex flex-col gap-y-8">
-              {selectedProject.logs.map((log) => (
-                <li key={log.id}>
+					{selectedProject.code_reviews?.map((review) => ( // ✅ Add optional chaining
+            <div key={review.id} className="flex items-center gap-x-2">
+              <h3 className="ml-8 font-poppins text-neutral-200 text-xl">
+                {review.project_review}
+              </h3>
+            </div>
+          ))}
+          {(!selectedProject.code_reviews || selectedProject.code_reviews.length === 0) && ( // ✅ Handle empty state
+            <div className="flex items-center gap-x-2">
+              <h3 className="ml-8 font-poppins text-neutral-200 text-xl">
+                No reviews available
+              </h3>
+            </div>
+          )}
+          </TabsContent>
+
+					
+
+          <TabsContent
+            className="text-neutral-300 font-ibmPlexMono  my-8 w-full"
+            value="codeReview"
+          >
+						<h1>jo</h1>
+						{/* <ol className="w-full flex flex-col gap-y-8">
+              {selectedProject.code_reviews.map((review) => (
+                <li key={review.id}>
                   <div className="flex items-center gap-x-2">
                     <h3 className="ml-8 font-poppins text-neutral-200 text-xl">
-                      {log.header}
+                      {review.header}
                     </h3>
-                    <StatusIndicator size="sm" status={log.status} />
+                    <StatusIndicator size="sm" status={review.status} />
                   </div>
                   <CodeBlock
                     theme={themes.github}
-                    code={log.code}
+                    code={review.code}
                     language="javascript"
                   >
                     <CodeBlock.Code 
@@ -105,22 +123,12 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                   </CodeBlock>
                 </li>
               ))}
-            </ol>
+            </ol> */}
           </TabsContent>
 
 
-          <TabsContent
-            className="text-neutral-500 font-ibmPlexMono mx-8 mt-8 mb-12 "
-            value="codeReview"
-          >
-            {selectedProject.codeReview}
-          </TabsContent>
-          <TabsContent
-            className="text-neutral-500 font-ibmPlexMono mx-8 mt-8 mb-12 "
-            value="recommendations"
-          >
-            {selectedProject.recommendations}
-          </TabsContent>
+
+
         </div>
       </Tabs>
     </motion.div>
