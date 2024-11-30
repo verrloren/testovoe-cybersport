@@ -2,7 +2,7 @@
 
 
 export interface Project {
-
+	id: string;
   label: string;
 	lastEditDate: Date;
   status: string;
@@ -35,7 +35,7 @@ export interface IProject {
 
 export interface IRecommendations {
 
-	overallProjectRecommendation: {
+	overallProjectRecommendation?: {
 		performance?: string[];
 		seo?: string[];
 		accessibility?: string[];

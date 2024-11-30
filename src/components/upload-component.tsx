@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react';
+import { useState } from 'react';
 import type { UploadProps } from 'antd';
-import { Upload } from 'antd';
+import { Spin, Upload } from 'antd';
 import { motion } from 'framer-motion';
 import { sendProjectFiles } from '@/action/sendProjectFiles';
 import { useRouter } from 'next/navigation';
 import JSZip from 'jszip';
-// import toast from 'react-hot-toast';
+import { useProjectStore } from '@/store/useProjectStore';
 
 const { Dragger } = Upload;
 
@@ -16,54 +16,96 @@ const { Dragger } = Upload;
 
 export default function UploadComponent() {
 
+	
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
+  const { setSelectedProject, selectedProject } = useProjectStore();
+
+  // const [spinning, setSpinning] = useState(false);
+  // const [percent, setPercent] = useState(0);
+
+	// const showLoader = () => {
+  //   setSpinning(true);
+  //   let ptg = -10;
+
+  //   const interval = setInterval(() => {
+  //     ptg += 5;
+  //     setPercent(ptg);
+
+  //     if (ptg > 120) {
+  //       clearInterval(interval);
+  //       setSpinning(false);
+  //       setPercent(0);
+  //     }
+  //   }, 100);
+  // };
 
 
 	const props: UploadProps = {
 		name: 'file',
 		multiple: true,
-		showUploadList: false, // Hide the upload list
+    showUploadList: false,
 		directory: true, // Allow directory upload
 		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar', // Specify accepted file types
 
+
+
 		customRequest: async (options) => {
+			
+			setLoading(true)
 			console.log('options', options);
-
-			const zip = new JSZip();
-	 		zip.file((options.file as File).name, options.file as File);
-
+		
 			try {
-				const content = await zip.generateAsync({ type: 'blob' });
+				const file = options.file as File;
 				const formData = new FormData();
-				formData.append('file', content, 'uploaded_files.zip');
-
-				console.log('Uploading file:', options.file );
-
+				
+				// Check if file is already zipped
+				const isZipFile = file.name.toLowerCase().endsWith('.zip');
+		
+				if (isZipFile) {
+					// If already zipped, send as is
+					formData.append('file', file, file.name);
+					console.log('File is already zipped, sending as is:', file.name);
+				} else {
+					// If not zipped, create zip file
+					const zip = new JSZip();
+					zip.file(file.name, file);
+					const content = await zip.generateAsync({ type: 'blob' });
+					formData.append('file', content, 'uploaded_files.zip');
+					console.log('Created zip file for:', file.name);
+				}
+		
+				console.log('Uploading file:', options.file);
 				const result = await sendProjectFiles(formData);
 				console.log('Upload result:', result);
-
+		
 				if (!result.success) {
 					console.error('Error:', result.response);
-
 					if (options.onError) {
-							options.onError(new Error(result.response), options.file);
+						options.onError(new Error(result.response), options.file);
 					}
 					console.log(`Upload failed: ${result.response}`);
-			} else {
-				if (options.onSuccess) {
+				} else {
+					if (options.onSuccess) {
+						
 						console.log('Success:', result);
-						options.onSuccess(result, options.file);
-						// toast.success('Files uploaded successfully');
-						router.push('/');
-				}
-			}
-	} catch (error) {
-			console.error('Error:', error);
 
-			if (options.onError) {
+						const newProject = result.response;
+						setSelectedProject(newProject);
+						console.log('Selected Project:', selectedProject);
+
+						options.onSuccess(result, options.file);
+						router.push('/');
+					}
+				}
+			} catch (error) {
+				console.error('Error:', error);
+				if (options.onError) {
 					options.onError(error as Error, options.file);
+				}
+			} finally {
+				setLoading(false)
 			}
-	}
 		},
 
 		onChange(info) {
@@ -91,6 +133,8 @@ export default function UploadComponent() {
 			transition={{ duration: 1.2, delay: 0.2, ease: "easeIn" }}
 			className='w-full aspect-square'
 		>
+
+      <Spin spinning={loading} fullscreen />
 
 			<Dragger 
 				style={{ border: "none" }} 

@@ -1,8 +1,6 @@
 "use client";
 
-
 import { Button } from "@/components/ui/button";
-import { languagesStyleGuides } from "@/lib/data";
 import { AiOutlineEdit } from "react-icons/ai";
 
 import {
@@ -15,16 +13,49 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Input } from "./input";
+import { useRouter } from "next/navigation";
+import { editProjectName } from "@/action/editProjectName";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useProjectStore } from "@/store/useProjectStore";
+
 
 export function SheetEdit() {
+
+
+	const router = useRouter();
+	const { selectedProject } = useProjectStore();
+	const [newProjectName, setNewProjectName] = useState('');
+	
+
+  const onNameEdit = async () => {
+    if (!selectedProject) {
+      toast.error('No project selected');
+      return;
+    }
+
+    if (!newProjectName) {
+      toast.error('Please enter a name');
+      return;
+    }
+
+    try {
+      const result = await editProjectName(Number(selectedProject.id), newProjectName);
+
+      if (result?.success) {
+        toast.success('Project name updated successfully');
+        router.refresh();
+        document.getElementById('dialog-close-button')?.click();
+      } else {
+        toast.error(result?.response || 'Failed to update name');
+      }
+    } catch (error) {
+      console.error('Edit error:', error);
+      toast.error('Failed to update name');
+    }
+  };
+
   return (
     <Sheet >
       <SheetTrigger asChild>
@@ -51,54 +82,27 @@ export function SheetEdit() {
         <SheetHeader>
           <SheetTitle className="text-white text-center text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl 
 					 font-poppins z-40 mb-4">
-            Choose your <br /> <span className="">style guide</span>
+            Edit name
           </SheetTitle>
         </SheetHeader>
-        <div className="w-full flex flex-col items-center gap-y-4">
-          {languagesStyleGuides.map((language) => (
-            <div
-              className="w-full flex items-center justify-between gap-x-2"
-              key={language.id}
-            >
-              {/* <h3 className="font-poppins text-md text-neutral-200">
-													{language.name}
-												</h3> */}
-              <Select>
-                <SelectTrigger className="w-full py-6 text-neutral-400 hover:text-neutral-400 transition-colors bg-black 
-								rounded-2xl font-poppins text-sm z-40 border border-neutral-800">
-                  <SelectValue
-                    className="font-poppins"
-                    placeholder={language.styleGuide}
-                  />
-                </SelectTrigger>
-                <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
-                  <SelectGroup>
-                    {language.styleGuide.map((styleGuide) => (
-                      <SelectItem
-                        key={language.id}
-                        className="text-neutral-400 cursor-pointer hover:text-neutral-200 transition-colors font-poppins text-sm"
-                        value={language.id}
-                      >
-                        {styleGuide}
-                      </SelectItem>
-                    ))}
-                    <SelectItem
-                      className="text-neutral-400 cursor-pointer hover:text-neutral-200 transition-colors font-poppins text-sm"
-                      value="uploadNew"
-                    >
-                      + Upload new
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
+
+        <div className="w-full flex flex-col items-center">
+					<Input 
+					value={newProjectName}
+					onChange={(e) => setNewProjectName(e.target.value)}
+					className="w-full py-6 text-neutral-400 hover:text-neutral-400 
+          transition-colors bg-black rounded-2xl font-poppins text-sm 
+          font-light z-40 border border-neutral-800 placeholder:text-neutral-600" 
+					placeholder="Name" 
+					/>
         </div>
+
         <SheetFooter className="w-full flex justify-center items-center">
           <SheetClose asChild>
             <Button
               className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40"
               type="submit"
+							onClick={onNameEdit}
             >
               Save changes
             </Button>

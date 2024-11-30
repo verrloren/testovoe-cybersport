@@ -27,8 +27,12 @@ import {
 } from "@/components/ui/select";
 import { UploadStyleGuide } from './upload-style-guide';
 
+interface SheetComponent {
+	styleGuides: StyleGuide[];
+}
 
-export function SheetComponent() {
+
+export function SheetComponent({ styleGuides }) {
 
 	const [languages, setLanguages] = useState<Language[]>(languagesStyleGuides);
 

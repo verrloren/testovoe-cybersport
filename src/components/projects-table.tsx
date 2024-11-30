@@ -16,6 +16,7 @@ interface ProjectsTableProps {
 export function ProjectsTable({ projects }: ProjectsTableProps) {
 
 	const [selectedProject, setSelectedProject] = useState(projects[0]);
+	
 
 	useEffect(() => {
     const handleProjectSelected = (event: CustomEvent) => {
@@ -32,6 +33,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
 	if (!selectedProject) {
 		return <div className="text-neutral-300 font-ibmPlexMono my-8 w-full">Select a project to view logs.</div>;
 	}
+
 
   return (
     <motion.div

@@ -1,11 +1,42 @@
+import { getProjects } from "@/action/getProjects";
+import { getStyleGuides } from "@/action/getStyleGuides";
 import { ActionButtons } from "@/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsTable } from "@/components/projects-table";
 import { ProjectsCombobox } from "@/components/ui/projects-combobox";
-import { projects } from "@/lib/data";
+// import { projects } from "@/lib/data";
 // import { redirect } from "next/navigation";
 
 export default async function HomePage() {
+
+	const projectsResponse = await getProjects();
+	const styleGuides = await getStyleGuides();
+
+	console.log(projectsResponse);
+	console.log(styleGuides);
+
+	
+	if (!projectsResponse) {
+		return <div>Failed to load projects</div>;
+	}
+
+
+  const transformedProjects = projectsResponse.success 
+    ? projectsResponse.response.map((project) => ({
+        id: project.id,
+        label: project.name,
+        status: project.project_status || 'default',
+        code: project.code,
+        logs: [{
+          id: '1',
+          header: 'Project Files',
+          code: project.code,
+          status: project.project_status || 'default'
+        }],
+        codeReview: 'Code review will be available soon.',
+        recommendations: 'Recommendations will be available soon.'
+      }))
+    : [];
 
 
   return (
@@ -23,13 +54,13 @@ export default async function HomePage() {
 			gap-y-6 md:gap-y-16 xl:gap-y-20">
 			
 				<div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
-					<ProjectsCombobox projects={projects} />
-					<ActionButtons />
+					<ProjectsCombobox projects={transformedProjects} />
+					<ActionButtons styleGuides={styleGuides} />
 				</div>
 
 				 <div className="h-full w-full">
-						{projects.length > 0 && (
-							<ProjectsTable projects={projects} />
+						{transformedProjects.length > 0 && (
+							<ProjectsTable projects={transformedProjects} />
 						)}
 				</div> 
 

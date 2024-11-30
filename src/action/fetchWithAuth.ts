@@ -1,10 +1,9 @@
-import { cookies } from "next/headers";
+import { getToken } from "./getToken";
 
 
 export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
 
-	const cookieStore = await cookies();
-	const token = cookieStore.get('access_token')?.value;
+	const { token } = await getToken();
 
 	if (!token) {
 		return { success: false, response: "No access token" };

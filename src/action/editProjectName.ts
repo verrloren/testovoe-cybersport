@@ -7,21 +7,19 @@ type DataType = {
 	response: string;
 }
 
- export const deleteProject = async (id: number) => {
+ export const editProjectName = async (id: number, name: string) => {
 
 	const { token } = await getToken();
 
-
-
 		try {
-			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects/delete`, {
+			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects/edit`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'API-Key': process.env.BACKEND_API_KEY as string,
 					'Authorization': `Bearer ${token}`
 				},
-				body: JSON.stringify({ id })
+				body: JSON.stringify({ id, name })
 			})
 
 			const { success, response } = await result.json();
