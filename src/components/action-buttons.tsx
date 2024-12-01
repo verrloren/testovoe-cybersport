@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { SheetEdit } from "./ui/sheet-edit";
 import { DeleteProjectDialog } from "./ui/delete-project-dialog";
 import { Project, StyleGuide } from "@/lib/types";
+import { ButtonPdf } from "./ui/button-pdf";
 
 interface ActionButtonsProps {
 	projects: Project[];
@@ -25,6 +26,10 @@ export function ActionButtons({ styleGuides }: ActionButtonsProps) {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, delay : 0.7 }}
 		className="flex flex-row items-center gap-x-2">
+			
+			{/* PDF */}
+			<ButtonPdf />
+
 			{/* ADD */}
 			<Button
 				onClick={() => router.push('/start')}

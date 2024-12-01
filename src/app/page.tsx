@@ -1,34 +1,34 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getProjects } from "@/action/getProjects";
 import { getStyleGuides } from "@/action/getStyleGuides";
 import { ActionButtons } from "@/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsTable } from "@/components/projects-table";
 import { ProjectsCombobox } from "@/components/ui/projects-combobox";
+import { Project } from "@/lib/types";
 
 export default async function HomePage() {
 
-	const projectsResponse = await getProjects();
-	const styleGuidesResponse = await getStyleGuides();
+  const projectsResponse = await getProjects();
+  const styleGuidesResponse = await getStyleGuides();
 	const styleGuides = styleGuidesResponse?.response;
 
 	console.log(projectsResponse);
 	console.log(styleGuides);
 
 	
-	if (!projectsResponse) {
-		return <div>Failed to load projects</div>;
-	}
+  if (!projectsResponse?.success) {
+    return <div>Failed to load projects</div>;
+  }
 
-
-  const transformedProjects = projectsResponse.success 
-    ? projectsResponse.response.map((project) => ({
-        id: project.id,
-        name: project.name,
-        project_status: project.project_status || 'warning',
-				last_edit_date: project.last_edit_date,
-        code_reviews: project.code_reviews,
-      }))
-    : [];
+	//@ts-expect-error
+  const transformedProjects: Project[] = projectsResponse.response.map((project: Project) => ({
+    id: project.id,
+    name: project.name,
+    project_status: project.project_status || 'warning',
+    last_edit_date: project.last_edit_date,
+    code_reviews: project.code_reviews || [],
+  }));
 
 
   return (
@@ -47,6 +47,7 @@ export default async function HomePage() {
 			
 				<div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
 					<ProjectsCombobox projects={transformedProjects} />
+					{/* @ts-expect-error */}
 					<ActionButtons styleGuides={styleGuides} />
 				</div>
 

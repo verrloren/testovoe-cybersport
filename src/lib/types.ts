@@ -154,6 +154,16 @@ export interface StyleGuideUpload {
 	id: string;
 	name: string;
 	codelang_code: string;
-	projectId: string;
 	file: File;
+}
+
+// types.ts
+export interface ProjectResponse {
+  success: boolean;
+  response: Project[];
+}
+
+export interface StyleGuideResponse {
+  success: boolean;
+  response: StyleGuide[];
 }

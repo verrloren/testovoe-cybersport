@@ -26,14 +26,43 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UploadStyleGuide } from "./upload-style-guide";
-import { useProjectStore } from "@/store/useProjectStore";
+// import { useProjectStore } from "@/store/useProjectStore";
+import toast from "react-hot-toast";
+import { sendDefaultStyleGuides } from "@/action/sendDefaultStyleGuides";
 
 interface SheetComponentProps {
   styleGuides: StyleGuide[];
 }
 
 export function SheetComponent({ styleGuides }: SheetComponentProps) {
-  const { selectedProject } = useProjectStore();
+  // const { selectedProject } = useProjectStore();
+  const [loading, setLoading] = useState(false);
+
+
+	const handleSaveChanges = async () => {
+
+    try {
+      setLoading(true);
+
+			const selectedIds = Object.values(selectedStyleGuides)
+      .filter((guide): guide is StyleGuide => guide !== null)
+      .map(guide => guide.id);
+
+      const result = await sendDefaultStyleGuides(selectedIds);
+
+      if (result.success) {
+        toast.success('Style guides updated successfully');
+      } else {
+        toast.error(result.response);
+      }
+    } catch (error) {
+      console.error('Failed to update style guides:', error);
+      toast.error('Failed to update style guides');
+    } finally {
+      setLoading(false);
+    }
+  };
+	
 
   const [selectedStyleGuides, setSelectedStyleGuides] = useState<{
     [key: string]: StyleGuide | null;
@@ -55,10 +84,7 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
       }));
     }
   };
-
-  const handleFileSelection = (file: StyleGuide) => {
-    console.log("Selected file:", file);
-  };
+	
 
   // Filter style guides for specific languages
   const styleGuidesByLanguage = {
@@ -142,25 +168,22 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
 
               <UploadStyleGuide
 								codelang_code={language}
-                styleGuideId={selectedStyleGuides[language]?.id || ""}
-                // projectId={selectedProject?.id}
-                onFileSelect={handleFileSelection}
+                styleGuideId={String(selectedStyleGuides[language]?.id)}
               />	
             </div>
           ))}
         </div>
 
         <SheetFooter className="w-full flex justify-center items-center">
+					
           <SheetClose asChild>
             <Button
               className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 transition-colors"
               type="submit"
-              onClick={() => {
-                console.log("Saving changes for:", selectedStyleGuides);
-                // Save selectedStyleGuides to backend or state
-              }}
+           		 disabled={loading}
+              onClick={handleSaveChanges}
             >
-              Save changes
+           	 {loading ? 'Saving...' : 'Save changes'}
             </Button>
           </SheetClose>
         </SheetFooter>

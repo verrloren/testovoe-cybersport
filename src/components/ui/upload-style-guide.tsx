@@ -8,7 +8,6 @@ import { StyleGuideUpload } from '@/lib/types';
 import { sendStyleGuide } from '@/action/sendStyleGuide';
 
 interface UploadStyleGuideProps {
-  onFileSelect: (file: StyleGuideUpload) => void;
 	styleGuideId: string;
 	// projectId: string;
 	codelang_code: string;
@@ -19,30 +18,26 @@ interface UploadStyleGuideProps {
 
 
 
-export function UploadStyleGuide ({ onFileSelect, styleGuideId, codelang_code }: UploadStyleGuideProps) {
+export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGuideProps) {
 	
 
   const props: UploadProps = {
     name: 'file',
     multiple: false,
     showUploadList: false,
-    accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar',
+    accept: '.txt',
     
     beforeUpload: async (file: File) => {
       try {
         const newFile: StyleGuideUpload = {
           id: styleGuideId,
-					// projectId: projectId,
-					codelang_code: codelang_code,
           name: file.name,
+					codelang_code: codelang_code,
           file
         };
 				console.log('newFile', newFile);
 
-        // Create FormData
         const formData = new FormData();
-        // formData.append('id', styleGuideId);
-        // formData.append('projectId', projectId);
         formData.append('codelang_code', codelang_code);
         formData.append('subject', file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
         formData.append('file', file);
@@ -60,8 +55,6 @@ export function UploadStyleGuide ({ onFileSelect, styleGuideId, codelang_code }:
           throw new Error(result.response);
         }
 
-        // Update UI only after successful upload
-        onFileSelect(newFile);
         console.log('File uploaded successfully:', newFile.name);
       } catch (error) {
         console.error('Upload failed:', error);
