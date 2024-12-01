@@ -16,9 +16,8 @@ export const sendStyleGuide = async (formData: FormData) => {
       headers: {
         'Authorization': `Bearer ${token}`,
         'API-Key': process.env.BACKEND_API_KEY as string,
-				'id': formData.get('id') as string,
+				'id': formData.get('codelang_code') as string,
 				'name': formData.get('subject') as string,
-				'codelang_code': formData.get('codelang_code') as string,
       },
       body: formData.get('file') as Blob,
     });

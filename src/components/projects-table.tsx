@@ -18,22 +18,23 @@ export function ProjectsTable() {
       transition={{ duration: 1, delay: 0.8 }}
       className="w-full min-h-80"
     >
-      <Tabs defaultValue="overview" className="w-full pb-8 text-white">
+      <Tabs defaultValue="codeReview" className="w-full pb-8 text-white">
         <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-800">
           <TabsList className=" text-base border-b pl-4 py-6 border-neutral-800 w-full justify-start">
+
             <TabsTrigger
               className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
+							hover:text-neutral-400"
+              value="codeReview"
+            >
+              Code review
+            </TabsTrigger>
+						<TabsTrigger
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base pl-4
 							hover:text-neutral-400"
               value="overview"
             >
               Overview
-            </TabsTrigger>
-            <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
-							hover:text-neutral-400 pl-8"
-              value="codeReview"
-            >
-              Code review
             </TabsTrigger>
           </TabsList>
 

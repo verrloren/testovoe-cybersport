@@ -4,7 +4,7 @@
 import { getToken } from "./getToken";
 
 
-export const sendDefaultStyleGuides = async (guidelineIds: number[]) => {
+export const sendDefaultStyleGuide = async (guidelineId: number) => {
   const { token } = await getToken();
 
   if (!token) {
@@ -19,7 +19,7 @@ export const sendDefaultStyleGuides = async (guidelineIds: number[]) => {
         'Authorization': `Bearer ${token}`,
         'API-Key': process.env.BACKEND_API_KEY as string,
       },
-      body: JSON.stringify({ id: guidelineIds }),
+      body: JSON.stringify({ id: guidelineId }),
     });
 
     const data = await response.json();

@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { SheetEdit } from "./ui/sheet-edit";
 import { DeleteProjectDialog } from "./ui/delete-project-dialog";
 import { Project, StyleGuide } from "@/lib/types";
-import { ButtonPdf } from "./ui/button-pdf";
+import { ButtonMD } from "./ui/button-md";
 
 interface ActionButtonsProps {
 	projects: Project[];
@@ -28,7 +28,7 @@ export function ActionButtons({ styleGuides }: ActionButtonsProps) {
 		className="flex flex-row items-center gap-x-2">
 			
 			{/* PDF */}
-			<ButtonPdf />
+			<ButtonMD />
 
 			{/* ADD */}
 			<Button

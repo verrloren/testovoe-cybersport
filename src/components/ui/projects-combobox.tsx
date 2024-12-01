@@ -54,7 +54,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
   }, [projects, selectedProject, setSelectedProject]);
 
 
-	const status = selectedProject?.project_status || "default";
+	const status = (selectedProject?.code_reviews?.length ?? 0) > 0 ? "error" : "success";
 
 
   return (
@@ -89,7 +89,7 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 							<CommandGroup >
 								{projects.map((project) => (
 									<CommandItem
-										className="text-neutral-400 font-poppins cursor-pointer hover:text-white transition-colors"
+										className="text-neutral-400 font-poppins flex items-center cursor-pointer hover:text-white transition-colors"
 										key={project.id}
 										onSelect={() => {
 											setValue(project.name);
@@ -106,7 +106,9 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
 											setOpen(false)
 										}}
 									> */}
+									
 										{project.name}
+									
 										<Check
 											className={cn(
 												"ml-auto",

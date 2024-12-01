@@ -26,7 +26,7 @@ export default function UploadComponent() {
 		multiple: true,
     showUploadList: false,
 		directory: true, // Allow directory upload
-		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb',
+		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py',
 
 
 
@@ -77,6 +77,7 @@ export default function UploadComponent() {
 			// 			router.push('/');
 			// 		}
 			// 	}
+			//woking
 			try {
 				const file = options.file as File;
 				const formData = new FormData();
@@ -111,6 +112,48 @@ export default function UploadComponent() {
 			} finally {
 				setLoading(false);
 			}
+			// try {
+			// 	const file = options.file as File;
+			// 	const formData = new FormData();
+		
+			// 	// Always create a zip file
+			// 	const zip = new JSZip();
+				
+			// 	// Add file to zip with original name
+			// 	zip.file(file.name, file);
+			// 	console.log('Adding file to zip:', file.name);
+		
+			// 	// Generate zip content
+			// 	const zipContent = await zip.generateAsync({ 
+			// 		type: 'blob',
+			// 		compression: 'DEFLATE',
+			// 		compressionOptions: { level: 9 }
+			// 	});
+			// 	console.log('Zip file created');
+		
+			// 	// Add zipped content to FormData
+			// 	formData.append('file', zipContent, 'uploaded_files.zip');
+		
+			// 	console.log('Sending zip file to server...', formData);
+			// 	const result = await sendProjectFiles(formData);
+		
+			// 	if (result.success) {
+			// 		const newProject = result.response;
+			// 		setSelectedProject(newProject);
+			// 		if (options.onSuccess) {
+			// 			options.onSuccess(result, options.file);
+			// 		}
+			// 		router.push('/');
+			// 	} else {
+			// 		console.error('Upload failed:', result.response);
+			// 		options.onError?.(new Error(result.response), options.file);
+			// 	}
+			// } catch (error) {
+			// 	console.error('Error during upload:', error);
+			// 	options.onError?.(error as Error, options.file);
+			// } finally {
+			// 	setLoading(false);
+			// }
 		},
 
 		onChange(info) {

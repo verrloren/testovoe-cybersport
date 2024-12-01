@@ -28,7 +28,9 @@ import {
 import { UploadStyleGuide } from "./upload-style-guide";
 // import { useProjectStore } from "@/store/useProjectStore";
 import toast from "react-hot-toast";
-import { sendDefaultStyleGuides } from "@/action/sendDefaultStyleGuides";
+import { sendDefaultStyleGuide } from "@/action/sendDefaultStyleGuide"
+import { Spin } from "antd";
+import { useRouter } from "next/navigation";
 
 interface SheetComponentProps {
   styleGuides: StyleGuide[];
@@ -37,31 +39,45 @@ interface SheetComponentProps {
 export function SheetComponent({ styleGuides }: SheetComponentProps) {
   // const { selectedProject } = useProjectStore();
   const [loading, setLoading] = useState(false);
+	const router = useRouter();
 
+	const getActiveStyleGuide = (guides: StyleGuide[], codelang: string) => {
+		return guides.find(guide => guide.codelang_code === codelang && guide.isActive);
+	};
+	
 
 	const handleSaveChanges = async () => {
-
-    try {
-      setLoading(true);
-
+		try {
+			setLoading(true);
+	
+			// Get selected style guides IDs
 			const selectedIds = Object.values(selectedStyleGuides)
-      .filter((guide): guide is StyleGuide => guide !== null)
-      .map(guide => guide.id);
-
-      const result = await sendDefaultStyleGuides(selectedIds);
-
-      if (result.success) {
-        toast.success('Style guides updated successfully');
-      } else {
-        toast.error(result.response);
-      }
-    } catch (error) {
-      console.error('Failed to update style guides:', error);
-      toast.error('Failed to update style guides');
-    } finally {
-      setLoading(false);
-    }
-  };
+				.filter((guide): guide is StyleGuide => guide !== null)
+				.map(guide => guide.id);
+	
+			if (selectedIds.length === 0) {
+				toast.error('Please select at least one style guide');
+				return;
+			}
+	
+			// Send each selected ID to backend
+			for (const id of selectedIds) {
+				const result = await sendDefaultStyleGuide(id);
+				
+				if (!result.success) {
+					throw new Error(result.response);
+				}
+			}
+	
+			toast.success('Style guides updated successfully');
+		} catch (error) {
+			console.error('Failed to update style guides:', error);
+			toast.error(error instanceof Error ? error.message : 'Failed to update style guides');
+		} finally {
+			setLoading(false);
+			router.refresh();
+		}
+	};
 	
 
   const [selectedStyleGuides, setSelectedStyleGuides] = useState<{
@@ -140,14 +156,14 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
                     transition-colors bg-black rounded-2xl font-poppins text-sm 
                     font-light z-40 border border-neutral-800"
                 >
-                  <SelectValue
-                    className="font-poppins"
-										placeholder={
-											selectedStyleGuides[language]?.name || 
-											styleGuidesByLanguage[language].find((guide) => guide.isActive)?.name || 
-											`Select a style guide for ${language}`
-										}
-                  />
+              <SelectValue
+                className="font-poppins"
+                placeholder={
+                  selectedStyleGuides[language]?.name || 
+                  getActiveStyleGuide(styleGuides, language)?.name ||
+                  `Select ${language} style guide`
+                }
+              />
                 </SelectTrigger>
 
                 <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
@@ -188,6 +204,8 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
           </SheetClose>
         </SheetFooter>
       </SheetContent>
+			<Spin spinning={loading} fullscreen />
+
     </Sheet>
   );
 }

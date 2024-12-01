@@ -1,11 +1,13 @@
 'use client';
 
 import type { UploadProps } from 'antd';
-import { Upload } from 'antd';
+import { Spin, Upload } from 'antd';
 import { Button } from './button';
 import { UploadIcon } from '@radix-ui/react-icons';
 import { StyleGuideUpload } from '@/lib/types';
 import { sendStyleGuide } from '@/action/sendStyleGuide';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface UploadStyleGuideProps {
 	styleGuideId: string;
@@ -20,6 +22,10 @@ interface UploadStyleGuideProps {
 
 export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGuideProps) {
 	
+	const [loading, setLoading] = useState(false);
+
+	const router = useRouter();
+
 
   const props: UploadProps = {
     name: 'file',
@@ -29,6 +35,7 @@ export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGu
     
     beforeUpload: async (file: File) => {
       try {
+				setLoading(true);
         const newFile: StyleGuideUpload = {
           id: styleGuideId,
           name: file.name,
@@ -56,10 +63,14 @@ export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGu
         }
 
         console.log('File uploaded successfully:', newFile.name);
+				router.refresh();
       } catch (error) {
         console.error('Upload failed:', error);
         alert(error instanceof Error ? error.message : 'Upload failed');
-      }
+      } finally {
+				setLoading(false);
+				router.refresh();
+			}
 
       return false; // Prevent default upload
     },
@@ -71,6 +82,8 @@ export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGu
 		<Upload 
 		style={{ zIndex: 50 }}
 		{...props}>
+      <Spin spinning={loading} fullscreen />
+
 			<Button
 			 className='rounded-full w-12 h-12 flex items-center justify-center
         text-neutral-400 bg-black border border-neutral-800 

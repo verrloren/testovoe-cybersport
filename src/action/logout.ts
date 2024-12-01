@@ -19,9 +19,9 @@ export const logout = async (): Promise<LogoutResponse> => {
 				return { success: false, response: "Invalid token" };
 			}
 
-			cookieStore.delete('access_token');
-
+			
 		}
+		cookieStore.delete('access_token');
 
 		return { success: true, response: "Logged out successfully" };
 	} catch (error) {

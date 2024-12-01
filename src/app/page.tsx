@@ -16,7 +16,6 @@ export default async function HomePage() {
 	console.log(projectsResponse);
 	console.log(styleGuides);
 
-	
   if (!projectsResponse?.success) {
     return <div>Failed to load projects</div>;
   }

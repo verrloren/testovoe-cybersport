@@ -42,26 +42,22 @@ export default function LoginForm() {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setTransition(async () => {
-      await login(values)
-        .then((data: LoginData) => {
-          console.log('Data:', data);
-
-          if (data.success) {
-
-						// if (data.accessToken) {
-						// 	document.cookie = `access_token=${data.accessToken}`
-						// 	console.log('Access Token:', data.accessToken);
-						// }
-
-            console.log(data.success);
-            toast.success("Login successful!");
-            router.push("/start");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Login failed!");
-        });
+      try {
+				//@ts-expect-error @eslint-ignore @ts-ignore
+        const data: LoginData = await login(values);
+        
+        if (data.success) {
+          toast.success("Login successful!");
+          
+          // Check if user has projects
+          router.push("/");
+        } else {
+          toast.error(data.response || "Login failed!");
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        toast.error("Login failed!");
+      }
     });
   };
   return (
