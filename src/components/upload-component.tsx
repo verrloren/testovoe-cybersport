@@ -4,7 +4,6 @@ import { useState } from 'react';
 import type { UploadProps } from 'antd';
 import { Spin, Upload } from 'antd';
 import { motion } from 'framer-motion';
-import { sendProjectFiles } from '@/action/sendProjectFiles';
 import { useRouter } from 'next/navigation';
 import JSZip from 'jszip';
 import { useProjectStore } from '@/store/useProjectStore';
@@ -25,15 +24,13 @@ export default function UploadComponent() {
 		name: 'file',
 		multiple: true,
     showUploadList: false,
-		directory: false, // Allow directory upload
-		accept: '.zip',
-		// accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py,.cs,.csproj,.cshtml,.sln,.DotSettings,.cshtml,.prettierrc,.svg,.rst,.cfg,.lock,.',
+		directory: true, // Allow directory upload
+		// accept: '.zip',
+		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py,.cs,.csproj,.cshtml,.sln,.DotSettings,.cshtml,.prettierrc,.svg,.rst,.cfg,.lock,.',
 
 
 
-		customRequest: async (options) => {
-			
-			setLoading(true)
+
 		
 			// try {
 			// 	const file = options.file as File;
@@ -79,64 +76,30 @@ export default function UploadComponent() {
 			// 		}
 			// 	}
 			//woking
-			try {
-				const file = options.file as File;
-				const formData = new FormData();
-				
-				const isZipFile = file.name.toLowerCase().endsWith('.zip');
-		
-				if (isZipFile) {
-					formData.append('file', file, file.name);
-				} else {
-					const zip = new JSZip();
-					zip.file(file.name, file);
-					const content = await zip.generateAsync({ type: 'blob' });
-					formData.append('file', content, 'uploaded_files.zip');
-				}
-		
-				const result = await sendProjectFiles(formData);
-		
-				if (result.success) {
-					const newProject = result.response;
-					setSelectedProject(newProject);
-					if (options.onSuccess) {
-						options.onSuccess(result, options.file);
-					}
-					router.push('/');
-				} else {
-					console.error('Upload failed:', result.response);
-					options.onError?.(new Error(result.response), options.file);
-				}
-			} catch (error) {
-				console.error('Error:', error);
-				options.onError?.(error as Error, options.file);
-			} finally {
-				setLoading(false);
-			}
 			// try {
 			// 	const file = options.file as File;
 			// 	const formData = new FormData();
-		
-			// 	// Always create a zip file
-			// 	const zip = new JSZip();
 				
-			// 	// Add file to zip with original name
-			// 	zip.file(file.name, file);
-			// 	console.log('Adding file to zip:', file.name);
+			// 	const isZipFile = file.name.toLowerCase().endsWith('.zip');
 		
-			// 	// Generate zip content
-			// 	const zipContent = await zip.generateAsync({ 
-			// 		type: 'blob',
-			// 		compression: 'DEFLATE',
-			// 		compressionOptions: { level: 9 }
+			// 	if (isZipFile) {
+			// 		formData.append('file', file, file.name);
+			// 	} else {
+			// 		const zip = new JSZip();
+			// 		zip.file(file.name, file);
+			// 		const content = await zip.generateAsync({ type: 'blob' });
+			// 		formData.append('file', content, 'uploaded_files.zip');
+			// 	}
+		
+			// 	// const result = await sendProjectFiles(formData);
+
+			// 	const result = await fetch('/api/upload', {
+			// 		method: 'POST',
+			// 		body: formData
+			// 	}).then(res => res.json()).catch(error => {
+			// 		console.error('Error:', error);
+			// 		return { success: false, response: error };
 			// 	});
-			// 	console.log('Zip file created');
-		
-			// 	// Add zipped content to FormData
-			// 	formData.append('file', zipContent, 'uploaded_files.zip');
-		
-			// 	console.log('Sending zip file to server...', formData);
-			// 	const result = await sendProjectFiles(formData);
 		
 			// 	if (result.success) {
 			// 		const newProject = result.response;
@@ -150,12 +113,57 @@ export default function UploadComponent() {
 			// 		options.onError?.(new Error(result.response), options.file);
 			// 	}
 			// } catch (error) {
-			// 	console.error('Error during upload:', error);
+			// 	console.error('Error:', error);
 			// 	options.onError?.(error as Error, options.file);
 			// } finally {
 			// 	setLoading(false);
 			// }
-		},
+
+
+			customRequest: async (options) => {
+				setLoading(true);
+				
+				try {
+					const file = options.file as File;
+					const formData = new FormData();
+					
+					const zip = new JSZip();
+					zip.file(file.name, file);
+					const content = await zip.generateAsync({ 
+						type: 'blob',
+						compression: 'DEFLATE',
+						compressionOptions: { level: 9 }
+					});
+					formData.append('file', content, 'uploaded_files.zip');
+			
+					const response = await fetch('/api/upload', {
+						method: 'POST',
+						body: formData
+					});
+			
+					if (!response.ok) {
+						throw new Error(`Upload failed: ${response.statusText}`);
+					}
+			
+					const result = await response.json();
+			
+					if (result.success) {
+						const newProject = result.response;
+						setSelectedProject(newProject);
+						if (options.onSuccess) {
+							options.onSuccess(result, options.file);
+						}
+						router.push('/');
+					} else {
+						throw new Error(result.response);
+					}
+				} catch (error) {
+					console.error('Upload error:', error);
+					options.onError?.(error as Error, options.file);
+				} finally {
+					setLoading(false);
+				}
+			},
 
 		onChange(info) {
 			const { status } = info.file;
