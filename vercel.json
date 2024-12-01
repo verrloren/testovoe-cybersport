@@ -5,6 +5,12 @@
     },
 		"api/upload": {
       "maxDuration": 60
-    }
+    },
+		
+
+				"api/upload/**/*.ts": {
+					"maxDuration": 30
+				}
+		
   }
 }
