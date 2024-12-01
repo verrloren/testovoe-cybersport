@@ -3,9 +3,6 @@
     "app/api/**/*": {
       "maxDuration": 60
     },
-		"api/upload": {
-      "maxDuration": 60
-    },
 		
 
 				"api/upload/**/*.ts": {
