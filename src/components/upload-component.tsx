@@ -25,8 +25,9 @@ export default function UploadComponent() {
 		name: 'file',
 		multiple: true,
     showUploadList: false,
-		directory: true, // Allow directory upload
-		accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py',
+		directory: false, // Allow directory upload
+		accept: '.zip',
+		// accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py,.cs,.csproj,.cshtml,.sln,.DotSettings,.cshtml,.prettierrc,.svg,.rst,.cfg,.lock,.',
 
 
 
