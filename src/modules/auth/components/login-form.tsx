@@ -9,18 +9,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from "../../../components/ui/form";
+import { Input } from "../../../components/ui/input";
+import { Button } from "../../../components/ui/button";
 import { useTransition } from "react";
-import { ExclamationMark } from "../ui/exclamation-mark";
+import { ExclamationMark } from "../../../components/ui/exclamation-mark";
 import { LoginSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { login } from "@/action/login";
-// import { getCookie } from "@/action/getCookie";
+import { login } from "@/modules/auth/login";
+import { useStore } from "@/store/store";
+import { QueryClient } from "react-query";
 
 type LoginData = {
   success: boolean;
@@ -29,8 +30,13 @@ type LoginData = {
 };
 
 export default function LoginForm() {
+
+	const queryClient = new QueryClient();
+	const setUserId = useStore((state) => state.setUserId);
+
   const router = useRouter();
   const [isPending, setTransition] = useTransition();
+	
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -48,7 +54,10 @@ export default function LoginForm() {
         
         if (data.success) {
           toast.success("Login successful!");
+					console.log(data)
+					setUserId(data.userId);
           
+					await queryClient.prefetchQuery('projects', fetchProjects);
           // Check if user has projects
           router.push("/");
         } else {

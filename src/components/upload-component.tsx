@@ -6,7 +6,7 @@ import { Spin, Upload } from 'antd';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import JSZip from 'jszip';
-import { useProjectStore } from '@/store/useProjectStore';
+import { useStore } from '@/store/store';
 
 const { Dragger } = Upload;
 
@@ -18,7 +18,7 @@ export default function UploadComponent() {
 	
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
-  const { setSelectedProject } = useProjectStore();
+  const { setSelectedProject } = useStore();
 
 	const props: UploadProps = {
 		name: 'file',

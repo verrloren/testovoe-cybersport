@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteProject } from "@/action/deleteProject"
+import { deleteProject } from "@/modules/projects/deleteProject"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 	DialogClose
 } from "@/components/ui/dialog"
-import { useProjectStore } from "@/store/useProjectStore";
+import { useStore } from "@/store/store";
 import { TrashIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ export function DeleteProjectDialog() {
 
 
   const router = useRouter();
-	const { selectedProject, clearSelectedProject } = useProjectStore();
+	const { selectedProject, clearSelectedProject } = useStore();
 
   const onDelete = async () => {
     if (!selectedProject) {

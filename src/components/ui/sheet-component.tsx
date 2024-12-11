@@ -26,9 +26,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UploadStyleGuide } from "./upload-style-guide";
-// import { useProjectStore } from "@/store/useProjectStore";
 import toast from "react-hot-toast";
-import { sendDefaultStyleGuide } from "@/action/sendDefaultStyleGuide"
+import { sendDefaultStyleGuide } from "@/modules/projects/sendDefaultStyleGuide"
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -37,7 +36,6 @@ interface SheetComponentProps {
 }
 
 export function SheetComponent({ styleGuides }: SheetComponentProps) {
-  // const { selectedProject } = useProjectStore();
   const [loading, setLoading] = useState(false);
 	const router = useRouter();
 

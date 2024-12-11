@@ -4,24 +4,22 @@ import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import ToasterProvider from "@/providers/toaster-provider";
 // import Header from "@/components/header/header";
 import ConditionalHeader from "@/components/header/conditional-header";
-
+import Providers from "@/providers/providers";
 
 // import ModalProvider from "@/providers/modal-provider";
-
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"], // if single weight, otherwise you use array like [400, 500, 700],
   style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
   subsets: ["latin"],
-	variable: '--font-poppins',
+  variable: "--font-poppins",
 });
 const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "700"], // if single weight, otherwise you use array like [400, 500, 700],
   style: "normal", // if single style, otherwise you use array like ['normal', 'italic']
   subsets: ["latin"],
-	variable: '--font-ibmPlexMono',
+  variable: "--font-ibmPlexMono",
 });
-
 
 export const metadata: Metadata = {
   title: "evrz",
@@ -33,10 +31,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
-			<html className={`${poppins } ${ibmPlexMono}`} lang="en">
-				<head>
+    <html className={`${poppins} ${ibmPlexMono}`} lang="en">
+      <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -48,13 +45,14 @@ export default async function RootLayout({
           }}
         />
       </head>
-				<body >
-					<ConditionalHeader />
-					{/* <ModalProvider /> */}
-					<ToasterProvider />
-					{children}
-
-				</body>
-			</html>
+      <body>
+        <Providers>
+          <ConditionalHeader />
+          {/* <ModalProvider /> */}
+          <ToasterProvider />
+          {children}
+        </Providers>
+      </body>
+    </html>
   );
 }

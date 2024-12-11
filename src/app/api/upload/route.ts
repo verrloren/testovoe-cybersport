@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { sendProjectFiles } from "@/action/sendProjectFiles";
+import { sendProjectFiles } from "@/modules/projects/sendProjectFiles";
 
 export async function POST(request: Request) {
   try {

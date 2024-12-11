@@ -21,7 +21,7 @@ import {
 import { StatusIndicator } from "./status-indicator"
 import { useEffect, useState } from "react";
 import { Project } from "@/lib/types";
-import { useProjectStore } from "@/store/useProjectStore";
+import { useStore } from "@/store/store";
 
 interface ProjectComboboxProps {
 	projects: Project[];
@@ -29,7 +29,7 @@ interface ProjectComboboxProps {
 
 
 export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
-	const { selectedProject, setSelectedProject } = useProjectStore();
+	const { selectedProject, setSelectedProject } = useStore();
   const [open, setOpen] = useState(false)
 	const [value, setValue] = useState(selectedProject?.name || projects[0]?.name || "");
 

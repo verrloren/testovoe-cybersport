@@ -1,6 +1,6 @@
 'use server';
 
-import { getToken } from "./getToken";
+import { getToken } from "@/modules/auth/getToken";
 
 
 

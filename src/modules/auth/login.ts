@@ -2,7 +2,7 @@
 
 import { LoginSchema } from "@/schemas";
 import * as z from "zod";
-import { setSession } from "./setSession";
+import { setSession } from "@/modules/auth/setSession";
 
 type DataType = {
   success: boolean;

@@ -1,101 +1,3 @@
-
-
-
-
-
-// export interface Project {
-// 	id: string;
-//   name: string;
-// 	last_edit_date: Date;
-//   status: string;
-
-//   codeReview?: string; 
-
-//   recommendations?: string; //arhitectural violations and recommendations
-
-//   logs?: LogEntry[]; //array of logs
-// }
-
-// export interface LogEntry {
-// 	id: string;
-// 	header: string;
-// 	status: string;
-// 	code: string;
-// }
-
-
-
-// export interface IProject {
-// 	id: string;
-//   label: string;
-// 	lastEditDate: Date;
-//   status: string;
-
-//   codeReview: ICodeReview; //code review: errors and solutions
-//   recommendations: IRecommendations; //arhitectural violations and recommendations
-// }
-
-// export interface IRecommendations {
-
-// 	overallProjectRecommendation?: {
-// 		performance?: string[];
-// 		seo?: string[];
-// 		accessibility?: string[];
-// 		security?: string[];
-// 	};
-	
-// 	archIssues?: {
-// 		id: string;
-
-// 		label: string;
-// 		fileName: string;
-// 		lineNumber: number;
-
-// 		solution: string;
-// 	}[];
-
-// }
-
-// export interface ICodeReview {
-// 	errors?: IError[];
-// 	warnings?: IError[];
-
-// 	namingIssues?: IError[];
-// 	styleIssues?: IError[];
-// 	standardIssues?: IError[];
-// 	packageIssues?: IError[];
-// }
-
-// export interface IError {
-// 	id: string;
-// 	status: string;
-
-// 	label: string;
-// 	fileName?: string;
-// 	lineNumber?: number;
-
-// 	solution?: string;
-// 	code?: string;
-// }
-
-
-
-// export interface StyleGuide {
-//   id: number;
-//   name: string;
-// 	codelang_code: string;
-//   styleGuide: string;
-//   selectedFile?: StyleGuide;
-// }
-
-// export interface StyleGuideUpload {
-//   id: string;
-//   name: string;
-// 	projectId: string;
-//   file?: File;
-// }
-
-
 export interface User {
   id: number;
   username: string;
@@ -110,11 +12,21 @@ export interface Project {
   id: number;
   name: string;
   user_id: number;
-  last_edit_date: string; // Use ISO 8601 string format for dates
+  last_edit_date: string; 
   project_status: string;
 
   code_reviews: CodeReview[];
 }
+export interface ProjectDto {
+  id: number;
+  name: string;
+  user_id: number;
+  project_status: string;
+  last_edit_date: string; 
+  code_reviews: CodeReview[];
+}
+
+
 
 export interface CodeReview {
   id: number;
@@ -151,7 +63,7 @@ export interface UserStyleGuide {
   is_default: boolean;
 }
 export interface StyleGuideUpload {
-	id: string;
+	id: number;
 	name: string;
 	codelang_code: string;
 	file: File;

@@ -9,17 +9,17 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
-import { ExclamationMark } from "../ui/exclamation-mark";
+import { ExclamationMark } from "@/components/ui/exclamation-mark";
 import { RegisterSchema } from "@/schemas";
-import { register } from "@/action/register";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion } from 'framer-motion';
 import Link from "next/link";
+import { register } from "../register";
 
 type RegisterData = {
   success: boolean;

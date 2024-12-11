@@ -5,7 +5,7 @@ import { Spin, Upload } from 'antd';
 import { Button } from './button';
 import { UploadIcon } from '@radix-ui/react-icons';
 import { StyleGuideUpload } from '@/lib/types';
-import { sendStyleGuide } from '@/action/sendStyleGuide';
+import { sendStyleGuide } from '@/modules/projects/sendStyleGuide';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 

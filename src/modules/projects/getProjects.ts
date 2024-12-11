@@ -1,27 +1,26 @@
 'use server';
 
-import { getToken } from "./getToken";
+import { getToken } from "@/modules/auth/getToken";
 
 type DataType = {
 	success: boolean;
 	response: string;
 }
 
- export const deleteProject = async (id: number) => {
+ export const getProjects = async () => {
 
 	const { token } = await getToken();
 
 
 
 		try {
-			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects/delete`, {
-				method: 'POST',
+			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects`, {
+				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
 					'API-Key': process.env.BACKEND_API_KEY as string,
 					'Authorization': `Bearer ${token}`
 				},
-				body: JSON.stringify({ id })
 			})
 
 			const { success, response } = await result.json();

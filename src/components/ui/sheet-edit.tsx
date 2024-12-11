@@ -15,17 +15,17 @@ import {
 
 import { Input } from "./input";
 import { useRouter } from "next/navigation";
-import { editProjectName } from "@/action/editProjectName";
+import { editProjectName } from "@/modules/projects/editProjectName";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useProjectStore } from "@/store/useProjectStore";
+import { useStore } from "@/store/store";
 
 
 export function SheetEdit() {
 
 
 	const router = useRouter();
-	const { selectedProject, updateProjectName} = useProjectStore();
+	const { selectedProject, updateProjectName} = useStore();
 	const [newProjectName, setNewProjectName] = useState('');
 	
 

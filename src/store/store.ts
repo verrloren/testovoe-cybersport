@@ -1,16 +1,19 @@
-// store/useProjectStore.ts
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Project } from '@/lib/types';
 
-interface ProjectState {
+interface StoreState {
   selectedProject: Project | null;
   setSelectedProject: (project: Project | null) => void;
   updateProjectName: (id: number, newName: string) => void;
-  clearSelectedProject: () => void; 
+  clearSelectedProject: () => void;
+
+	userId: number | null;
+	setUserId: (id:number) => void;
+	clearUserId: () => void;
 }
 
-export const useProjectStore = create<ProjectState>()(
+export const useStore = create<StoreState>()(
   persist(
     (set) => ({
       selectedProject: null,
@@ -28,6 +31,10 @@ export const useProjectStore = create<ProjectState>()(
           return state;
         }),
       clearSelectedProject: () => set({ selectedProject: null }), 
+
+			userId: null,
+			setUserId: (id) => set({ userId: id }),
+			clearUserId: () => set({ userId: null }),
     }),
     {
       name: 'project-storage',

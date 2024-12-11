@@ -1,7 +1,7 @@
 // sendStyleGuide.ts
 'use server';
 
-import { getToken } from "./getToken";
+import { getToken } from "../auth/getToken";
 
 export const sendStyleGuide = async (formData: FormData) => {
   const { token } = await getToken();

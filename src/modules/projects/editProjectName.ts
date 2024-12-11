@@ -1,24 +1,26 @@
 'use server';
 
-import { getToken } from "./getToken";
+import { getToken } from "@/modules/auth/getToken";
+
 
 type DataType = {
 	success: boolean;
 	response: string;
 }
 
- export const getStyleGuides = async () => {
+ export const editProjectName = async (id: number, name: string) => {
 
-		const { token } = await getToken();
+	const { token } = await getToken();
 
 		try {
-			const result = await fetch(`${process.env.BACKEND_API_URL}/api/styleguide`, {
-				method: 'GET',
+			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects/edit`, {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					'API-Key': process.env.BACKEND_API_KEY as string,
-					'Authorization': `Bearer ${token}`,
+					'Authorization': `Bearer ${token}`
 				},
+				body: JSON.stringify({ id, name })
 			})
 
 			const { success, response } = await result.json();

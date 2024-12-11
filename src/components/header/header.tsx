@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { logout } from "@/action/logout";
+import { logout } from "@/modules/auth/logout";
 
 
 type LogoutData = {

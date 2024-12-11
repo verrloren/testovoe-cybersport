@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { StatusIndicator } from "./ui/status-indicator";
 import { themes } from "prism-react-renderer";
-import { useProjectStore } from "@/store/useProjectStore";
+import { useStore } from "@/store/store";
 
 export function ProjectsTable() {
-  const { selectedProject } = useProjectStore(); // ✅ Use zustand store
+  const { selectedProject } = useStore(); // ✅ Use zustand store
 
   return (
     <motion.div
