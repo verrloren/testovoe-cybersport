@@ -1,12 +1,7 @@
 'use server';
 
 import * as z from "zod";
-import { RegisterSchema } from "../schemas";
-
-type DataType = {
-	success: boolean;
-	response: string;
-}
+import { RegisterSchema } from "@/schemas/index";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);
@@ -29,20 +24,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		})
 
 		const { success, response } = await result.json();
-
-
-
-		
-		const data: DataType = {
-			success,
-			response
-		}
-
-		if(!success || !response) {
-			return data
-		}
-
-		return data;
+		return { success, response };
 
 	} catch (error) {
 		console.error(error);

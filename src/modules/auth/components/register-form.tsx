@@ -21,9 +21,11 @@ import { motion } from 'framer-motion';
 import Link from "next/link";
 import { register } from "../register";
 
-type RegisterData = {
+export type RegisterResponse = {
   success: boolean;
   response: string;
+} | {
+  error: string;
 };
 
 export default function RegisterForm() {
@@ -46,8 +48,11 @@ export default function RegisterForm() {
       register(values)
         //data received from server
 				
-        .then((data: RegisterData ) => {
-					console.log(data)
+        .then((data: RegisterResponse ) => {
+					if ('error' in data) {
+						toast.error(data.error);
+						return;
+					}
 					if(data.success) {
 						console.log(data.success)
 						toast.success("Account created successfully!");

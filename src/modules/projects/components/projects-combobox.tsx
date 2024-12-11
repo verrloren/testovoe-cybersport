@@ -20,19 +20,25 @@ import {
 } from "@/components/ui/popover"
 import { StatusIndicator } from "./status-indicator"
 import { useEffect, useState } from "react";
-import { Project } from "@/lib/types";
+// import { ProjectDto } from "@/lib/types";
 import { useStore } from "@/store/store";
+import { useQuery } from "react-query";
+import { getProjects } from "../getProjects";
+import { projectsApi } from "../api";
+import { ProjectDto } from "@/lib/types";
 
-interface ProjectComboboxProps {
-	projects: Project[];
-}
+export function ProjectsCombobox() {
 
+  const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
+    queryKey: [projectsApi.baseKey],
+		queryFn: getProjects,
+  });
 
-export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
+	console.log(projects)
+
 	const { selectedProject, setSelectedProject } = useStore();
   const [open, setOpen] = useState(false)
 	const [value, setValue] = useState(selectedProject?.name || projects[0]?.name || "");
-
 
   useEffect(() => {
     if (selectedProject) {
@@ -41,17 +47,23 @@ export function ProjectsCombobox({ projects }: ProjectComboboxProps) {
   }, [selectedProject]);
 
   useEffect(() => {
-    if (selectedProject) {
-      const projectExists = projects.some(p => p.id === selectedProject.id);
-      if (!projectExists && projects.length > 0) {
+    if (!isLoading && projects.length > 0) {
+      if (selectedProject) {
+        const projectExists = projects.some(p => p.id === selectedProject.id);
+        if (!projectExists) {
+          setSelectedProject(projects[0]);
+          setValue(projects[0].name);
+        }
+      } else {
         setSelectedProject(projects[0]);
         setValue(projects[0].name);
       }
-    } else if (projects.length > 0) {
-      setSelectedProject(projects[0]);
-      setValue(projects[0].name);
     }
-  }, [projects, selectedProject, setSelectedProject]);
+  }, [projects, selectedProject, setSelectedProject, isLoading]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
 
 	const status = (selectedProject?.code_reviews?.length ?? 0) > 0 ? "error" : "success";

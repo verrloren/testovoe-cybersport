@@ -17,12 +17,13 @@ export interface Project {
 
   code_reviews: CodeReview[];
 }
+
 export interface ProjectDto {
   id: number;
   name: string;
   user_id: number;
-  project_status: string;
   last_edit_date: string; 
+  project_status: string;
   code_reviews: CodeReview[];
 }
 

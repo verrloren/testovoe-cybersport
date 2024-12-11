@@ -1,42 +1,11 @@
 'use server';
 
+import { ProjectDto } from "@/lib/types";
 import { getToken } from "@/modules/auth/getToken";
+import { projectsApi } from "./api";
 
-type DataType = {
-	success: boolean;
-	response: string;
-}
 
- export const getProjects = async () => {
-
+ export const getProjects = async (): Promise<ProjectDto[]> => {
 	const { token } = await getToken();
-
-
-
-		try {
-			const result = await fetch(`${process.env.BACKEND_API_URL}/api/projects`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					'API-Key': process.env.BACKEND_API_KEY as string,
-					'Authorization': `Bearer ${token}`
-				},
-			})
-
-			const { success, response } = await result.json();
-
-			const data: DataType = {
-				success,
-				response
-			}
-
-			if(!success || !response) {
-				return data
-			}
-	
-			return data;
-
-		} catch (error) {
-			console.error(error)
-		}
+	return await projectsApi.getProjects(token);
  }

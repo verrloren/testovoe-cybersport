@@ -1,35 +1,46 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getProjects } from "@/modules/projects/getProjects";
-import { getStyleGuides } from "@/modules/projects/getStyleGuides";
-import { ActionButtons } from "@/modules/projects/components/action-buttons";
+// import { getStyleGuides } from "@/modules/projects/getStyleGuides";
+// import { ActionButtons } from "@/modules/projects/components/action-buttons";
 import Container from "@/components/container";
-import { ProjectsTable } from "@/modules/projects/components/projects-table";
+// import { ProjectsTable } from "@/modules/projects/components/projects-table";
 import { ProjectsCombobox } from "@/modules/projects/components/projects-combobox";
-import { Project } from "@/lib/types";
+// import { Project } from "@/lib/types";
+import { dehydrate, QueryClient } from "react-query";
+import { HydrationBoundary } from "@/components/hydration-boundary";
+import { projectsApi } from "@/modules/projects/api";
 
 
 export default async function HomePage() {
-  const projectsResponse = await getProjects();
-  const styleGuidesResponse = await getStyleGuides();
-  const styleGuides = styleGuidesResponse?.response;
+  // const projectsResponse = await getProjects();
+  // const styleGuidesResponse = await getStyleGuides();
+  // const styleGuides = styleGuidesResponse?.response;
 
-  console.log(projectsResponse);
-  console.log(styleGuides);
 
-  if (!projectsResponse?.success) {
-    return <div>Failed to load projects</div>;
-  }
+  // console.log(projectsResponse);
+  // console.log(styleGuides);
 
-  //@ts-expect-error
-  const transformedProjects: Project[] = projectsResponse.response.map(
-    (project: Project) => ({
-      id: project.id,
-      name: project.name,
-      project_status: project.project_status || "warning",
-      last_edit_date: project.last_edit_date,
-      code_reviews: project.code_reviews || [],
-    })
-  );
+  // if (!projectsResponse?.success) {
+  //   return <div>Failed to load projects</div>;
+  // }
+
+  // const transformedProjects: Project[] = projectsResponse.response.map(
+  //   (project: Project) => ({
+  //     id: project.id,
+  //     name: project.name,
+  //     project_status: project.project_status || "warning",
+  //     last_edit_date: project.last_edit_date,
+  //     code_reviews: project.code_reviews || [],
+  //   })
+  // );
+
+	const queryClient = new QueryClient()
+  
+	await queryClient.prefetchQuery({
+		queryKey: [projectsApi.baseKey],
+		queryFn: getProjects,
+	})
+
 
   return (
       <main className="min-h-screen w-full relative">
@@ -46,13 +57,15 @@ export default async function HomePage() {
 			gap-y-6 md:gap-y-16 xl:gap-y-20"
           >
             <div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
-              <ProjectsCombobox projects={transformedProjects} />
-              {/* @ts-expect-error */}
-              <ActionButtons styleGuides={styleGuides} />
+              <HydrationBoundary state={dehydrate(queryClient)} >
+								<ProjectsCombobox />
+							</HydrationBoundary>
+              {/* <ProjectsCombobox projects={transformedProjects} /> */}
+              {/* <ActionButtons styleGuides={styleGuides} /> */}
             </div>
 
             <div className="h-full w-full">
-              {transformedProjects.length > 0 && <ProjectsTable />}
+              {/* <ProjectsTable /> */}
             </div>
           </div>
         </Container>

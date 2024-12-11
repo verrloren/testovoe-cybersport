@@ -20,19 +20,18 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { login } from "@/modules/auth/login";
-import { useStore } from "@/store/store";
+// import { useStore } from "@/store/store";
 // import { QueryClient } from "react-query";
 
-type LoginData = {
+export type LoginResponse = {
   success: boolean;
-  response: string;
-	token: string;
+} | {
+  error: string;
 };
-
 export default function LoginForm() {
 
 	// const queryClient = new QueryClient();
-	const setUserId = useStore((state) => state.setUserId);
+	// const setUserId = useStore((state) => state.setUserId);
 
   const router = useRouter();
   const [isPending, setTransition] = useTransition();
@@ -49,19 +48,22 @@ export default function LoginForm() {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setTransition(async () => {
       try {
-				//@ts-expect-error @eslint-ignore @ts-ignore
-        const data: LoginData = await login(values);
+        const data: LoginResponse = await login(values);
+				if ('error' in data) {
+          toast.error(data.error);
+          return;
+        }
         
         if (data.success) {
           toast.success("Login successful!");
 					console.log(data)
-					setUserId(data.userId);
+					// setUserId(data.userId);
           
 					// await queryClient.prefetchQuery('projects', fetchProjects);
           // Check if user has projects
           router.push("/");
         } else {
-          toast.error(data.response || "Login failed!");
+          toast.error("Login failed!");
         }
       } catch (error) {
         console.error('Login error:', error);

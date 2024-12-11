@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface UploadStyleGuideProps {
-	styleGuideId: string;
+	styleGuideId: number;
 	// projectId: string;
 	codelang_code: string;
 }

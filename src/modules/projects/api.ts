@@ -1,22 +1,22 @@
 import { ProjectDto } from "@/lib/types";
 import { jsonApiInstance } from "@/shared/projects/api-instance";
-import { UseQueryOptions } from "react-query";
 
-
+interface ProjectsResponse {
+  response: ProjectDto[];
+}
 
 export const projectsApi = {
-	baseKey: "projects",
-	getProjectsQueryOptions: ({ userId }: { userId: number }): UseQueryOptions<ProjectDto[]> => {
-		return {
-			queryKey: [projectsApi.baseKey, userId],
-			queryFn: meta =>
-				jsonApiInstance<ProjectDto[]>(
-					'/projects',
-					signal: meta.signal,
-					json: null,
-				)
-		}
-	}
+  baseKey: 'projects',
+  getProjects: async (token: string|undefined) => {
+    const response = await jsonApiInstance<ProjectsResponse>('/api/projects', {
+      method: 'GET',
+			headers:{
+				'Authorization': `Bearer ${token}`,
+				'API-Key': process.env.BACKEND_API_KEY as string,
 
-	
+			},
+      json: null,
+    });
+    return response.response;
+  }
 }
