@@ -9,11 +9,11 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../../../components/ui/form";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
-import { ExclamationMark } from "../../../components/ui/exclamation-mark";
+import { ExclamationMark } from "./exclamation-mark";
 import { LoginSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -21,7 +21,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { login } from "@/modules/auth/login";
 import { useStore } from "@/store/store";
-import { QueryClient } from "react-query";
+// import { QueryClient } from "react-query";
 
 type LoginData = {
   success: boolean;
@@ -31,7 +31,7 @@ type LoginData = {
 
 export default function LoginForm() {
 
-	const queryClient = new QueryClient();
+	// const queryClient = new QueryClient();
 	const setUserId = useStore((state) => state.setUserId);
 
   const router = useRouter();
@@ -57,7 +57,7 @@ export default function LoginForm() {
 					console.log(data)
 					setUserId(data.userId);
           
-					await queryClient.prefetchQuery('projects', fetchProjects);
+					// await queryClient.prefetchQuery('projects', fetchProjects);
           // Check if user has projects
           router.push("/");
         } else {

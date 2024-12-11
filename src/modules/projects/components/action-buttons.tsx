@@ -1,14 +1,14 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button"
+import { Button } from "../../../components/ui/button"
 import { PlusIcon } from "@radix-ui/react-icons"
-import { SheetComponent } from "./ui/sheet-component";
+import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
-import { SheetEdit } from "./ui/sheet-edit";
-import { DeleteProjectDialog } from "./ui/delete-project-dialog";
+import { SheetEdit } from "./sheet-edit";
+import { DeleteProjectDialog } from "../../../components/ui/delete-project-dialog";
 import { Project, StyleGuide } from "@/lib/types";
-import { ButtonMD } from "./ui/button-md";
+import { ButtonMD } from "./button-md";
 
 interface ActionButtonsProps {
 	projects: Project[];

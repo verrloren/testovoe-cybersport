@@ -2,7 +2,7 @@
 'use client'
 
 import { FaMarkdown } from "react-icons/fa"; // ✅ Change to markdown icon
-import { Button } from "./button";
+import { Button } from "../../../components/ui/button";
 import toast from "react-hot-toast";
 import { useStore } from "@/store/store";
 import { useState } from "react";

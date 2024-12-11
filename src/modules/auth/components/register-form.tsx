@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
-import { ExclamationMark } from "@/components/ui/exclamation-mark";
+import { ExclamationMark } from "@/modules/auth/components/exclamation-mark";
 import { RegisterSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

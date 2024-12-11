@@ -13,7 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { Input } from "./input";
+import { Input } from "../../../components/ui/input";
 import { useRouter } from "next/navigation";
 import { editProjectName } from "@/modules/projects/editProjectName";
 import { useState } from "react";

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getProjects } from "@/modules/projects/getProjects";
 import { getStyleGuides } from "@/modules/projects/getStyleGuides";
-import { ActionButtons } from "@/components/action-buttons";
+import { ActionButtons } from "@/modules/projects/components/action-buttons";
 import Container from "@/components/container";
-import { ProjectsTable } from "@/components/projects-table";
-import { ProjectsCombobox } from "@/components/ui/projects-combobox";
+import { ProjectsTable } from "@/modules/projects/components/projects-table";
+import { ProjectsCombobox } from "@/modules/projects/components/projects-combobox";
 import { Project } from "@/lib/types";
 
 

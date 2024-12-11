@@ -2,7 +2,7 @@
 
 import type { UploadProps } from 'antd';
 import { Spin, Upload } from 'antd';
-import { Button } from './button';
+import { Button } from '@/components/ui/button';
 import { UploadIcon } from '@radix-ui/react-icons';
 import { StyleGuideUpload } from '@/lib/types';
 import { sendStyleGuide } from '@/modules/projects/sendStyleGuide';
