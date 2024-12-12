@@ -16,12 +16,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { StatusIndicator } from "./status-indicator";
-import { useQuery } from "react-query";
 import { getProjects } from "../getProjects";
 import { projectsApi } from "../api";
 import { ProjectDto } from "@/lib/types";
 import { useProjectsStore } from "../projects-store";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export function ProjectsCombobox() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
@@ -31,19 +31,9 @@ export function ProjectsCombobox() {
   const isPopoverOpen = useProjectsStore((state) => state.isPopoverOpen);
   const setIsPopoverOpen = useProjectsStore((state) => state.setIsPopoverOpen);
 
-  const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
+  const { data: projects = [], isLoading } = useSuspenseQuery<ProjectDto[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjects,
-    onSuccess: (data) => {
-      if (data.length > 0) {
-        if (
-          !selectedProject ||
-          !data.some((p) => p.id === selectedProject.id)
-        ) {
-          setSelectedProject(data[0]);
-        }
-      }
-    },
   });
 
   if (isLoading) {

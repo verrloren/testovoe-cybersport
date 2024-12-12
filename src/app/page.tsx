@@ -6,13 +6,15 @@ import { getProjects } from "@/modules/projects/getProjects";
 import { ActionButtons } from "@/modules/projects/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsCombobox } from "@/modules/projects/components/projects-combobox";
-import { dehydrate, QueryClient } from "react-query";
-import { HydrationBoundary } from "@/components/hydration-boundary";
+// import { dehydrate, QueryClient } from "@tanstack/react-query";
+// import { HydrationBoundary } from "@/components/hydration-boundary";
 import { projectsApi } from "@/modules/projects/api";
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+import { getQueryClient } from "@/shared/get-query-clients";
  
 
 export default async function HomePage() {
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: [projectsApi.baseKey],
@@ -38,8 +40,8 @@ export default async function HomePage() {
               <ProjectsCombobox />
               <ActionButtons />
             </div>
-
-            {/* <div className="h-full w-full">
+{/* 
+            <div className="h-full w-full">
               <ProjectsTable />
             </div> */}
           </div>
