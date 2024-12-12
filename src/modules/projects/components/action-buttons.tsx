@@ -7,15 +7,11 @@ import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
 import { SheetEdit } from "./sheet-edit";
 import { DeleteProjectDialog } from "../../../components/ui/delete-project-dialog";
-import { Project, StyleGuide } from "@/lib/types";
 import { ButtonMD } from "./button-md";
 
-interface ActionButtonsProps {
-	projects: Project[];
-	styleGuides: StyleGuide[];
-}
 
-export function ActionButtons({ styleGuides }: ActionButtonsProps) {
+
+export function ActionButtons() {
 
 	const router = useRouter();
 
@@ -46,7 +42,7 @@ export function ActionButtons({ styleGuides }: ActionButtonsProps) {
 			<DeleteProjectDialog />
 			
 			{/* SETTINGS */}
-			<SheetComponent styleGuides={styleGuides} />
+			{/* <SheetComponent  /> */}
 		</motion.div>
 	)
 }

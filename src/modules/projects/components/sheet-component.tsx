@@ -31,17 +31,15 @@ import { sendDefaultStyleGuide } from "@/modules/projects/sendDefaultStyleGuide"
 import { Spin } from "antd";
 import { useRouter } from "next/navigation";
 
-interface SheetComponentProps {
-  styleGuides: StyleGuide[];
-}
 
-export function SheetComponent({ styleGuides }: SheetComponentProps) {
+
+export function SheetComponent() {
   const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
-	const getActiveStyleGuide = (guides: StyleGuide[], codelang: string) => {
-		return guides.find(guide => guide.codelang_code === codelang && guide.isActive);
-	};
+	// const getActiveStyleGuide = (guides: StyleGuide[], codelang: string) => {
+	// 	return guides.find(guide => guide.codelang_code === codelang && guide.isActive);
+	// };
 	
 
 	const handleSaveChanges = async () => {
@@ -86,26 +84,26 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
     sharp: null,
   });
 
-  const handleStyleGuideSelect = (
-    language: string,
-    styleGuideId: string
-  ) => {
-    const selected = styleGuides.find((guide) => guide.id.toString() === styleGuideId);
-    if (selected) {
-      setSelectedStyleGuides((prev) => ({
-        ...prev,
-        [language]: selected,
-      }));
-    }
-  };
+  // const handleStyleGuideSelect = (
+  //   language: string,
+  //   styleGuideId: string
+  // ) => {
+  //   const selected = styleGuides.find((guide) => guide.id.toString() === styleGuideId);
+  //   if (selected) {
+  //     setSelectedStyleGuides((prev) => ({
+  //       ...prev,
+  //       [language]: selected,
+  //     }));
+  //   }
+  // };
 	
 
   // Filter style guides for specific languages
-  const styleGuidesByLanguage = {
-    typescript: styleGuides.filter((guide) => guide.codelang_code === "typescript"),
-    python: styleGuides.filter((guide) => guide.codelang_code === "python"),
-    sharp: styleGuides.filter((guide) => guide.codelang_code === "sharp"),
-  };
+  // const styleGuidesByLanguage = {
+  //   typescript: styleGuides.filter((guide) => guide.codelang_code === "typescript"),
+  //   python: styleGuides.filter((guide) => guide.codelang_code === "python"),
+  //   sharp: styleGuides.filter((guide) => guide.codelang_code === "sharp"),
+  // };
 
   return (
     <Sheet>
@@ -119,8 +117,8 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
       </SheetTrigger>
 
       <SheetContent
-        className="w-full h-full bg-black backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
-          flex flex-col justify-center overflow-hidden 
+        className="w-full h-screen bg-black backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
+          flex flex-col justify-center overflow-hidden
           px-4 sm:px-20 md:px-20 xl:px-28 2xl:px-36
           gap-y-12"
       >
@@ -128,16 +126,20 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
 				        {/* sphere */}
 								<div
           className="radial-ellipse-dashboard w-full aspect-square
-			fixed left-0 -bottom-[20%] md:-bottom-1/4 lg:-bottom-1/4 -z-50
+			absolute left-0 -bottom-[20%] md:-bottom-1/4 lg:-bottom-1/4 -z-50
 			  xl:-bottom-1/4 "
         ></div>
 
         <SheetHeader>
           <SheetTitle
+
             className="text-white text-center text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-poppins z-40 mb-4"
           >
             Choose your <br /> style guide
           </SheetTitle>
+					<h1 className="text-white text-center text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-poppins z-40 mb-4">
+						hello
+					</h1>
         </SheetHeader>
 
         <div className="w-full flex flex-col items-center gap-y-4">
@@ -154,19 +156,19 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
                     transition-colors bg-black rounded-2xl font-poppins text-sm 
                     font-light z-40 border border-neutral-800"
                 >
-              <SelectValue
+              {/* <SelectValue
                 className="font-poppins"
                 placeholder={
                   selectedStyleGuides[language]?.name || 
                   getActiveStyleGuide(styleGuides, language)?.name ||
                   `Select ${language} style guide`
                 }
-              />
+              /> */}
                 </SelectTrigger>
 
                 <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
                   <SelectGroup className="w-full">
-                    {styleGuidesByLanguage[language].map((guide) => (
+                    {/* {styleGuidesByLanguage[language].map((guide) => (
                       <SelectItem
                         key={guide.id}
                         value={guide.id.toString()}
@@ -175,15 +177,15 @@ export function SheetComponent({ styleGuides }: SheetComponentProps) {
                       >
                         {guide.name}
                       </SelectItem>
-                    ))}
+                    ))} */}
                   </SelectGroup>
                 </SelectContent>
               </Select>
 
-              <UploadStyleGuide
+              {/* <UploadStyleGuide
 								codelang_code={language}
                 styleGuideId={String(selectedStyleGuides[language]?.id)}
-              />	
+              />	 */}
             </div>
           ))}
         </div>

@@ -7,8 +7,14 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/components/date-input.js"
   ],
+	prefix: "",
   theme: {
+		
     extend: {
+			fontSize: {
+        '7xl': '4.5rem',
+        '8xl': '6rem'
+      },
 			fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
 				ibmPlexMono: ['IBM_Plex_Mono', 'monospace'],
