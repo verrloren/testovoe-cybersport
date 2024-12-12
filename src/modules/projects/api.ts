@@ -4,7 +4,7 @@ import { jsonApiInstance } from "@/shared/projects/api-instance";
 interface ProjectsResponse {
   response: ProjectDto[];
 }
-interface UpdateTodoResponse {
+interface UpdateProjectResponse {
 	success: boolean;
 	response: string;
 }
@@ -24,7 +24,7 @@ export const projectsApi = {
   },
 	// This means all ProjectDto fields are optional EXCEPT id
 	updateTodo: (data: Partial<ProjectDto> & {id: number, name: string}, token: string|undefined) => {
-		return jsonApiInstance<UpdateTodoResponse>(`/api/projects/edit`, {
+		return jsonApiInstance<UpdateProjectResponse>(`/api/projects/edit`, {
 				method: "POST",
 				headers:{
 					'Authorization': `Bearer ${token}`,

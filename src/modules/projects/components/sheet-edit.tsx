@@ -14,47 +14,38 @@ import {
 } from "@/components/ui/sheet";
 
 import { Input } from "../../../components/ui/input";
-import { useRouter } from "next/navigation";
-import { editProjectName } from "@/modules/projects/editProjectName";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import { useProjectsStore } from "@/modules/projects/projects-store";
+import { useUpdateProject } from "../use-update-project";
 
 
 export function SheetEdit() {
 
 
-	const router = useRouter();
-	const { selectedProject, updateProjectName} = useProjectsStore();
-	const [newProjectName, setNewProjectName] = useState('');
+	const { selectedProject} = useProjectsStore();
+	const { updateProject } = useUpdateProject();
 	
 
-  const onNameEdit = async () => {
-    if (!selectedProject) {
-      toast.error('No project selected');
-      return;
-    }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 
-    if (!newProjectName) {
+		const form = e.currentTarget;
+    const formData = new FormData(form);
+    const newName = formData.get('projectName') as string;
+
+    if (!selectedProject || !newName) {
       toast.error('Please enter a name');
       return;
     }
 
     try {
-      const result = await editProjectName(Number(selectedProject.id), newProjectName);
-
-      if (result?.success) {
-				updateProjectName(selectedProject.id, newProjectName);
-        toast.success('Project name updated successfully');
-        router.refresh();
-        document.getElementById('dialog-close-button')?.click();
-      } else {
-        toast.error(result?.response || 'Failed to update name');
-      }
-    } catch (error) {
-      console.error('Edit error:', error);
-      toast.error('Failed to update name');
-    }
+			await updateProject(selectedProject.id, newName);
+			toast.success('Project name updated successfully');
+			document.getElementById('dialog-close-button')?.click();
+			form.reset();
+		} catch (error) {
+			toast.error(`Failed to update name: ${error}`);
+		}
   };
 
   return (
@@ -87,28 +78,30 @@ export function SheetEdit() {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="w-full flex flex-col items-center">
+        {/* <div className="w-full flex flex-col items-center"> */}
+				<form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-y-12">
 					<Input 
-					value={newProjectName}
-					onChange={(e) => setNewProjectName(e.target.value)}
+					required
+					placeholder="Name"
+					name="projectName"
+					defaultValue={selectedProject?.name}
 					className="w-full py-6 text-neutral-400 hover:text-neutral-400 
           transition-colors bg-black rounded-2xl font-poppins text-sm 
           font-light z-40 border border-neutral-800 placeholder:text-neutral-600" 
-					placeholder="Name" 
 					/>
-        </div>
+        {/* </div> */}
 
         <SheetFooter className="w-full flex justify-center items-center">
           <SheetClose asChild>
             <Button
               className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40"
               type="submit"
-							onClick={onNameEdit}
             >
               Save changes
             </Button>
           </SheetClose>
         </SheetFooter>
+				</form>
       </SheetContent>
     </Sheet>
   );

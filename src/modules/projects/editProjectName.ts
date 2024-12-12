@@ -6,7 +6,6 @@ import { projectsApi } from "./api";
  export const editProjectName = async (id: number, name: string) => {
 	const { token } = await getToken();
 		try {
-
 			const { success, response } = await projectsApi.updateTodo({ id, name }, token);
 			return {success, response }
 		} catch (error) {
