@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { projectsApi } from "./api";
 import { ProjectDto } from "@/lib/types";
-import { editProjectName } from "./editProjectName";
+import { editProjectAction } from "./edit-project-action";
 import { useProjectsStore } from "./projects-store";
 
 export const useUpdateProject = () => {
 
 	const queryClient = useQueryClient();
-	const {  updateProjectName} = useProjectsStore();
+	const updateProjectName = useProjectsStore(state => state.updateProjectName);
 	type UpdateProjectVariables = {
 		id: number;
 		name: string;
@@ -15,7 +15,7 @@ export const useUpdateProject = () => {
 	
 
 	const updateProjectMutation = useMutation({
-		mutationFn: ({ id, name }: UpdateProjectVariables) => editProjectName(id, name),
+		mutationFn: ({ id, name }: UpdateProjectVariables) => editProjectAction(id, name),
 		onMutate: async newProject => {
 			 // Cancel any outgoing refetches
 			await queryClient.cancelQueries({

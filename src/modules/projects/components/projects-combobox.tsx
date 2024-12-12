@@ -27,8 +27,8 @@ import { FaChevronDown } from "react-icons/fa";
 export function ProjectsCombobox() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
   const setSelectedProject = useProjectsStore((state) => state.setSelectedProject);
-  const isPopoverOpen = useProjectsStore((state) => state.isPopoverOpen);
-  const setIsPopoverOpen = useProjectsStore((state) => state.setIsPopoverOpen);
+  const isComboboxOpen = useProjectsStore((state) => state.isComboboxOpen);
+  const setIsComboboxOpen = useProjectsStore((state) => state.setIsComboboxOpen);
 
   const { data: projects = [], isLoading } = useSuspenseQuery<ProjectDto[]>({
     queryKey: [projectsApi.baseKey],
@@ -51,12 +51,12 @@ export function ProjectsCombobox() {
     >
       <StatusIndicator size="lg" status={status} />
 
-      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+      <Popover open={isComboboxOpen} onOpenChange={setIsComboboxOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="ghost"
             role="combobox"
-            aria-expanded={isPopoverOpen}
+            aria-expanded={isComboboxOpen}
             className="text-7xl 2xl:text-8xl font-poppins flex justify-center items-center border-none h-auto
 						text-white gap-x-4 hover:bg-transparent hover:text-white focus:outline-none focus:border-none"
           >
@@ -64,7 +64,7 @@ export function ProjectsCombobox() {
 
             <motion.div
 							className="w-full h-full flex items-center justify-center"
-              animate={{ rotate: isPopoverOpen ? 180 : 0 }}
+              animate={{ rotate: isComboboxOpen ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
               <FaChevronDown fontSize={24} width={24} height={24}  className="w-24 h-24 text-2xl font-semibold " />
@@ -91,7 +91,7 @@ export function ProjectsCombobox() {
                     key={project.id}
                     onSelect={() => {
                       setSelectedProject(project);
-                      setIsPopoverOpen(false);
+                      setIsComboboxOpen(false);
                     }}
                   >
                     {project.name}

@@ -1,7 +1,6 @@
-'use client';
+"use client";
 
-import { deleteProject } from "@/modules/projects/deleteProject"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,51 +9,35 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-	DialogClose
-} from "@/components/ui/dialog"
+  DialogClose,
+} from "@/components/ui/dialog";
 import { useProjectsStore } from "@/modules/projects/projects-store";
-import { TrashIcon } from "@radix-ui/react-icons"
-import { useRouter } from "next/navigation"
+import { TrashIcon } from "@radix-ui/react-icons";
 import toast from "react-hot-toast";
- 
-
-// interface DeleteProjectDialogProps {
-// 	projects: Project[];
-// }
-
-
+import { useDeleteProjectMutation } from "../use-delete-project";
 
 export function DeleteProjectDialog() {
+  const selectedProject = useProjectsStore((state) => state.selectedProject);
+  const { deleteProject } = useDeleteProjectMutation();
 
-
-  const router = useRouter();
-	const { selectedProject, clearSelectedProject } = useProjectsStore();
+	const isOpen = useProjectsStore((state) => state.isDeleteDialogOpen);
+  const setIsOpen = useProjectsStore((state) => state.setDeleteDialogOpen);
 
   const onDelete = async () => {
     if (!selectedProject) {
-      toast.error('No project selected');
+      toast.error("No project selected");
       return;
     }
-
     try {
-      const result = await deleteProject(Number(selectedProject.id));
-
-      if (result?.success) {
-				clearSelectedProject();
-        toast.success('Project deleted successfully');
-        router.refresh();
-        document.getElementById('dialog-close-button')?.click();
-      } else {
-        toast.error(result?.response || 'Failed to delete project');
-      }
+      await deleteProject(selectedProject.id);
     } catch (error) {
-      console.error('Delete error:', error);
-      toast.error('Failed to delete project');
+      console.error("Delete error:", error);
+      toast.error("Failed to delete project");
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
           className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border 
@@ -70,7 +53,9 @@ export function DeleteProjectDialog() {
           px-8 gap-y-12"
       >
         <DialogHeader>
-          <DialogTitle className="text-white text-6xl text-center">Are you sure?</DialogTitle>
+          <DialogTitle className="text-white text-6xl text-center">
+            Are you sure?
+          </DialogTitle>
         </DialogHeader>
 
         <DialogDescription className="text-neutral-600 font-poppins text-lg text-center">
