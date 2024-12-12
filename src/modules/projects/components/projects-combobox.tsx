@@ -26,9 +26,7 @@ import { FaChevronDown } from "react-icons/fa";
 
 export function ProjectsCombobox() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
-  const setSelectedProject = useProjectsStore(
-    (state) => state.setSelectedProject
-  );
+  const setSelectedProject = useProjectsStore((state) => state.setSelectedProject);
   const isPopoverOpen = useProjectsStore((state) => state.isPopoverOpen);
   const setIsPopoverOpen = useProjectsStore((state) => state.setIsPopoverOpen);
 
