@@ -62,10 +62,10 @@ export default function Header() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent 
-						className="rounded-2xl bg-black border-neutral-800 ">
-              <DropdownMenuItem>
+						className="rounded-2xl bg-black border border-neutral-800 hover:border-neutral-50 transition-colors shadow-lg ">
+              <DropdownMenuItem className="hover:bg-black">
                 <Button
-                  className="w-full bg-black text-neutral-200 shadow-none hover:text-white"
+                  className="w-full bg-black text-neutral-200 shadow-none hover:text-white hover:bg-black"
 									onClick={onLogout}
                 >
 									Sign out

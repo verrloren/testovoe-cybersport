@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { StatusIndicator } from "./ui/status-indicator";
 import { themes } from "prism-react-renderer";
-import { useStore } from "@/store/store";
+import { useProjectsStore } from "@/modules/projects/projects-store";
 
 export function ProjectsTable() {
-  const { selectedProject } = useStore(); // ✅ Use zustand store
+	const selectedProject = useProjectsStore((state) => state.selectedProject);
 
   return (
     <motion.div
@@ -18,9 +18,9 @@ export function ProjectsTable() {
       transition={{ duration: 1, delay: 0.8 }}
       className="w-full min-h-80"
     >
-      <Tabs defaultValue="codeReview" className="w-full pb-8 text-white">
+      <Tabs defaultValue="codeReview" className="w-full pb-8 text-white ">
         <div className="w-full min-h-96 bg-black rounded-3xl border border-neutral-800">
-          <TabsList className=" text-base border-b pl-4 py-6 border-neutral-800 w-full justify-start">
+          <TabsList className="bg-transparent text-base border-b pl-8 py-8 border-neutral-800 w-full justify-start gap-4">
 
             <TabsTrigger
               className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
@@ -30,7 +30,7 @@ export function ProjectsTable() {
               Code review
             </TabsTrigger>
 						<TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base pl-4
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base 
 							hover:text-neutral-400"
               value="overview"
             >
@@ -41,14 +41,14 @@ export function ProjectsTable() {
 
 
           <TabsContent
-            className="text-neutral-300 font-ibmPlexMono  my-8 w-full"
+            className="text-neutral-300 font-ibmPlexMono  my-8 w-full px-12"
             value="overview"
           >
             {selectedProject?.code_reviews?.map(
               (
                 review // ✅ Add optional chaining
               ) => (
-                <div key={review.id} className="flex items-center px-8">
+                <div key={review.id} className="flex items-center ">
                   <h3 className=" font-ibmPlexMono text-neutral-600 text-lg">
                     {review.project_review}
                   </h3>
@@ -69,7 +69,7 @@ export function ProjectsTable() {
 
 
           <TabsContent
-            className="text-neutral-300 font-ibmPlexMono  my-4 w-full"
+            className="text-neutral-300 font-ibmPlexMono  my-8 w-full px-12"
             value="codeReview"
           >
             {selectedProject?.code_reviews?.map((review) => (
@@ -77,7 +77,7 @@ export function ProjectsTable() {
                 {review.issues?.map((issue) => (
                   <div
                     key={issue.id}
-                    className="mb-8 bg-black/50 rounded-xl p-6"
+                    className="mb-8 bg-black/50 rounded-xl"
                   >
                     {/* File info */}
                     <div className="flex items-center gap-4 mb-6 text-sm ">

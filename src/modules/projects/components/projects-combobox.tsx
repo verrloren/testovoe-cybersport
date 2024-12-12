@@ -20,8 +20,9 @@ import { getProjects } from "../getProjects";
 import { projectsApi } from "../api";
 import { ProjectDto } from "@/lib/types";
 import { useProjectsStore } from "../projects-store";
-import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { FaChevronDown } from "react-icons/fa";
 
 export function ProjectsCombobox() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
@@ -58,21 +59,22 @@ export function ProjectsCombobox() {
             variant="ghost"
             role="combobox"
             aria-expanded={isPopoverOpen}
-            className="text-7xl 2xl:text-8xl font-poppins flex justify-center items-center 
+            className="text-7xl 2xl:text-8xl font-poppins flex justify-center items-center border-none h-auto
 						text-white gap-x-4 hover:bg-transparent hover:text-white focus:outline-none focus:border-none"
           >
-            {selectedProject?.name || "Select Project"}
+            <span className="text-center -pt-4 relative -top-2">{selectedProject?.name || "Select Project"}</span>
 
             <motion.div
+							className="w-full h-full flex items-center justify-center"
               animate={{ rotate: isPopoverOpen ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDownIcon width={12} height={12} className="" />
+              <FaChevronDown fontSize={24} width={24} height={24}  className="w-24 h-24 text-2xl font-semibold " />
             </motion.div>
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="mt-8 border-none rounded-2xl p-0">
+        <PopoverContent className="mt-8 border-none rounded-2xl p-0 ">
           <Command className="bg-black border border-neutral-800  rounded-xl">
             <CommandInput
               className="text-white placeholder:text-neutral-400 font-poppins"
@@ -86,7 +88,7 @@ export function ProjectsCombobox() {
               <CommandGroup>
                 {projects.map((project) => (
                   <CommandItem
-                    className="text-neutral-400 font-poppins flex items-center cursor-pointer 
+                    className="text-neutral-600  font-poppins flex items-center cursor-pointer 
 										hover:text-white transition-colors"
                     key={project.id}
                     onSelect={() => {

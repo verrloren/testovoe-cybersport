@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // import { getStyleGuides } from "@/modules/projects/getStyleGuides";
-// import { ProjectsTable } from "@/modules/projects/components/projects-table";
 // import { Project } from "@/lib/types";
+import { ProjectsTable } from "@/modules/projects/components/projects-table";
 import { getProjects } from "@/modules/projects/getProjects";
 import { ActionButtons } from "@/modules/projects/components/action-buttons";
 import Container from "@/components/container";
 import { ProjectsCombobox } from "@/modules/projects/components/projects-combobox";
-// import { dehydrate, QueryClient } from "@tanstack/react-query";
-// import { HydrationBoundary } from "@/components/hydration-boundary";
 import { projectsApi } from "@/modules/projects/api";
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { getQueryClient } from "@/shared/get-query-clients";
@@ -40,10 +38,10 @@ export default async function HomePage() {
               <ProjectsCombobox />
               <ActionButtons />
             </div>
-{/* 
+
             <div className="h-full w-full">
               <ProjectsTable />
-            </div> */}
+            </div>
           </div>
         </HydrationBoundary>
 					</Container>
