@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 	DialogClose
 } from "@/components/ui/dialog"
-import { useStore } from "@/store/store";
+import { useProjectsStore } from "@/modules/projects/projects-store";
 import { TrashIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast";
@@ -28,7 +28,7 @@ export function DeleteProjectDialog() {
 
 
   const router = useRouter();
-	const { selectedProject, clearSelectedProject } = useStore();
+	const { selectedProject, clearSelectedProject } = useProjectsStore();
 
   const onDelete = async () => {
     if (!selectedProject) {

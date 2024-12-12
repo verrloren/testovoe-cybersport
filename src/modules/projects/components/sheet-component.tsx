@@ -15,6 +15,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+	sheet
 } from "@/components/ui/sheet";
 
 import {
@@ -117,7 +118,7 @@ export function SheetComponent() {
       </SheetTrigger>
 
       <SheetContent
-        className="w-full h-screen bg-black backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
+        className="w-full sm:w-full md:w-[100vw] h-screen bg-black backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
           flex flex-col justify-center overflow-hidden
           px-4 sm:px-20 md:px-20 xl:px-28 2xl:px-36
           gap-y-12"
@@ -137,9 +138,6 @@ export function SheetComponent() {
           >
             Choose your <br /> style guide
           </SheetTitle>
-					<h1 className="text-white text-center text-7xl md:text-8xl lg:text-7xl 2xl:text-8xl font-poppins z-40 mb-4">
-						hello
-					</h1>
         </SheetHeader>
 
         <div className="w-full flex flex-col items-center gap-y-4">
@@ -204,7 +202,7 @@ export function SheetComponent() {
           </SheetClose>
         </SheetFooter>
       </SheetContent>
-			<Spin spinning={loading} fullscreen />
+			{/* <Spin spinning={loading} fullscreen /> */}
 
     </Sheet>
   );

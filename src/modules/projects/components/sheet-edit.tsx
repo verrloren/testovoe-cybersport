@@ -18,14 +18,14 @@ import { useRouter } from "next/navigation";
 import { editProjectName } from "@/modules/projects/editProjectName";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useStore } from "@/store/store";
+import { useProjectsStore } from "@/modules/projects/projects-store";
 
 
 export function SheetEdit() {
 
 
 	const router = useRouter();
-	const { selectedProject, updateProjectName} = useStore();
+	const { selectedProject, updateProjectName} = useProjectsStore();
 	const [newProjectName, setNewProjectName] = useState('');
 	
 

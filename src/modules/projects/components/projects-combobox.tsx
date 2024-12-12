@@ -30,21 +30,21 @@ export function ProjectsCombobox() {
 	const isPopoverOpen = useProjectsStore(state => state.isPopoverOpen);
 	const setIsPopoverOpen = useProjectsStore(state => state.setIsPopoverOpen);
 	
-	const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
-    queryKey: [projectsApi.baseKey],
-    queryFn: getProjects,
-		onSuccess: data => {
-			if (data.length > 0) {
-        if (!selectedProject || !data.some(p => p.id === selectedProject.id)) {
-          setSelectedProject(data[0]);
-        }
-			}
-		}
-  });
+	// const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
+  //   queryKey: [projectsApi.baseKey],
+  //   queryFn: getProjects,
+	// 	onSuccess: data => {
+	// 		if (data.length > 0) {
+  //       if (!selectedProject || !data.some(p => p.id === selectedProject.id)) {
+  //         setSelectedProject(data[0]);
+  //       }
+	// 		}
+	// 	}
+  // });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   const status =
     (selectedProject?.code_reviews?.length ?? 0) > 0 ? "error" : "success";
@@ -89,7 +89,13 @@ export function ProjectsCombobox() {
                 No project found.
               </CommandEmpty>
               <CommandGroup>
-                {projects.map((project) => (
+							<CommandItem
+                    className="text-neutral-400  font-poppins flex items-center cursor-pointer hover:text-white transition-colors"
+                  >
+                   hi
+
+                  </CommandItem>
+                {/* {projects.map((project) => (
                   <CommandItem
                     className="text-neutral-400 font-poppins flex items-center cursor-pointer hover:text-white transition-colors"
                     key={project.id}
@@ -103,7 +109,7 @@ export function ProjectsCombobox() {
        							 <Check className="h-4 w-4 text-white ml-auto" />
     								)}
                   </CommandItem>
-                ))}
+                ))} */}
               </CommandGroup>
             </CommandList>
           </Command>

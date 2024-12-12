@@ -4,13 +4,13 @@
 import { FaMarkdown } from "react-icons/fa"; // ✅ Change to markdown icon
 import { Button } from "../../../components/ui/button";
 import toast from "react-hot-toast";
-import { useStore } from "@/store/store";
+import { useProjectsStore } from "@/modules/projects/projects-store";
 import { useState } from "react";
 import { getMD } from "@/modules/projects/getMD";
 
 export function ButtonMD() {
   const [MDLoading, setMDLoading] = useState(false);
-  const { selectedProject } = useStore();
+  const { selectedProject } = useProjectsStore();
 
   const handleMDDownload = async () => {
     if (!selectedProject) {

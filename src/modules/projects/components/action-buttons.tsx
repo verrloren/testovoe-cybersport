@@ -1,12 +1,12 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { Button } from "../../../components/ui/button"
+import { Button } from "@/components/ui/button"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
 import { SheetEdit } from "./sheet-edit";
-import { DeleteProjectDialog } from "../../../components/ui/delete-project-dialog";
+import { DeleteProjectDialog } from "@/modules/projects/components/delete-project-dialog";
 import { ButtonMD } from "./button-md";
 
 
@@ -42,7 +42,7 @@ export function ActionButtons() {
 			<DeleteProjectDialog />
 			
 			{/* SETTINGS */}
-			{/* <SheetComponent  /> */}
+			<SheetComponent  />
 		</motion.div>
 	)
 }

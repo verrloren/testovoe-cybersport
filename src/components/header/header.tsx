@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { logout } from "@/modules/auth/logout";
+// import { logout } from "@/modules/auth/logout";
 
 
 type LogoutData = {
@@ -26,7 +26,7 @@ export default function Header() {
 
 	
   const onLogout = async () => {
-		const response: LogoutData = await logout();
+		// const response: LogoutData = await logout();
 
 		console.log("logout:", response)
 
@@ -62,10 +62,10 @@ export default function Header() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent 
-						className="rounded-2xl bg-black border-neutral-800">
+						className="rounded-2xl bg-black border-neutral-800 ">
               <DropdownMenuItem>
                 <Button
-                  className="w-full bg-black text-neutral-200 shadow-none"
+                  className="w-full bg-black text-neutral-200 shadow-none hover:text-white"
 									onClick={onLogout}
                 >
 									Sign out

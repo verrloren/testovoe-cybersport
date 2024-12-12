@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import ToasterProvider from "@/providers/toaster-provider";
-// import Header from "@/components/header/header";
 import ConditionalHeader from "@/components/header/conditional-header";
 import Providers from "@/providers/providers";
-
-// import ModalProvider from "@/providers/modal-provider";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"], // if single weight, otherwise you use array like [400, 500, 700],
@@ -46,12 +43,12 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <Providers>
-          <ConditionalHeader />
+        {/* <Providers> */}
+          {/* <ConditionalHeader /> */}
           {/* <ModalProvider /> */}
-          <ToasterProvider />
+          {/* <ToasterProvider /> */}
           {children}
-        </Providers>
+        {/* </Providers> */}
       </body>
     </html>
   );
