@@ -29,7 +29,7 @@ export function ActionButtons() {
 			{/* ADD */}
 			<Button
 				onClick={() => router.push('/start')}
-				className="w-12 h-12 py-2 px-2 bg-black rounded-full border 
+				className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border 
 				border-neutral-800 hover:border-neutral-200 transition-colors peer"
 			>	
 				<PlusIcon className="text-white peer-hover:text-white" />

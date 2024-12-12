@@ -61,7 +61,7 @@ export function SheetEdit() {
     <Sheet >
       <SheetTrigger asChild>
         <Button
-          className="w-12 h-12 py-2 px-2 bg-black rounded-full border
+          className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border
 					border-neutral-800 hover:border-neutral-200 transition-colors peer"
         >
           <AiOutlineEdit className="text-white peer-hover:text-white" />
@@ -69,7 +69,7 @@ export function SheetEdit() {
       </SheetTrigger>
 
       <SheetContent
-        className="w-full h-full bg-black  backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
+        className="w-full h-full bg-black backdrop-blur-lg border-l-neutral-800 rounded-bl-2xl rounded-tl-2xl
 								flex flex-col justify-center overflow-hidden 
 								px-4 sm:px-20 md:px-20 xl:px-28 2xl:px-36
 								gap-y-12"

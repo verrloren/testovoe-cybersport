@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // import { getStyleGuides } from "@/modules/projects/getStyleGuides";
-import { ProjectsTable } from "@/modules/projects/components/projects-table";
+// import { ProjectsTable } from "@/modules/projects/components/projects-table";
 // import { Project } from "@/lib/types";
 import { getProjects } from "@/modules/projects/getProjects";
 import { ActionButtons } from "@/modules/projects/components/action-buttons";
@@ -9,16 +9,15 @@ import { ProjectsCombobox } from "@/modules/projects/components/projects-combobo
 import { dehydrate, QueryClient } from "react-query";
 import { HydrationBoundary } from "@/components/hydration-boundary";
 import { projectsApi } from "@/modules/projects/api";
-import { Button } from "@/components/ui/button";
  
 
 export default async function HomePage() {
-  // const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: [projectsApi.baseKey],
-  //   queryFn: getProjects,
-  // });
+  await queryClient.prefetchQuery({
+    queryKey: [projectsApi.baseKey],
+    queryFn: getProjects,
+  });
 
   return (
 
@@ -30,7 +29,7 @@ export default async function HomePage() {
               xl:-top-[60%] "
       ></div>
 			<Container>
-        {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+        <HydrationBoundary state={dehydrate(queryClient)}>
           <div
             className="w-full relative pt-44 md:pt-52 lg:pt-60 2xl:pt-72 flex flex-col justify-center 
 			gap-y-6 md:gap-y-16 xl:gap-y-20"
@@ -44,7 +43,7 @@ export default async function HomePage() {
               <ProjectsTable />
             </div> */}
           </div>
-        {/* </HydrationBoundary> */}
+        </HydrationBoundary>
 					</Container>
     </main>
   );

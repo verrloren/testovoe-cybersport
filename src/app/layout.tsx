@@ -43,12 +43,12 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        {/* <Providers> */}
-          {/* <ConditionalHeader /> */}
+        <Providers>
+          <ConditionalHeader />
           {/* <ModalProvider /> */}
-          {/* <ToasterProvider /> */}
+          <ToasterProvider />
           {children}
-        {/* </Providers> */}
+        </Providers>
       </body>
     </html>
   );
