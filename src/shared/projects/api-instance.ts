@@ -7,7 +7,7 @@ class ApiError extends Error {
 }
 
 export const jsonApiInstance = async <T>(
-	url: string,
+url: string,
 	init?: RequestInit & { json: unknown }) => {
 	//добавить заголовки
 	let headers = init?.headers ?? {};

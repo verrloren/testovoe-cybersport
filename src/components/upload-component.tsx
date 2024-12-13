@@ -203,7 +203,7 @@ export default function UploadComponent() {
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.4, ease: "easeIn" }}
-				className="text-radial-gradient font-poppins">
+				className="text-radial-gradient text-lg font-poppins">
 					Drag & Drop <br /> your project here
 				</motion.p>
 			</Dragger>

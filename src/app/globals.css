@@ -53,6 +53,7 @@ html, body {
   box-shadow: inset -10px -10px 30px rgba(0, 0, 0, 0.5), inset 10px 10px 30px rgba(255, 255, 255, 0.2);
   animation: saturation 5s ease-in-out, rotate 120s linear infinite;
   background: radial-gradient(circle at 30% 30%, #87698A, #3B2D8F, #110567);
+  /* background: radial-gradient(circle at 30% 30%, #AD7561, #3B2D8F, #110567); */
 }
 .radial-ellipse-dashboard:before {
   content: "";

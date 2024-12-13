@@ -80,8 +80,13 @@ export interface StyleGuideResponse {
   response: StyleGuide[];
 }
 
-export type StyleGuideMap = {
-  [key in 'typescript' | 'python' | 'sharp']: StyleGuide | null;
-};
+export type StyleGuideLanguage = 'typescript' | 'python' | 'sharp';
 
-export type StyleGuideLanguage = keyof StyleGuideMap;
+export interface StyleGuideMap {
+  [key: string]: StyleGuide | null;
+}
+
+export interface ApiResponse {
+  success: boolean;
+  response: string;
+}

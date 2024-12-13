@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AiOutlineSetting } from "react-icons/ai";
 
-import { StyleGuide } from "@/lib/types";
+import { StyleGuide, StyleGuideMap } from "@/lib/types";
 
 import {
   Sheet,
@@ -26,76 +26,55 @@ import {
 } from "@/components/ui/select";
 import { UploadStyleGuide } from "./upload-style-guide";
 import toast from "react-hot-toast";
-import { sendDefaultStyleGuide } from "@/modules/projects/sendDefaultStyleGuide";
 import { Spin } from "antd";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { styleGuidesApi } from "../api";
 import { getStyleGuidesAction } from "../get-style-guides-action";
+import { useStyleGuideMutation } from "../use-save-style-guides";
+import { LoadingOutlined } from '@ant-design/icons';
 
 export function SheetComponent() {
+  const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>({
+    typescript: null,
+    python: null,
+    sharp: null,
+  });
 
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
-	const { data: styleGuides = [] } = useSuspenseQuery({
-		queryKey: [styleGuidesApi.baseKey],
-		queryFn: getStyleGuidesAction
-	})
+  const { saveGuides, loading } = useStyleGuideMutation();
+  const { data: styleGuides = [] } = useSuspenseQuery({
+    queryKey: [styleGuidesApi.baseKey],
+    queryFn: getStyleGuidesAction,
+  });
 
   const getActiveStyleGuide = (guides: StyleGuide[], codelang: string) => {
-  	return guides.find(guide => guide.codelang_code === codelang && guide.isActive);
+    return guides.find(
+      (guide) => guide.codelang_code === codelang && guide.isActive
+    );
   };
 
   const handleSaveChanges = async () => {
     try {
-      setLoading(true);
-      // Get selected style guides IDs
-      const selectedIds = Object.values(selectedStyleGuides)
-        .filter((guide): guide is StyleGuide => guide !== null)
-        .map((guide) => guide.id);
-
-      if (selectedIds.length === 0) {
-        toast.error("Please select at least one style guide");
-        return;
+      const success = await saveGuides(selectedGuides);
+      if (success) {
+        toast.success("Style guides saved successfully");
+        document.getElementById("sheet-close-button")?.click();
       }
-
-      // Send each selected ID to backend
-      for (const id of selectedIds) {
-        const result = await sendDefaultStyleGuide(id);
-
-        if (!result.success) {
-          throw new Error(result.response);
-        }
-      }
-
-      toast.success("Style guides updated successfully");
     } catch (error) {
-      console.error("Failed to update style guides:", error);
       toast.error(
         error instanceof Error ? error.message : "Failed to update style guides"
       );
-    } finally {
-      setLoading(false);
-      router.refresh();
     }
   };
 
- 	const [selectedStyleGuides, setSelectedStyleGuides] = useState<{
- 	  [key: string]: StyleGuide | null;
- 	}>({
- 	  typescript: null,
- 	  python: null,
- 	  sharp: null,
- 	});
-
-  const handleStyleGuideSelect = (
-    language: string,
-    styleGuideId: string
-  ) => {
-    const selected = styleGuides.find((guide) => guide.id.toString() === styleGuideId);
+  const handleStyleGuideSelect = (language: string, styleGuideId: number) => {
+    const selected = styleGuides.find(
+      (guide) => guide.id === styleGuideId
+    );
     if (selected) {
-      setSelectedStyleGuides((prev) => ({
+      setSelectedGuides((prev) => ({
         ...prev,
         [language]: selected,
       }));
@@ -104,7 +83,9 @@ export function SheetComponent() {
 
   // Filter style guides for specific languages
   const styleGuidesByLanguage = {
-    typescript: styleGuides.filter((guide) => guide.codelang_code === "typescript"),
+    typescript: styleGuides.filter(
+      (guide) => guide.codelang_code === "typescript"
+    ),
     python: styleGuides.filter((guide) => guide.codelang_code === "python"),
     sharp: styleGuides.filter((guide) => guide.codelang_code === "sharp"),
   };
@@ -113,10 +94,10 @@ export function SheetComponent() {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border
-            border-neutral-800 hover:border-neutral-200 transition-colors peer"
+          className="w-12 h-12 py-2 px-2 bg-black/90 hover:bg-black/90 rounded-full border border-black/90 
+					hover:border-white shadow-none transition-colors"
         >
-          <AiOutlineSetting className="text-white peer-hover:text-white" />
+          <AiOutlineSetting className="text-white " />
         </Button>
       </SheetTrigger>
 
@@ -147,7 +128,7 @@ export function SheetComponent() {
             >
               <Select
                 onValueChange={(value) =>
-                  handleStyleGuideSelect(language, value)
+                  handleStyleGuideSelect(language, Number(value))
                 }
               >
                 <SelectTrigger
@@ -156,13 +137,13 @@ export function SheetComponent() {
                     font-light z-40 border border-neutral-800"
                 >
                   <SelectValue
-                className="font-poppins"
-                placeholder={
-                  selectedStyleGuides[language]?.name || 
-                  getActiveStyleGuide(styleGuides, language)?.name ||
-                  `Select ${language} style guide`
-                }
-              />
+                    className="font-poppins"
+                    placeholder={
+                      selectedGuides[language]?.name ||
+                      getActiveStyleGuide(styleGuides, language)?.name ||
+                      `Select ${language} style guide`
+                    }
+                  />
                 </SelectTrigger>
 
                 <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
@@ -182,27 +163,33 @@ export function SheetComponent() {
               </Select>
 
               <UploadStyleGuide
-								codelang_code={language}
-                styleGuideId={selectedStyleGuides[language]?.id}
-              />	
+                codelang_code={language}
+                styleGuideId={selectedGuides[language]?.id}
+              />
             </div>
           ))}
         </div>
 
         <SheetFooter className="w-full flex justify-center items-center">
-          <SheetClose asChild>
+          <SheetClose id="sheet-close-button" asChild>
             <Button
               className="py-6 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 transition-colors"
               type="submit"
               disabled={loading}
               onClick={handleSaveChanges}
             >
-              {loading ? "Saving..." : "Save changes"}
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <Spin fullscreen />
+                </div>
+              ) : (
+                "Save changes"
+              )}
             </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
-      <Spin spinning={loading} fullscreen />
+      <Spin indicator={<LoadingOutlined spin />} size="large" spinning={loading} fullscreen />
     </Sheet>
   );
 }

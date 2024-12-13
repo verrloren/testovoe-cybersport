@@ -2,12 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
-import { PlusIcon } from "@radix-ui/react-icons"
+// import { PlusIcon } from "@radix-ui/react-icons"
 import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
 import { SheetEdit } from "./sheet-edit";
 import { DeleteProjectDialog } from "@/modules/projects/components/delete-project-dialog";
 import { ButtonMD } from "./button-md";
+import { AiOutlinePlus } from "react-icons/ai";
 
 
 
@@ -29,10 +30,10 @@ export function ActionButtons() {
 			{/* ADD */}
 			<Button
 				onClick={() => router.push('/start')}
-				className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border 
-				border-neutral-800 hover:border-neutral-200 transition-colors peer"
+				className="w-12 h-12 py-2 px-2 bg-black/90 hover:bg-black/90 rounded-full border border-black/90 
+					hover:border-white shadow-none transition-colors"
 			>	
-				<PlusIcon className="text-white peer-hover:text-white" />
+				<AiOutlinePlus className="text-white" />
 			</Button>
 
 			{/* EDIT */}

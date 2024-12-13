@@ -53,13 +53,13 @@ export function ButtonMD() {
     <Button
       onClick={handleMDDownload}
       disabled={MDLoading || !selectedProject}
-      className="w-12 h-12 py-2 px-2 bg-black hover:bg-black rounded-full border 
-        border-neutral-800 hover:border-neutral-200 transition-colors peer"
+      className="w-12 h-12 py-2 px-2 bg-black/90 hover:bg-black/90 rounded-full border border-black/90 
+					hover:border-white shadow-none transition-colors"
     >
       {MDLoading ? (
         <div className="animate-spin">⌛</div>
       ) : (
-        <FaMarkdown className="text-white peer-hover:text-white" /> // ✅ Use markdown icon
+        <FaMarkdown className="text-white" /> // ✅ Use markdown icon
       )}
     </Button>
   );
