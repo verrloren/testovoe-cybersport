@@ -20,11 +20,6 @@ export function NpxInfo() {
 				animate={{ opacity: 1, x: 0 }}
 				transition={{ duration: 0.4, delay: 1.8, ease: "easeInOut" }}
 				className="text-neutral-600 text-lg font-ibmPlexMono">~ npx evrz analize</motion.p>
-				<motion.p
-				initial={{ opacity: 0, x: 30 }}
-				animate={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.4, delay: 1.8, ease: "easeInOut" }}
-				className="text-neutral-400 text-lg font-ibmPlexMono mt-4">** .zip is recommended</motion.p>
 			</div>
 		</>
 	)

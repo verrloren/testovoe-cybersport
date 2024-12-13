@@ -14,7 +14,6 @@ export interface Project {
   user_id: number;
   last_edit_date: string; 
   project_status: string;
-
   code_reviews: CodeReview[];
 }
 
@@ -80,3 +79,9 @@ export interface StyleGuideResponse {
   success: boolean;
   response: StyleGuide[];
 }
+
+export type StyleGuideMap = {
+  [key in 'typescript' | 'python' | 'sharp']: StyleGuide | null;
+};
+
+export type StyleGuideLanguage = keyof StyleGuideMap;

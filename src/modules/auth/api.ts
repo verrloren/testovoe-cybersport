@@ -1,5 +1,5 @@
 import { jsonApiInstance } from "@/shared/projects/api-instance";
-import { UseQueryOptions } from "react-query";
+import { UseQueryOptions } from "@tanstack/react-query";
 
 export type UserDto = {
 	id: number; 

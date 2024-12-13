@@ -20,7 +20,7 @@ export function ActionButtons() {
 		<motion.div 
 			initial={{ opacity: 0, y: 15 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, delay : 0.7 }}
+			transition={{ duration: 0.6, delay : 0.15, ease: "easeInOut" }}
 		className="flex flex-row items-center gap-x-2">
 			
 			{/* PDF */}

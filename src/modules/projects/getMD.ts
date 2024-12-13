@@ -4,10 +4,7 @@
 import { getToken } from "@/modules/auth/getToken";
 
 
-type DataType = {
-	success: boolean;
-	response: string;
-}
+
 
 export const getMD = async (projectId: number) => {
   const { token } = await getToken();
@@ -25,18 +22,7 @@ export const getMD = async (projectId: number) => {
     },
   });
 
-	const { success, response } = await result.json();
-
-	const data: DataType = {
-		success,
-		response
-	}
-
-	if(!success || !response) {
-		return data
-	}
-
-	return data;
+	return await result.json();
 } catch (error) {
 	console.error(error)
 }

@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface UploadStyleGuideProps {
-	styleGuideId: number;
+	styleGuideId: number | undefined;
 	// projectId: string;
 	codelang_code: string;
 }
@@ -36,6 +36,7 @@ export function UploadStyleGuide ({ styleGuideId, codelang_code }: UploadStyleGu
     beforeUpload: async (file: File) => {
       try {
 				setLoading(true);
+				if(!styleGuideId) return;
         const newFile: StyleGuideUpload = {
           id: styleGuideId,
           name: file.name,

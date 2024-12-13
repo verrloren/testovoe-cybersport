@@ -16,7 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { StatusIndicator } from "./status-indicator";
-import { getProjects } from "../getProjects";
+import { getProjectsAction } from "../get-projects-action";
 import { projectsApi } from "../api";
 import { ProjectDto } from "@/lib/types";
 import { useProjectsStore } from "../projects-store";
@@ -32,7 +32,7 @@ export function ProjectsCombobox() {
 
   const { data: projects = [], isLoading } = useSuspenseQuery<ProjectDto[]>({
     queryKey: [projectsApi.baseKey],
-    queryFn: getProjects,
+    queryFn: getProjectsAction,
   });
 
   if (isLoading) {
@@ -46,7 +46,7 @@ export function ProjectsCombobox() {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.6 }}
+      transition={{ duration: 0.6, delay: 0.13, ease: "easeInOut" }}
       className="flex justify-center items-center"
     >
       <StatusIndicator size="lg" status={status} />

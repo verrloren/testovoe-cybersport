@@ -108,7 +108,7 @@ html, body {
   height: 100%;
   border-radius: 50%;
   animation: rotate 120s linear infinite;
-  /* z-index: -20; */
+  z-index: -10;
   transition: filter 0.4s ease; /* Add transition for the default state */
 }
 

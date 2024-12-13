@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-// import { logout } from "@/modules/auth/logout";
+import { logout } from "@/modules/auth/logout";
 
 
 type LogoutData = {
@@ -26,7 +26,7 @@ export default function Header() {
 
 	
   const onLogout = async () => {
-		// const response: LogoutData = await logout();
+		const response: LogoutData = await logout();
 
 		console.log("logout:", response)
 
@@ -47,7 +47,7 @@ export default function Header() {
     <motion.header
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       className="w-full h-24 z-10 absolute top-0 left-0
 			 bg-transparent flex items-center justify-center"
     >
