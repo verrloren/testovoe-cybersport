@@ -5,6 +5,9 @@
 html, body {
 	background-color: #000;
 	overflow-y: scroll;
+	overflow-x: hidden;
+	margin: 0;
+  padding: 0;
 }
 
 :root {

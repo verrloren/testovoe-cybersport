@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import JSZip from 'jszip';
 import { useProjectsStore } from '@/modules/projects/projects-store';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
 
@@ -191,7 +192,7 @@ export default function UploadComponent() {
 			className='w-full aspect-square'
 		>
 
-      <Spin spinning={loading} fullscreen />
+			<Spin indicator={<LoadingOutlined spin />} size="large" spinning={loading} fullscreen />
 
 			<Dragger 
 				style={{ border: "none" }} 

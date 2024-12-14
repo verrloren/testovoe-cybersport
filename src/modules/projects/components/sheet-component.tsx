@@ -90,6 +90,7 @@ export function SheetComponent() {
     sharp: styleGuides.filter((guide) => guide.codelang_code === "sharp"),
   };
 
+	console.log(styleGuides)
   return (
     <Sheet>
       <SheetTrigger asChild>

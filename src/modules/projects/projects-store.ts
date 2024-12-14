@@ -11,6 +11,9 @@ interface ProjectsStoreState {
 	isComboboxOpen: boolean;
 	setIsComboboxOpen: (isOpen: boolean) => void;
 
+	searchQuery: string;
+  setSearchQuery: (query: string) => void;
+
 	isDeleteDialogOpen: boolean;
   setDeleteDialogOpen: (open: boolean) => void;
 
@@ -38,6 +41,9 @@ export const useProjectsStore = create<ProjectsStoreState>()(
 					selectedProject: nextProject || null,
 					isDeleteDialogOpen: false // Close dialog when clearing
 				})),
+				
+				searchQuery: '',
+				setSearchQuery: (query) => set({ searchQuery: query }),
 
 			isComboboxOpen: false,
 			setIsComboboxOpen: (isOpen) => set({ isComboboxOpen: isOpen }),

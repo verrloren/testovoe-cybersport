@@ -19,8 +19,8 @@ export function ActionButtons() {
 	return (
 
 		<motion.div 
-			initial={{ opacity: 0, y: 15 }}
-			animate={{ opacity: 1, y: 0 }}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
 			transition={{ duration: 0.6, delay : 0.15, ease: "easeInOut" }}
 		className="flex flex-row items-center gap-x-2">
 			
@@ -45,5 +45,6 @@ export function ActionButtons() {
 			{/* SETTINGS */}
 			<SheetComponent  />
 		</motion.div>
+
 	)
 }

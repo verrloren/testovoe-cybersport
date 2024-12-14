@@ -24,7 +24,7 @@ export default async function HomePage() {
   });
 
   return (
-    <main className="min-h-screen w-full bg-transparent relative">
+    <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
       {/* sphere */}
       <div
         className="radial-ellipse-dashboard w-full aspect-square
@@ -38,8 +38,8 @@ export default async function HomePage() {
 						gap-y-6 md:gap-y-16 xl:gap-y-20"
          	>
             <div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
-              <ProjectsCombobox />
-              <ActionButtons />
+						<ProjectsCombobox />
+						<ActionButtons />	
             </div>
 
             <div className="h-full w-full">
