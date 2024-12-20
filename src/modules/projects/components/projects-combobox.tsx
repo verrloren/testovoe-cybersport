@@ -21,7 +21,7 @@ import { projectsApi } from "../api";
 import { ProjectDto } from "@/lib/types";
 import { useProjectsStore } from "../projects-store";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FaChevronDown } from "react-icons/fa";
 
 export function ProjectsCombobox() {
@@ -30,7 +30,7 @@ export function ProjectsCombobox() {
   const isComboboxOpen = useProjectsStore((state) => state.isComboboxOpen);
   const setIsComboboxOpen = useProjectsStore((state) => state.setIsComboboxOpen);
 
-  const { data: projects = [], isLoading } = useSuspenseQuery<ProjectDto[]>({
+  const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
   });
