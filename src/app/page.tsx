@@ -10,6 +10,7 @@ import { projectsApi, styleGuidesApi } from "@/modules/projects/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
 import { getStyleGuidesAction } from "@/modules/projects/get-style-guides-action";
+import { Suspense } from "react";
 
 export default async function HomePage() {
   const queryClient = getQueryClient();
@@ -32,22 +33,22 @@ export default async function HomePage() {
         xl:-top-[60%] "
       />
       <Container>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <div
-            className="w-full relative pt-44 md:pt-52 lg:pt-60 2xl:pt-72 flex flex-col justify-center 
-						gap-y-6 md:gap-y-16 xl:gap-y-20"
-         	>
-            <div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
-						<ProjectsCombobox />
-						<ActionButtons />	
-            </div>
-
-            <div className="h-full w-full">
-              <ProjectsTable />
-            </div>
-						
-          </div>
-        </HydrationBoundary>
+			<Suspense fallback={<div>Loading...</div>}>
+					<HydrationBoundary state={dehydrate(queryClient)}>
+						<div
+							className="w-full relative pt-44 md:pt-52 lg:pt-60 2xl:pt-72 flex flex-col justify-center 
+											gap-y-6 md:gap-y-16 xl:gap-y-20"
+						>
+							<div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
+											<ProjectsCombobox />
+											<ActionButtons />
+							</div>
+							<div className="h-full w-full">
+								<ProjectsTable />
+							</div>
+						</div>
+					</HydrationBoundary>
+				</Suspense>
       </Container>
     </main>
   );
