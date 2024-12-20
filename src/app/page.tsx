@@ -20,10 +20,13 @@ export default async function HomePage() {
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
   });
+
   await queryClient.prefetchQuery({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
   });
+
+	const dehydratedState = dehydrate(queryClient);
 
   return (
     <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
@@ -34,7 +37,7 @@ export default async function HomePage() {
         xl:-top-[60%] "
       />
       <Container>
-					<HydrationBoundary state={dehydrate(queryClient)}>
+					<HydrationBoundary state={dehydratedState}>
 						<div
 							className="w-full relative pt-44 md:pt-52 lg:pt-60 2xl:pt-72 flex flex-col justify-center 
 											gap-y-6 md:gap-y-16 xl:gap-y-20"

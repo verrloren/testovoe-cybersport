@@ -28,7 +28,7 @@ import { UploadStyleGuide } from "./upload-style-guide";
 import toast from "react-hot-toast";
 import { Spin } from "antd";
 // import { useRouter } from "next/navigation";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { styleGuidesApi } from "../api";
 import { getStyleGuidesAction } from "../get-style-guides-action";
 import { useStyleGuideMutation } from "../use-save-style-guides";
@@ -44,7 +44,7 @@ export function SheetComponent() {
   // const router = useRouter();
 
   const { saveGuides, loading } = useStyleGuideMutation();
-  const { data: styleGuides = [] } = useSuspenseQuery({
+  const { data: styleGuides = [] } = useQuery({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
   });
