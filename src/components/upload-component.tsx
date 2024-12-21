@@ -223,7 +223,7 @@ export default function UploadComponent() {
 	customRequest: async () => {
 		setLoading(true);
 		try {
-			await new Promise(resolve => setTimeout(resolve, 10000));
+			await new Promise(resolve => setTimeout(resolve, 60000));
 			router.push('/');
 		} finally {
 			toast.success('File uploaded successfully');
