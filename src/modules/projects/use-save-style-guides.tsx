@@ -8,34 +8,25 @@ export const useStyleGuideMutation = () => {
 
   const mutation = useMutation({
     mutationFn: async (selectedGuides: StyleGuideMap) => {
-      const selectedIds = Object.entries(selectedGuides)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .filter(([_, guide]) => guide !== null)
-				.map(([codelang_code, guide]) => ({
-          guideline_id: guide!.guideline_id,
-          codelang_code
-        }));
+      const selectedIds = Object.values(selectedGuides)
+        .filter((guide): guide is StyleGuide => guide !== null)
+        .map(guide => guide.id);
 
       if (selectedIds.length === 0) {
-        throw new Error("Please select at least one style guide");
+        throw new Error("Please select at leastp one style guide");
       }
 
-      // const results = await Promise.all(
-      //   selectedIds.map(async ({id, codelang_code}) => {
-      //     const result = await setDefaultStyleGuideAction(selectedIds);
-      //     if (!result.success) {
-      //       throw new Error(result.response);
-      //     }
-      //     return result;
-      //   })
-      // );
+      const results = await Promise.all(
+        selectedIds.map(async (id) => {
+          const result = await setDefaultStyleGuideAction(id);
+          if (!result.success) {
+            throw new Error(result.response);
+          }
+          return result;
+        })
+      );
 
-			const result = await setDefaultStyleGuideAction(selectedIds);
-      if (!result.success) {
-        throw new Error(result.response);
-      }
-			return true;
-      // return results.every(r => r.success);
+      return results.every(r => r.success);
     },
 
     onMutate: async (selectedGuides) => {
@@ -48,7 +39,7 @@ export const useStyleGuideMutation = () => {
       if (previousGuides) {
         const updatedGuides = previousGuides.map(guide => ({
           ...guide,
-          isActive: selectedGuides[guide.codelang_code]?.guideline_id === guide.guideline_id
+          isActive: selectedGuides[guide.codelang_code]?.id === guide.id
         }));
 
         queryClient.setQueryData([styleGuidesApi.baseKey], updatedGuides);

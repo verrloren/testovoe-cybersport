@@ -24,16 +24,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UploadStyleGuide } from "./upload-style-guide";
+// import { UploadStyleGuide } from "./upload-style-guide";
 import toast from "react-hot-toast";
-import { Spin } from "antd";
 // import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { styleGuidesApi } from "../api";
 import { getStyleGuidesAction } from "../get-style-guides-action";
 import { useStyleGuideMutation } from "../use-save-style-guides";
-import { LoadingOutlined } from '@ant-design/icons';
 import { getActiveGuides } from "../get-active-styleguides";
+import { Loader } from "@/components/loader";
 
 export function SheetComponent() {
   // const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>({
@@ -48,6 +47,9 @@ export function SheetComponent() {
   const { data: styleGuides = [] } = useQuery({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
+    staleTime: 60_000, // e.g. 1 minute
+    refetchOnWindowFocus: false,
+    retry: false, // Prevent infinite retries
   });
 
 	const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>(
@@ -169,10 +171,10 @@ export function SheetComponent() {
                 </SelectContent>
               </Select>
 
-              <UploadStyleGuide
+              {/* <UploadStyleGuide
                 codelang_code={language}
                 styleGuideId={selectedGuides[language]?.id}
-              />
+              /> */}
             </div>
           ))}
         </div>
@@ -187,7 +189,7 @@ export function SheetComponent() {
             >
               {loading ? (
                 <div className="flex items-center gap-2">
-                  <Spin fullscreen />
+                  <Loader loading={loading} />
                 </div>
               ) : (
                 "Save changes"
@@ -196,7 +198,7 @@ export function SheetComponent() {
           </SheetClose>
         </SheetFooter>
       </SheetContent>
-      <Spin indicator={<LoadingOutlined spin />} size="large" spinning={loading} fullscreen />
+      <Loader loading={loading} />
     </Sheet>
   );
 }

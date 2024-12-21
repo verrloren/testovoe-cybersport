@@ -10,6 +10,15 @@ export default async function LoginPage() {
 
 			<AuthSphere />
 
+			{/* <div className="w-full xl:w-[100vh] aspect-square rounded-full 
+			absolute top-1/2 left-1/2  z-0
+			radial-ellipse noise"></div> */}
+			{/* <div
+        className="noise w-full xl:w-[100vh] aspect-square -z-10 absolute 
+		top-1/2 left-1/2 transform-translate-x-1/2 -translate-y-1/2
+		radial-ellipse  overflow-hidden"
+      ></div> */}
+
       <Suspense>
         <RegisterForm />
       </Suspense>

@@ -1,24 +1,20 @@
-'use client'
+// 'use client'
 
-import { useState } from 'react';
-// import type { UploadFile, UploadProps } from 'antd';
-import { Spin, Upload } from 'antd';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+// import { useState } from 'react';
+// import { motion } from 'framer-motion';
+// import { useRouter } from 'next/navigation';
 // import JSZip from 'jszip';
 // import { useProjectsStore } from '@/modules/projects/projects-store';
-import { LoadingOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd/es/upload/interface';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 // import { sendProjectFiles } from '@/modules/projects/sendProjectFiles';
 
-const { Dragger } = Upload;
+// const { Dragger } = Upload;
 
-export default function UploadComponent() {
+// export default function UploadComponent() {
 
 	
-	const router = useRouter();
-	const [loading, setLoading] = useState(false);
+// 	const router = useRouter();
+// 	const [loading, setLoading] = useState(false);
 	// const setSelectedProject = useProjectsStore((state) => state.setSelectedProject);
 
 	//GPT
@@ -76,11 +72,11 @@ export default function UploadComponent() {
 
 
 
-	const props: UploadProps = {
-		name: 'file',
-		multiple: true,
-    showUploadList: false,
-		directory: true, // Allow directory upload
+	// const props: UploadProps = {
+	// 	name: 'file',
+	// 	multiple: true,
+  //   showUploadList: false,
+	// 	directory: true, // Allow directory upload
 		// accept: '.zip',
 		// accept: '.txt,.pdf,.doc,.docx,.jpg,.png,.gif,.zip,.rar,.js,.jsx,.ts,.tsx,.vue,.html,.css,.scss,.json,.htm,.sasss,.less,.svg,.md,.mdx,.yaml,.yml,.env,.babelrc,.exlintrc,.prettierrc,.packege.json,.package-lock.json,.yarn.lock,.pdf,.doc,.docx,.lockb,.py,.cs,.csproj,.cshtml,.sln,.DotSettings,.cshtml,.prettierrc,.svg,.rst,.cfg,.lock,.',
 
@@ -220,16 +216,16 @@ export default function UploadComponent() {
 	// },
 
 	
-	customRequest: async () => {
-		setLoading(true);
-		try {
-			await new Promise(resolve => setTimeout(resolve, 60000));
-			router.push('/');
-		} finally {
-			toast.success('File uploaded successfully');
-			setLoading(false);
-		}
-	},
+	// customRequest: async () => {
+	// 	setLoading(true);
+	// 	try {
+	// 		await new Promise(resolve => setTimeout(resolve, 60000));
+	// 		router.push('/');
+	// 	} finally {
+	// 		toast.success('File uploaded successfully');
+	// 		setLoading(false);
+	// 	}
+	// },
 
 
 
@@ -333,48 +329,50 @@ export default function UploadComponent() {
 		// 		await handleUpload([options.file]);
 		// },
 
-		onChange(info) {
-			const { status } = info.file;
-			if (status === 'done') {
-					console.log(`${info.file.name} uploaded successfully`);
-			} else if (status === 'error') {
-					console.log(`${info.file.name} upload failed`);
-			}
-	},
-		onDrop(e) {
-			console.log('Dropped files', e.dataTransfer.files);
-		},
-		capture: undefined,
-		hasControlInside: undefined
-	};
+
+
+// 		onChange(info) {
+// 			const { status } = info.file;
+// 			if (status === 'done') {
+// 					console.log(`${info.file.name} uploaded successfully`);
+// 			} else if (status === 'error') {
+// 					console.log(`${info.file.name} upload failed`);
+// 			}
+// 	},
+// 		onDrop(e) {
+// 			console.log('Dropped files', e.dataTransfer.files);
+// 		},
+// 		capture: undefined,
+// 		hasControlInside: undefined
+// 	};
 
 
 
 	
-	return (
-		<motion.div 
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 1.2, delay: 0.2, ease: "easeIn" }}
-			className='w-full aspect-square'
-		>
+// 	return (
+// 		<motion.div 
+// 			initial={{ opacity: 0 }}
+// 			animate={{ opacity: 1 }}
+// 			transition={{ duration: 1.2, delay: 0.2, ease: "easeIn" }}
+// 			className='w-full aspect-square'
+// 		>
 
-			<Spin indicator={<LoadingOutlined spin />} size="large" spinning={loading} fullscreen />
+// 			<Spin indicator={<LoadingOutlined spin />} size="large" spinning={loading} fullscreen />
 
-			<Dragger 
-				style={{ border: "none" }} 
-				className="radial-ellipse-upload" 
-				{...props}
-			>
-				<div className="rotating-background"></div>
-				<motion.p
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.4, ease: "easeIn" }}
-				className="text-radial-gradient text-lg font-poppins">
-					Drag & Drop <br /> your project here
-				</motion.p>
-			</Dragger>
-		</motion.div>
-	)
-}
+// 			<Dragger 
+// 				style={{ border: "none" }} 
+// 				className="radial-ellipse-upload" 
+// 				{...props}
+// 			>
+// 				<div className="rotating-background"></div>
+// 				<motion.p
+// 					initial={{ opacity: 0, y: 10 }}
+// 					animate={{ opacity: 1, y: 0 }}
+// 					transition={{ duration: 0.6, delay: 0.4, ease: "easeIn" }}
+// 				className="text-radial-gradient text-lg font-poppins">
+// 					Drag & Drop <br /> your project here
+// 				</motion.p>
+// 			</Dragger>
+// 		</motion.div>
+// 	)
+// }

@@ -20,8 +20,10 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { login } from "@/modules/auth/login";
-// import { useStore } from "@/store/store";
-// import { QueryClient } from "react-query";
+// import { useQueryClient } from "@tanstack/react-query";
+// import { projectsApi, styleGuidesApi } from "@/modules/projects/api";
+// import { getProjectsAction } from "@/modules/projects/get-projects-action";
+// import { getStyleGuidesAction } from "@/modules/projects/get-style-guides-action";
 
 export type LoginResponse = {
   success: boolean;
@@ -30,12 +32,9 @@ export type LoginResponse = {
 };
 export default function LoginForm() {
 
-	// const queryClient = new QueryClient();
-	// const setUserId = useStore((state) => state.setUserId);
-
   const router = useRouter();
   const [isPending, setTransition] = useTransition();
-	
+	// const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -53,14 +52,16 @@ export default function LoginForm() {
           toast.error(data.error);
           return;
         }
-        
         if (data.success) {
-          toast.success("Login successful!");
-					console.log(data)
-					// setUserId(data.userId);
-          
-					// await queryClient.prefetchQuery('projects', fetchProjects);
-          // Check if user has projects
+					// await queryClient.prefetchQuery({
+					// 	queryKey: [projectsApi.baseKey],
+					// 	queryFn: getProjectsAction,
+					// });
+					// await queryClient.prefetchQuery({
+					// 	queryKey: [styleGuidesApi.baseKey],
+					// 	queryFn: getStyleGuidesAction,
+					// });
+					toast.success("Login successful!");
           router.push("/");
         } else {
           toast.error("Login failed!");
@@ -71,13 +72,14 @@ export default function LoginForm() {
       }
     });
   };
+
   return (
     <>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
-        className=""
+        className=" z-20"
       >
         <h1 className="font-poppins text-7xl xl:text-8xl text-white">
           Welcome
@@ -85,7 +87,7 @@ export default function LoginForm() {
       </motion.div>
 
       <Form {...form}>
-        <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-8 z-20" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -100,7 +102,7 @@ export default function LoginForm() {
                   <FormControl>
                     <Input
                       className="w-full rounded-2xl  border-none
-											text-white text-lg pl-4 py-6 border border-neutral-800
+											text-white text-lg placeholder:text-lg pl-4 py-6 border border-neutral-800
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -127,7 +129,7 @@ export default function LoginForm() {
                   <FormControl>
                     <Input
                       className="w-full rounded-2xl font-poppins border-none
-											text-white text-lg pl-4 py-6 border border-neutral-800
+											text-white text-lg placeholder:text-lg pl-4 py-6 border border-neutral-800
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -169,7 +171,7 @@ export default function LoginForm() {
         transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
       >
         <Link
-          className="text-base 
+          className="text-base font-semibold
 					text-neutral-200 font-poppins
 						hover:text-neutral-50 transition-colors duration-300"
           href="/auth/register"

@@ -71,14 +71,14 @@ export default function RegisterForm() {
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
-					 className=""
+					 className=" z-20"
 		 >
 			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Sign up</h1>
 		</motion.div>
 
 
       <Form {...form}>
-        <form className="mt-8" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-8 z-20" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div 
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -92,8 +92,8 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input
                       className="w-full rounded-2xl font-poppins 
-											text-white text-lg pl-4 py-6 border-none
-											bg-black transition-colors duration-200 focus:outline-none
+											text-white text-lg placeholder:text-lg pl-4 py-6 border-none bg-black
+											transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
                       placeholder="name"
@@ -118,7 +118,7 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input
                       className="w-full rounded-2xl font-poppins
-											text-white text-lg pl-4 py-6 border-none
+											text-white text-lg placeholder:text-lg pl-4 py-6 border-none
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}
@@ -145,7 +145,7 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input
                       className="w-full rounded-2xl font-poppins
-											text-white text-lg pl-4 py-6 border-none
+											text-white text-lg placeholder:text-lg pl-4 py-6 border-none
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
                       disabled={isPending}

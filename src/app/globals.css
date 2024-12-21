@@ -180,3 +180,17 @@ html, body {
 ::-webkit-scrollbar-corner {
   background: #000; /* Background color of the scrollbar corner */
 }
+
+.filepond--panel-root {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.filepond--drop-label {
+  color: transparent !important;
+}
+
+/* Remove any visual FilePond elements */
+.filepond--credits {
+  display: none !important;
+}

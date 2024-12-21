@@ -33,6 +33,8 @@ export function ProjectsCombobox() {
   const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {

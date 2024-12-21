@@ -38,8 +38,7 @@ export interface CodeReview {
 export interface Issue {
   id: number;
   codereview_id: number;
-  type_of_issue: string; // Consider using an enum for issue types
-  file_path: string;
+  type_of_issue: string; 
   line_number: string;
   line_snippet: string;
   issue_body: string;
@@ -57,12 +56,8 @@ export interface StyleGuide {
   user_guidelines: UserStyleGuide[];
 }
 
-export interface UserStyleGuide {
-  id: number;
-  guideline_id: number;
-  user_id: number;
-  is_default: boolean;
-}
+
+
 export interface StyleGuideUpload {
 	id: number;
 	name: string;

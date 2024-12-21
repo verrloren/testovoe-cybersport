@@ -10,11 +10,11 @@ export const useLogout = () => {
 
   const handleLogout = async () => {
     try {
+      queryClient.clear();
       const result = await logout();
       if (result.success) {
-        // Clear all React Query caches
-        queryClient.clear();
-        // Redirect to login
+        queryClient.removeQueries({ queryKey: ['projects'] });
+        queryClient.removeQueries({ queryKey: ['styleguides'] });
         router.push('/auth/login');
         router.refresh();
       } else {

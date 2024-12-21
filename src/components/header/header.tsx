@@ -4,8 +4,6 @@ import { Logo } from "./logo";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
-import { useQueryClient } from '@tanstack/react-query';
-
 import { MenuIcon } from "lucide-react";
 import {
   DropdownMenu,
@@ -14,41 +12,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { logout } from "@/modules/auth/logout";
+import { useLogout } from "@/modules/auth/use-logout";
 
 
-type LogoutData = {
-  success: boolean;
-  response: string;
-};
+
 
 export default function Header() {
   const router = useRouter();
-	const queryClient = useQueryClient();
+	const { handleLogout } = useLogout();
 
 	
   const onLogout = async () => {
-		queryClient.clear();
-		const response: LogoutData = await logout();
+		await handleLogout()
+		.then(() => {
+			document.cookie = "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+			toast.success("You have been logged out.");
+			router.push("/auth/login");
+			router.refresh();
+		}).catch(error => 
+			toast.error("Logout failed: " + error)
+		);
 
-		console.log("logout:", response)
-
-    if (response.success) {
-			
-		document.cookie = "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-
-		queryClient.removeQueries({ queryKey: ['projects'] });
-		queryClient.removeQueries({ queryKey: ['styleguides'] });
-
-		toast.success(response.response);
-		router.push("/auth/login");
-		router.refresh();
-		
-    } else {
-      toast.error(response.response);
-    }
-  };
-
+	}
 
   return (
     <motion.header

@@ -23,6 +23,9 @@ export const projectsApi = {
       },
       json: null,
     });
+    if (!response) {
+      return [];
+    }
     return response.response;
   },
   // This means all ProjectDto fields are optional EXCEPT id
@@ -68,6 +71,9 @@ export const styleGuidesApi = {
         json: null,
       }
     );
+    if (!response) {
+      return [];
+    }
     return response.response;
   },
   sendStyleGuide: (formData: FormData, token: string | undefined) => {
@@ -83,16 +89,14 @@ export const styleGuidesApi = {
     });
   },
 	
-  setDefaultStyleGuide: (selectedGuides: { guideline_id: number; codelang_code: string }[], token: string | undefined) => {
-		const requestBody = { selectedGuides };
-		console.log("setDefaultStyleGuide request body:", requestBody);
+  setDefaultStyleGuide: (id: number, token: string | undefined) => {
     return jsonApiInstance<ResponseDto>(`/api/styleguide/change_default`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "API-Key": process.env.BACKEND_API_KEY as string,
       },
-      json: requestBody // Changed from json: id to json: { id }
+      json: { id }, // Changed from json: id to json: { id }
     });
   },
 };

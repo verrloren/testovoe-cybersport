@@ -22,6 +22,12 @@ url: string,
 		...init,
 		headers
 	})
+
+	if (result.status === 401 || result.status === 422) {
+		return null as T;
+	}
+
+
 	if (!result.ok) {
 		throw new ApiError(result);
 	}
