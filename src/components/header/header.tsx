@@ -4,6 +4,7 @@ import { Logo } from "./logo";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
+import { useQueryClient } from '@tanstack/react-query';
 
 import { MenuIcon } from "lucide-react";
 import {
@@ -23,19 +24,25 @@ type LogoutData = {
 
 export default function Header() {
   const router = useRouter();
+	const queryClient = useQueryClient();
 
 	
   const onLogout = async () => {
+		queryClient.clear();
 		const response: LogoutData = await logout();
 
 		console.log("logout:", response)
 
     if (response.success) {
-			document.cookie = "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+			
+		document.cookie = "access_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+
+		queryClient.removeQueries({ queryKey: ['projects'] });
+		queryClient.removeQueries({ queryKey: ['styleguides'] });
 
 		toast.success(response.response);
 		router.push("/auth/login");
-		window.location.reload();
+		router.refresh();
 		
     } else {
       toast.error(response.response);

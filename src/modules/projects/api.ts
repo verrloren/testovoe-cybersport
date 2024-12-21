@@ -83,14 +83,16 @@ export const styleGuidesApi = {
     });
   },
 	
-  setDefaultStyleGuide: (id: number, token: string | undefined) => {
+  setDefaultStyleGuide: (selectedGuides: { guideline_id: number; codelang_code: string }[], token: string | undefined) => {
+		const requestBody = { selectedGuides };
+		console.log("setDefaultStyleGuide request body:", requestBody);
     return jsonApiInstance<ResponseDto>(`/api/styleguide/change_default`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "API-Key": process.env.BACKEND_API_KEY as string,
       },
-      json: { id }, // Changed from json: id to json: { id }
+      json: requestBody // Changed from json: id to json: { id }
     });
   },
 };

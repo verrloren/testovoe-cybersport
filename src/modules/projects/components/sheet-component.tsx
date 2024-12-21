@@ -33,13 +33,14 @@ import { styleGuidesApi } from "../api";
 import { getStyleGuidesAction } from "../get-style-guides-action";
 import { useStyleGuideMutation } from "../use-save-style-guides";
 import { LoadingOutlined } from '@ant-design/icons';
+import { getActiveGuides } from "../get-active-styleguides";
 
 export function SheetComponent() {
-  const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>({
-    typescript: null,
-    python: null,
-    sharp: null,
-  });
+  // const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>({
+  //   typescript: null,
+  //   python: null,
+  //   sharp: null,
+  // });
 
   // const router = useRouter();
 
@@ -49,6 +50,10 @@ export function SheetComponent() {
     queryFn: getStyleGuidesAction,
   });
 
+	const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>(
+    getActiveGuides(styleGuides)
+  );
+
   const getActiveStyleGuide = (guides: StyleGuide[], codelang: string) => {
     return guides.find(
       (guide) => guide.codelang_code === codelang && guide.isActive
@@ -57,6 +62,7 @@ export function SheetComponent() {
 
   const handleSaveChanges = async () => {
     try {
+			console.log('selected',selectedGuides)
       const success = await saveGuides(selectedGuides);
       if (success) {
         toast.success("Style guides saved successfully");

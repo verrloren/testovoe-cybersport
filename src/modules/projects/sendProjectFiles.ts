@@ -12,14 +12,11 @@ import { getToken } from "@/modules/auth/getToken";
 		return { success: false, response: "No access token" };
 	}
 
-
-
 	if (!formData) {
 		return { success: false, response: "Invalid Files" };
 	}
-
 		try {
-
+			console.log('fetch started:', formData);
 			const response = await fetch(`${process.env.BACKEND_API_URL}/api/upload/files`, {
 				method: 'POST',
 				headers: {

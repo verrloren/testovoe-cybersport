@@ -49,6 +49,7 @@ export interface Issue {
 
 export interface StyleGuide {
   id: number;
+	guideline_id: number;
   codelang_code: string; // 'py', 'ts', 'sharp'
 	isActive: boolean;
   name: string;

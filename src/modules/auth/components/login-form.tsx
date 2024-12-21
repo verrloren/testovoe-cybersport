@@ -99,7 +99,7 @@ export default function LoginForm() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-full rounded-2xl font-poppins border-none
+                      className="w-full rounded-2xl  border-none
 											text-white text-lg pl-4 py-6 border border-neutral-800
 											bg-black transition-colors duration-200 focus:outline-none
 											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
