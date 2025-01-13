@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { projectsApi } from "./api";
-import { ProjectDto } from "@/lib/types";
+import { ProjectDto } from "@/shared/model/types";
 import { editProjectAction } from "./edit-project-action";
 import { useProjectsStore } from "./projects-store";
 
@@ -16,31 +16,37 @@ export const useUpdateProject = () => {
 
 	const updateProjectMutation = useMutation({
 		mutationFn: ({ id, name }: UpdateProjectVariables) => editProjectAction(id, name),
-		onMutate: async newProject => {
-			 // Cancel any outgoing refetches
-			await queryClient.cancelQueries({
-				queryKey: [projectsApi.baseKey, newProject.id],
-			});
-			 // Snapshot the previous value
-			const previousProject = queryClient.getQueryData<ProjectDto>([projectsApi.baseKey, newProject.id]);
-			// Optimistically update to the new value
-			if(previousProject){
-				queryClient.setQueryData([projectsApi.baseKey, newProject.id], newProject)
-			}
-			updateProjectName(newProject.id, newProject.name);
-			return { previousProject, newProject };
-		},
+    
+    onMutate: async ({ id, name }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({
+        queryKey: [projectsApi.baseKey],
+      });
+
+      // Snapshot previous projects
+      const previousProjects = queryClient.getQueryData<ProjectDto[]>([projectsApi.baseKey]);
+
+      // Optimistically update projects list
+      if (previousProjects) {
+        const updatedProjects = previousProjects.map(project => 
+          project.id === id ? { ...project, name } : project
+        );
+        queryClient.setQueryData([projectsApi.baseKey], updatedProjects);
+      }
+
+      // Update local state
+      updateProjectName(id, name);
+
+      return { previousProjects };
+    },
 		onError: (_, __, context) => {
 			// Roll back to the previous value
-				if (context) {
-					queryClient.setQueryData(
-						['todos', context.newProject.id],
-						context.previousProject,
-					);
+				if (context?.previousProjects) {
+					queryClient.setQueryData([projectsApi.baseKey], context.previousProjects)
 				}
 		},
-		onSettled: (newProject) => {
-			queryClient.invalidateQueries({ queryKey: [projectsApi.baseKey, newProject] })
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: [projectsApi.baseKey] })
 		}
 	});
 

@@ -2,13 +2,13 @@
 'use server';
 
 import { getToken } from "../auth/getToken";
-import { styleGuidesApi } from "./api";
-import { ApiResponse } from "@/lib/types";
+import { ApiResponse } from "@/shared/model/types";
+import { styleGuidesApi } from "../styleguides/api";
 
-export const setDefaultStyleGuideAction = async (selectedGuides: { guideline_id: number; codelang_code: string }[]): Promise<ApiResponse> => {
+export const setDefaultStyleGuideAction = async (id: number): Promise<ApiResponse> => {
   const { token } = await getToken();
   try {
-    return await styleGuidesApi.setDefaultStyleGuide(selectedGuides, token);
+    return await styleGuidesApi.setDefaultStyleGuide(id, token);
   } catch (error) {
     return {
       success: false,

@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button"
 // import { PlusIcon } from "@radix-ui/react-icons"
 import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
-import { SheetEdit } from "./sheet-edit";
-import { DeleteProjectDialog } from "@/modules/projects/components/delete-project-dialog";
+import { EditProjectSheet } from "./edit-project-sheet";
+import { DeleteProjectDialog } from "@/modules/projects/ui/delete-project-dialog";
 import { ButtonMD } from "./button-md";
 import { AiOutlinePlus } from "react-icons/ai";
 
 
 
-export function ActionButtons() {
+export function ActionButtons({ redirect, rounded, bg }: { redirect?: boolean, rounded?: string, bg?: string }) {
 
 	const router = useRouter();
 
@@ -37,10 +37,10 @@ export function ActionButtons() {
 			</Button>
 
 			{/* EDIT */}
-			<SheetEdit />
+			<EditProjectSheet bg={bg} rounded={rounded} />
 
 			{/* DELETE */}
-			<DeleteProjectDialog />
+			<DeleteProjectDialog bg={bg} rounded={rounded} redirect={redirect} />
 			
 			{/* SETTINGS */}
 			<SheetComponent  />

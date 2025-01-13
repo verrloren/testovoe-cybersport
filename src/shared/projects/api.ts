@@ -1,5 +1,5 @@
 import { UseQueryOptions } from "react-query"
-import { ProjectDto } from "@/lib/types"
+import { ProjectDto } from "@/shared/model/types"
 import { jsonApiInstance } from "./api-instance"
 
 

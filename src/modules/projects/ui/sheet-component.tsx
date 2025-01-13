@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AiOutlineSetting } from "react-icons/ai";
 
-import { StyleGuide, StyleGuideMap } from "@/lib/types";
+import { StyleGuide, StyleGuideMap } from "@/shared/model/types";
 
 import {
   Sheet,
@@ -28,11 +28,11 @@ import {
 import toast from "react-hot-toast";
 // import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { styleGuidesApi } from "../api";
-import { getStyleGuidesAction } from "../get-style-guides-action";
+import { getStyleGuidesAction } from "../../styleguides/get-style-guides-action";
 import { useStyleGuideMutation } from "../use-save-style-guides";
 import { getActiveGuides } from "../get-active-styleguides";
 import { Loader } from "@/components/loader";
+import { styleGuidesApi } from "@/modules/styleguides/api";
 
 export function SheetComponent() {
   // const [selectedGuides, setSelectedGuides] = useState<StyleGuideMap>({

@@ -1,8 +1,8 @@
 'use server';
 
 import { getToken } from "../auth/getToken";
+import { StyleGuide } from "@/shared/model/types";
 import { styleGuidesApi } from "./api";
-import { StyleGuide } from "@/lib/types";
 
 export const getStyleGuidesAction = async (): Promise<StyleGuide[]> => {
   const { token } = await getToken();

@@ -1,6 +1,6 @@
 'use client'
 
-import { ExclamationMark } from "@/modules/auth/components/exclamation-mark";
+import { ExclamationMark } from "@/modules/auth/ui/exclamation-mark";
 
 interface FormErrorMessageProps {
 	message: string | undefined;

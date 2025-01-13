@@ -1,25 +1,23 @@
 "use server";
-import { getProjectsAction } from "@/modules/projects/get-projects-action";
 import Container from "@/components/container";
-import { projectsApi } from "@/modules/projects/api";
-import { styleGuidesApi } from "@/modules/styleguides/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
 import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
-import { ProjectsList } from "@/modules/projects/ui/projects-list";
 import { Button } from "@/components/ui/button";
 import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
+import { StyleGuidesList } from "@/modules/styleguides/ui/style-guides-list";
+import { styleGuidesApi } from "@/modules/styleguides/api";
 
-export default async function HomePage() {
+export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();
 
-  if (!queryClient.getQueryData([projectsApi.baseKey])) {
-    await queryClient.prefetchQuery({
-      queryKey: [projectsApi.baseKey],
-      queryFn: getProjectsAction,
-    });
-  }
+  // if (!queryClient.getQueryData([projectsApi.baseKey])) {
+  //   await queryClient.prefetchQuery({
+  //     queryKey: [projectsApi.baseKey],
+  //     queryFn: getProjectsAction,
+  //   });
+  // }
 
   if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
     await queryClient.prefetchQuery({
@@ -43,7 +41,7 @@ export default async function HomePage() {
           <div className="w-full pt-20 md:pt-44 lg:pt-52 2xl:pt-72">
             <div className="flex items-center justify-between">
               <h3 className="text-8xl text-white font-semibold pb-8 xl:pb-16">
-                Projects
+                Style Guides
               </h3>
               <Link
                 href="/new-project"
@@ -53,7 +51,7 @@ export default async function HomePage() {
 							hover:border-white shadow-none transition-colors text-neutral-950 text-base"
                 >
                   <AiOutlinePlus className="text-black" />
-                    Create project
+                    Create style guide
                 </Button>
               </Link>
             </div>
@@ -61,7 +59,7 @@ export default async function HomePage() {
               className="w-full relative flex flex-col justify-center
 							gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20"
             >
-              <ProjectsList />
+							<StyleGuidesList />
             </div>
           </div>
         </HydrationBoundary>

@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { StyleGuide } from "@/lib/types";
-import { getStyleGuidesAction } from "./get-style-guides-action";
+import { StyleGuide } from "@/shared/model/types";
+import { getStyleGuidesAction } from "../styleguides/get-style-guides-action";
 import { styleGuidesApi } from "./api";
 
 type StyleGuidesResult = {

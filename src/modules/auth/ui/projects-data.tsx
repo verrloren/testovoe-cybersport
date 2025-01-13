@@ -1,11 +1,11 @@
-import { ProjectsTable } from "@/modules/projects/components/projects-table";
+import { ProjectsTable } from "@/modules/projects/ui/projects-table";
 import { getProjectsAction } from "@/modules/projects/get-projects-action";
-import { getStyleGuidesAction } from "@/modules/projects/get-style-guides-action";
+import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
 import { projectsApi, styleGuidesApi } from "@/modules/projects/api";
-import { ProjectsCombobox } from "@/modules/projects/components/projects-combobox";
-import { ActionButtons } from "@/modules/projects/components/action-buttons";
+import { ProjectsCombobox } from "@/modules/projects/ui/projects-combobox";
+import { ActionButtons } from "@/modules/projects/ui/action-buttons";
 
 // Separate async component for data fetching
 export async function ProjectsData() {

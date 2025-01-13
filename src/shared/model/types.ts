@@ -5,7 +5,7 @@ export interface User {
   password: string;
   role: string; // Consider using an enum for predefined roles
   projects: Project[];
-  user_guidelines: UserStyleGuide[];
+  user_guidelines: StyleGuide[];
 }
 
 export interface Project {
@@ -53,7 +53,7 @@ export interface StyleGuide {
 	isActive: boolean;
   name: string;
   text: string;
-  user_guidelines: UserStyleGuide[];
+  user_guidelines: StyleGuide[];
 }
 
 

@@ -15,32 +15,40 @@ import {
 
 import { Input } from "../../../components/ui/input";
 import toast from "react-hot-toast";
-import { useProjectsStore } from "@/modules/projects/projects-store";
-import { useUpdateProject } from "../use-update-project";
+import { useUpdateStyleGuide } from "../use-update-style-guide";
 
 
-export function SheetEdit() {
+interface EditStyleGuideSheetProps {
+  styleGuideId?: number;
+  styleGuideName?: string;
+  bg?: string;
+  border?: string;
+  text?: string;
+  rounded?: string;
+  wfull?: string;
+}
 
+export function EditStyleGuideSheet({ styleGuideId, styleGuideName, bg, border, text, rounded, wfull}: EditStyleGuideSheetProps) {
 
-	const { selectedProject} = useProjectsStore();
-	const { updateProject } = useUpdateProject();
-	
+  const { updateStyleGuide } = useUpdateStyleGuide();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get('projectName') as string;
+    const newStyleGuideName = formData.get('styleGuideName') as string;
 
-    if (!selectedProject || !newName) {
+    if (!newStyleGuideName) {
       toast.error('Please enter a name');
       return;
     }
 
     try {
-			await updateProject(selectedProject.id, newName);
-			toast.success('Project name updated successfully');
+			if(styleGuideId && styleGuideName) {
+				await updateStyleGuide(styleGuideId, newStyleGuideName);
+			} 
+			toast.success('Style Guide updated successfully');
 			document.getElementById('dialog-close-button')?.click();
 			form.reset();
 		} catch (error) {
@@ -52,10 +60,14 @@ export function SheetEdit() {
     <Sheet >
       <SheetTrigger asChild>
         <Button
-          className="w-12 h-12 py-2 px-2 bg-black/90 hover:bg-black/90 rounded-full border border-black/90 
-					hover:border-white shadow-none transition-colors"
+          className={`h-12 py-2 px-2 shadow-none transition-colors 
+						${wfull === "wfull" ? "w-full" : "w-12"}
+						${border === "none" ? "border-none" : "border border-black/90 hover:border-white"}
+						${bg === "black" ? "bg-black/90 hover:bg-black/90" : "bg-neutral-950"} 
+						${rounded === "full" ? "rounded-full" : "rounded-lg"} 
+					`}
         >
-          <AiOutlineEdit className="text-white" />
+          <AiOutlineEdit className="text-white" /> {text ?? text}
         </Button>
       </SheetTrigger>
 
@@ -83,8 +95,8 @@ export function SheetEdit() {
 					<Input 
 					required
 					placeholder="Name"
-					name="projectName"
-					defaultValue={selectedProject?.name}
+					name="styleGuideName"
+					defaultValue={styleGuideId && styleGuideName}
 					className="w-full py-6 text-neutral-400 hover:text-neutral-400 
           transition-colors bg-black rounded-2xl font-poppins text-sm 
           font-light z-40 border border-neutral-800 placeholder:text-neutral-600" 

@@ -1,4 +1,4 @@
-import { StyleGuide, StyleGuideLanguage, StyleGuideMap } from "@/lib/types";
+import { StyleGuide, StyleGuideLanguage, StyleGuideMap } from "@/shared/model/types";
 import { useState } from "react";
 
 export const useStyleGuideSelection = () => {

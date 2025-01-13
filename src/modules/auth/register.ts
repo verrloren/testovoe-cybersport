@@ -1,7 +1,7 @@
 'use server';
 
 import * as z from "zod";
-import { RegisterSchema } from "@/schemas/index";
+import { RegisterSchema } from "@/modules/auth/schemas/index";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
 	const validatedFields = RegisterSchema.safeParse(values);

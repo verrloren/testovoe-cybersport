@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Project } from '@/lib/types';
+import { Project } from '@/shared/model/types';
 
 interface ProjectsStoreState {
   selectedProject: Project | null;

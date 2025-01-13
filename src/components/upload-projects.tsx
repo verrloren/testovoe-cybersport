@@ -1,17 +1,16 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, SetStateAction, Dispatch } from "react";
 import { FilePond } from "react-filepond";
 import "filepond/dist/filepond.min.css";
-import { motion } from "framer-motion";
 
 type UploadProjectsProps = {
-  onFilesUpdate?: (files: File[]) => void;
+  onFilesUpdate?: Dispatch<SetStateAction<File[]>>;
 };
 
 export function UploadProjects({ onFilesUpdate }: UploadProjectsProps) {
-  const [files, setFiles] = useState([]);
-  const pondRef = useRef(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const pondRef = useRef<FilePond | null>(null);
 
   const handleFilesUpdate = (fileItems: File[]) => {
     setFiles(fileItems);
@@ -41,10 +40,10 @@ export function UploadProjects({ onFilesUpdate }: UploadProjectsProps) {
       >
         Drag & Drop <br /> your project here
       </motion.p> */}
-
       <FilePond
         ref={pondRef}
         files={files}
+        // @ts-expect-error Type mismatch between FilePond and File[]
         onupdatefiles={handleFilesUpdate}
         allowMultiple={true}
         maxFiles={200}

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { styleGuidesApi } from "./api";
-import { StyleGuide, StyleGuideMap } from "@/lib/types";
+import { StyleGuide, StyleGuideMap } from "@/shared/model/types";
 import { setDefaultStyleGuideAction } from "./set-default-style-guide-action";
+import { styleGuidesApi } from "../styleguides/api";
 
 export const useStyleGuideMutation = () => {
   const queryClient = useQueryClient();

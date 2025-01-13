@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { styleGuidesApi } from "./api";
-import {  StyleGuide } from "@/lib/types";
+import {  StyleGuide } from "@/shared/model/types";
 import { sendStyleGuideAction } from "./send-style-guide-action";
 
 interface UploadVariables {

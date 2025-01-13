@@ -1,6 +1,6 @@
 'use server';
 
-import { ProjectDto } from "@/lib/types";
+import { ProjectDto } from "@/shared/model/types";
 import { getToken } from "@/modules/auth/getToken";
 import { projectsApi } from "./api";
 

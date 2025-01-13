@@ -1,4 +1,4 @@
-import { StyleGuide, StyleGuideMap } from "@/lib/types";
+import { StyleGuide, StyleGuideMap } from "@/shared/model/types";
 
 export const getActiveGuides = (styleGuides: StyleGuide[]): StyleGuideMap => {
   return {
