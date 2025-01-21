@@ -12,6 +12,7 @@ interface ResponseDto {
 
 export const projectsApi = {
   baseKey: "projects",
+  baseUrl: "/api/projects",
   getProjects: async (token: string | undefined) => {
     const response = await jsonApiInstance<ProjectsResponse>("/api/projects", {
       method: "GET",
@@ -52,6 +53,18 @@ export const projectsApi = {
       },
       json: data,
     });
+  },
+  async createProject(formData: FormData) {
+    const response = await fetch("/api/projects", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create project");
+    }
+
+    return response.json();
   },
 };
 

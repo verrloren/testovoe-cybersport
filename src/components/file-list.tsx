@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-interface FileListProps {
+type FileListProps = {
   files: File[];
 };
 
@@ -18,7 +18,10 @@ export function FileList({ files }: FileListProps) {
         {files.map((file, index) => (
           <li key={index} className="flex items-center gap-2 text-sm mt-12">
             
-            <h6 className="text-neutral-600 border border-neutral-800 bg-neutral-950 rounded-xl px-4 py-1"><span className="w-4 h-4 mr-2">📄</span>{file.name}</h6>
+            <h6 
+						className="text-neutral-600 border border-neutral-800 bg-neutral-950 rounded-xl 
+						px-4 py-1"><span className="w-4 h-4 mr-2">📄
+						</span>{file.filename}</h6>
           </li>
         ))}
       </ul>

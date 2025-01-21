@@ -14,9 +14,24 @@ import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-act
 import { DeleteStyleGuideDialog } from "./delete-style-guide-dialog";
 import { styleGuidesApi } from "../api";
 import { EditStyleGuideSheet } from "./edit-style-guide-sheet";
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export function StyleGuidesList() {
-
   const { data: styleguides = [], isLoading } = useQuery<StyleGuide[]>({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
@@ -27,9 +42,15 @@ export function StyleGuidesList() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full grid grid-cols-4 gap-x-4 gap-y-4">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="w-full grid grid-cols-4 gap-x-4 gap-y-4"
+    >
       {styleguides.map((styleguide) => (
-        <div
+        <motion.div
+					variants={item}
           key={styleguide.id}
           className={`relative bg-neutral-950 border border-neutral-800 rounded-2xl 
 				hover:border-neutral-400 transition-colors px-8 py-8 
@@ -39,16 +60,13 @@ export function StyleGuidesList() {
           {/* styleguide name */}
           <div className="flex flex-row items-center gap-x-2">
             <Link
-							href={`/styleguides/${styleguide.id}`}
+              href={`/styleguides/${styleguide.id}`}
               className="text-white text-3xl"
             >
               {styleguide.name}
             </Link>
-            <div
-              className='w-2 h-2 mt-1 rounded-full'
-            ></div>
+            <div className="w-2 h-2 mt-1 rounded-full"></div>
           </div>
-
 
           <div className="absolute top-6 right-4 ">
             <DropdownMenu>
@@ -86,8 +104,8 @@ export function StyleGuidesList() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

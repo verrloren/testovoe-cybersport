@@ -1,6 +1,6 @@
 "use server";
 
-import { LoginSchema } from "@/modules/auth/schemas";
+import { LoginSchema } from "@/shared/schemas";
 import * as z from "zod";
 import { setSession } from "@/modules/auth/setSession";
 

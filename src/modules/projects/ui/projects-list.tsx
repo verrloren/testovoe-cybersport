@@ -16,6 +16,28 @@ import { DeleteProjectDialog } from "./delete-project-dialog";
 import { EditProjectSheet } from "./edit-project-sheet";
 import Link from "next/link";
 import { useProjectsStore } from "../projects-store";
+import { motion } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
+const spinTransition = {
+  repeat: Infinity,
+  duration: 1,
+  ease: "linear"
+};
 
 export function ProjectsList() {
   const selectProject = useProjectsStore((state) => state.setSelectedProject);
@@ -25,58 +47,78 @@ export function ProjectsList() {
     queryFn: getProjectsAction,
     staleTime: 60_000,
     refetchOnWindowFocus: false,
-		select: (data) => {
+    select: (data) => {
       return [...data].sort((a, b) => {
         // First, sort by pending status
-        if (a.project_status === "pending" && b.project_status !== "pending") return -1;
-        if (a.project_status !== "pending" && b.project_status === "pending") return 1;
-        
+        if (a.project_status === "pending" && b.project_status !== "pending")
+          return -1;
+        if (a.project_status !== "pending" && b.project_status === "pending")
+          return 1;
+
         // Then sort by last_edit_date
-        return new Date(b.last_edit_date).getTime() - new Date(a.last_edit_date).getTime();
+        return (
+          new Date(b.last_edit_date).getTime() -
+          new Date(a.last_edit_date).getTime()
+        );
       });
-    }
+    },
   });
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full min-h-screen grid grid-cols-4 gap-x-4 gap-y-4">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="w-full min-h-screen gap-x-4 gap-y-4
+		grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "
+    >
       {projects.map((project) => (
-        <div
+        <motion.div
+					variants={item}
           key={project.id}
           className={`relative min-w-40 min-h-48 border  rounded-2xl 
-				hover:border-neutral-400 transition-colors px-8 py-8 
-				${ project.project_status === "pending" ? "bg-[#080808]": "bg-neutral-950"}
-				${ project.project_status === "pending" ? "border-none": "border-neutral-800"}
-				${ project.project_status === "pending" ? "brightness-75": "border-neutral-800"}
+				hover:border-neutral-600 transition-colors px-8 py-8 
+				${project.project_status === "pending" ? "bg-[#080808]" : "bg-neutral-950"}
+				${project.project_status === "pending" ? "border-none" : "border-neutral-900"}
+				${project.project_status === "pending" ? "brightness-75" : "border-neutral-800"}
 				`}
           // onClick={() => router.push(`/${project.id}`)}
         >
           {/* project name */}
-          <div className="flex flex-row items-center gap-x-2">
+          <div className="flex flex-row items-center gap-x-3">
             <Link
-							href={project.project_status !== "pending" ? `/${project.id}` : ""}
-							onClick={(e) => {
-								if (project.project_status === "pending") {
-									e.preventDefault(); // Prevent the redirect
-									return;
-								}
-								selectProject(project);
-							}}
+              href={
+                project.project_status !== "pending" ? `/${project.id}` : ""
+              }
+              onClick={(e) => {
+                if (project.project_status === "pending") {
+                  e.preventDefault(); // Prevent the redirect
+                  return;
+                }
+                selectProject(project);
+              }}
               className={`text-white text-3xl
-								${project.project_status === "pending" ? "hover:no-underline " : "hover:underline "}
+								${
+                  project.project_status === "pending"
+                    ? "hover:no-underline "
+                    : "hover:underline "
+                }
 								${project.project_status === "pending" ? "cursor-default " : "cursor-pointer"}
 							`}
             >
               {project.name}
             </Link>
-            <div
-              className={`w-2 h-2 mt-1 rounded-full ${
-                project.project_status === "pending"
-                  ? "bg-yellow-600"
-                  : "bg-green-600"
-              }`}
-            ></div>
+            {project.project_status === "pending" ? (
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={spinTransition}
+                className="w-3 h-3 mt-[7px] rounded-full border-2 border-neutral-600 border-t-transparent"
+              />
+            ) : (
+              <div className="w-2 h-2 mt-[7px] rounded-full bg-green-600" />
+            )}
           </div>
 
           <div className="w-full flex items-start gap-x-8 mt-2">
@@ -140,8 +182,8 @@ export function ProjectsList() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

@@ -8,6 +8,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
 import { StyleGuidesList } from "@/modules/styleguides/ui/style-guides-list";
 import { styleGuidesApi } from "@/modules/styleguides/api";
+import { StyleguidesPageInfo } from "@/modules/projects/ui/styleguides-page-info";
 
 export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();
@@ -39,22 +40,7 @@ export default async function StyleGuidesPage() {
       <Container>
         <HydrationBoundary state={dehydratedState}>
           <div className="w-full pt-20 md:pt-44 lg:pt-52 2xl:pt-72">
-            <div className="flex items-center justify-between">
-              <h3 className="text-8xl text-white font-semibold pb-8 xl:pb-16">
-                Style Guides
-              </h3>
-              <Link
-                href="/new-project"
-              >
-                <Button
-                  className="w-auto px-4 h-12 py-2 bg-neutral-100 hover:bg-white rounded-xl
-							hover:border-white shadow-none transition-colors text-neutral-950 text-base"
-                >
-                  <AiOutlinePlus className="text-black" />
-                    Create style guide
-                </Button>
-              </Link>
-            </div>
+							<StyleguidesPageInfo />
             <div
               className="w-full relative flex flex-col justify-center
 							gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20"

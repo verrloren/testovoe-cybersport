@@ -1,57 +1,62 @@
-"use client";
+import { FilePond } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
+import { type FilePondFile } from 'filepond';
+import { useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import { useState, useRef, SetStateAction, Dispatch } from "react";
-import { FilePond } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-
-type UploadProjectsProps = {
-  onFilesUpdate?: Dispatch<SetStateAction<File[]>>;
-};
+interface UploadProjectsProps {
+  onFilesUpdate: (files: File[]) => void;
+}
 
 export function UploadProjects({ onFilesUpdate }: UploadProjectsProps) {
-  const [files, setFiles] = useState<File[]>([]);
-  const pondRef = useRef<FilePond | null>(null);
+  const pondRef = useRef<FilePond>(null);
+  const [isUploaded, setIsUploaded] = useState(false);
 
-  const handleFilesUpdate = (fileItems: File[]) => {
-    setFiles(fileItems);
-    onFilesUpdate?.(fileItems);
-  };
-
-  const handleClick = () => {
-    pondRef.current?.browse();
+  const handleFilesUpdate = (fileItems: FilePondFile[]) => {
+    // Convert FilePond files to regular Files
+    const files = fileItems.map(fileItem => fileItem.file as File);
+    
+    // Update parent component
+    onFilesUpdate(files);
+    
+    // Update local state
+    setIsUploaded(files.length > 0);
   };
 
   return (
-    <div
-      onClick={handleClick}
-      className="relative min-w-[35vw] aspect-square 
-    		 rounded-full group cursor-pointer"
+    <div 
+      onClick={() => pondRef.current?.browse()} 
+      className="relative radial-ellipse-upload-project-files w-[40rem] h-[40rem] rounded-full 
+			cursor-pointer bg-neutral-950 border border-neutral-900"
     >
-      <div className="radial-ellipse-upload absolute top-0 left-0">
-        <div className="rotating-background" />
-      </div>
-      
-      {/* <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4, ease: "easeIn" }}
-        className="absolute text-radial-gradient text-lg font-poppins text-center z-10 
-				group-hover:scale-110 transition-transform duration-300"
-      >
-        Drag & Drop <br /> your project here
-      </motion.p> */}
+
+			<AnimatePresence>
+        {!isUploaded && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+              text-neutral-600 text-xl z-50 pointer-events-none"
+          >
+            Browse
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <FilePond
         ref={pondRef}
-        files={files}
-        // @ts-expect-error Type mismatch between FilePond and File[]
         onupdatefiles={handleFilesUpdate}
         allowMultiple={true}
         maxFiles={200}
         name="files"
-        className="absolute left-0 top-0 w-full h-full hidden z-50"
+        className="absolute left-0 top-0 w-full h-full z-50"
         dropOnPage={false}
         dropOnElement={true}
-        browseOnClick={false}
+        instantUpload={false}
+        allowRevert={false}
+        allowProcess={false}
+				labelIdle=""
       />
     </div>
   );
