@@ -52,8 +52,8 @@ export function StyleGuidesList() {
         <motion.div
 					variants={item}
           key={styleguide.id}
-          className={`relative bg-neutral-950 border border-neutral-800 rounded-2xl 
-				hover:border-neutral-400 transition-colors px-8 py-8 
+          className={`relative bg-neutral-950 border border-neutral-900 rounded-2xl 
+				hover:border-neutral-600 transition-colors px-8 py-8 
 				`}
           // onClick={() => router.push(`/${styleguide.id}`)}
         >
@@ -61,7 +61,7 @@ export function StyleGuidesList() {
           <div className="flex flex-row items-center gap-x-2">
             <Link
               href={`/styleguides/${styleguide.id}`}
-              className="text-white text-3xl"
+              className="text-white text-2xl"
             >
               {styleguide.name}
             </Link>

@@ -3,9 +3,6 @@ import Container from "@/components/container";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
 import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
-import { Button } from "@/components/ui/button";
-import { AiOutlinePlus } from "react-icons/ai";
-import Link from "next/link";
 import { StyleGuidesList } from "@/modules/styleguides/ui/style-guides-list";
 import { styleGuidesApi } from "@/modules/styleguides/api";
 import { StyleguidesPageInfo } from "@/modules/projects/ui/styleguides-page-info";
@@ -37,6 +34,12 @@ export default async function StyleGuidesPage() {
         fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
         xl:-top-[60%] "
       /> */}
+			<div
+        className="radial-ellipse-dashboard-black w-full aspect-square
+        fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
+        xl:-top-[60%] "
+      />
+
       <Container>
         <HydrationBoundary state={dehydratedState}>
           <div className="w-full pt-20 md:pt-44 lg:pt-52 2xl:pt-72">
