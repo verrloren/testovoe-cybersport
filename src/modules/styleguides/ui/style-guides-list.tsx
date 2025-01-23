@@ -52,7 +52,7 @@ export function StyleGuidesList() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="w-full grid grid-cols-4 gap-x-4 gap-y-4"
+      className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4"
     >
       {styleguides.map((styleguide) => (
         <motion.div
