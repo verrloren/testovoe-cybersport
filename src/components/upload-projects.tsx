@@ -26,7 +26,7 @@ export function UploadProjects({ onFilesUpdate }: UploadProjectsProps) {
   return (
     <div 
       onClick={() => pondRef.current?.browse()} 
-      className="relative radial-ellipse-upload-project-files w-[40rem] h-[40rem] rounded-full 
+      className="relative radial-ellipse-upload-project-files w-[35rem] aspect-square rounded-full 
 			cursor-pointer bg-neutral-950 border border-neutral-900"
     >
 

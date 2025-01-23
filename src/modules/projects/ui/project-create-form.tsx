@@ -21,12 +21,13 @@ import { StyleGuide } from "@/shared/model/types";
 import { styleGuidesApi } from "@/modules/styleguides/api";
 import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from '../../../components/loader';
-import { motion } from 'framer-motion';
+import { Loader } from "../../../components/loader";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export function ProjectCreateForm({ files }: { files: File[] }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { data: styleguides = [], isLoading } = useQuery<StyleGuide[]>({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
@@ -63,17 +64,17 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
     try {
       setIsSubmitting(true);
       const formData = new FormData();
-      
+
       // Append form data
       formData.append("projectName", data.projectName);
       formData.append("styleGuide", data.styleGuide);
-      
+
       // Append files
       files.forEach((file) => {
         formData.append("files", file);
       });
 
-			console.log(data)
+      console.log(data);
 
       await createProjectMutation.mutateAsync(formData);
     } catch (error) {
@@ -83,13 +84,13 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
     }
   };
 
-	if(isLoading) return <Loader loading={isLoading} />
+  if (isLoading) return <Loader loading={isLoading} />;
 
   return (
     <motion.form
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
       onSubmit={handleSubmit(onSubmit)}
       className="w-full h-full flex flex-col items-start gap-y-4 xl:gap-y-6"
     >
@@ -104,7 +105,7 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
 		transition-colors bg-black rounded-2xl font-poppins
 		font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
       />
-			{errors.projectName && (
+      {errors.projectName && (
         <p className="text-red-500 text-sm">{errors.projectName.message}</p>
       )}
       <h5 className="text-3xl font-bold text-center text-white">Style Guide</h5>
@@ -120,7 +121,10 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
               border border-neutral-800 hover:border-neutral-400
               ring-0 focus:border-neutral-400 focus:outline-none "
             >
-              <SelectValue className="text-neutral-400 placeholder:text-neutral-600" placeholder="Select Style Guide" />
+              <SelectValue
+                className="text-neutral-400 placeholder:text-neutral-600"
+                placeholder="Select Style Guide"
+              />
             </SelectTrigger>
 
             <SelectContent className="w-full bg-black border border-neutral-800 rounded-2xl">
@@ -134,6 +138,11 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
                   {styleguide.name}
                 </SelectItem>
               ))}
+              <Link href="/new-styleguide">
+                <Button className="bg-transparent ml-4 text-neutral-300">
+                  Create new Style Guide
+                </Button>
+              </Link>
             </SelectContent>
           </Select>
         )}
