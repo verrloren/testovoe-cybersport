@@ -11,9 +11,9 @@ export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();
 
   if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
-    queryClient.prefetchQuery({
+    await queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
-      queryFn: await getStyleGuidesAction,
+      queryFn: getStyleGuidesAction,
     });
   }
 

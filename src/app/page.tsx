@@ -13,16 +13,16 @@ export default async function HomePage() {
   const queryClient = getQueryClient();
 
   if (!queryClient.getQueryData([projectsApi.baseKey])) {
-    queryClient.prefetchQuery({
+    await queryClient.prefetchQuery({
       queryKey: [projectsApi.baseKey],
-      queryFn: await getProjectsAction,
+      queryFn:  getProjectsAction,
     });
   }
 
   if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
-    queryClient.prefetchQuery({
+    await queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
-      queryFn: await getStyleGuidesAction,
+      queryFn: getStyleGuidesAction,
     });
   }
 
