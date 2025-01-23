@@ -10,12 +10,10 @@ import { SpherePurple } from "@/components/sphere-purple";
 export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();
 
-  if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
     await queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
       queryFn: getStyleGuidesAction,
     });
-  }
 
   const dehydratedState = dehydrate(queryClient);
 

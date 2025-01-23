@@ -29,7 +29,7 @@ interface SheetEditProps {
   wfull?: string;
 }
 
-export function EditProjectSheet({ projectId, projectName, bg, border, text, rounded, wfull}: SheetEditProps) {
+export default function EditProjectSheet({ projectId, projectName, bg, border, text, rounded, wfull}: SheetEditProps) {
 
 
 	const { selectedProject} = useProjectsStore();

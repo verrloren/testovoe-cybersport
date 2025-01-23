@@ -12,12 +12,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DeleteProjectDialog } from "./delete-project-dialog";
-import { EditProjectSheet } from "./edit-project-sheet";
 import Link from "next/link";
 import { useProjectsStore } from "../projects-store";
 import { motion } from "framer-motion";
 import { ClientLoader } from "@/components/client-loader";
+import dynamic from "next/dynamic";
+
+const DeleteProjectDialog = dynamic(() => import('./delete-project-dialog'), { ssr: false });
+const EditProjectSheet = dynamic(() => import('./edit-project-sheet'), { ssr: false });
 
 const container = {
   hidden: { opacity: 0 },

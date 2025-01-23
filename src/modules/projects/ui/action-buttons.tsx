@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 // import { PlusIcon } from "@radix-ui/react-icons"
 import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
-import { EditProjectSheet } from "./edit-project-sheet";
-import { DeleteProjectDialog } from "@/modules/projects/ui/delete-project-dialog";
+import EditProjectSheet from "./edit-project-sheet";
+import DeleteProjectDialog from "@/modules/projects/ui/delete-project-dialog";
 import { ButtonMD } from "./button-md";
 import { AiOutlinePlus } from "react-icons/ai";
 

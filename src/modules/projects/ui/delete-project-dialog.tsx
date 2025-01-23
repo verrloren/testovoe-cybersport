@@ -31,7 +31,7 @@ interface DeleteProjectDialogProps {
 }
 
 
-export function DeleteProjectDialog({ projectId, bg, border, text, rounded, wfull, redirect }: DeleteProjectDialogProps) {
+export default function DeleteProjectDialog({ projectId, bg, border, text, rounded, wfull, redirect }: DeleteProjectDialogProps) {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
   const { deleteProject } = useDeleteProjectMutation();
 	const router = useRouter();
