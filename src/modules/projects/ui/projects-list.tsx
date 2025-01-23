@@ -42,7 +42,7 @@ const spinTransition = {
   ease: "linear"
 };
 
-export function ProjectsList() {
+export default function ProjectsList() {
   const selectProject = useProjectsStore((state) => state.setSelectedProject);
 
   const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({

@@ -1,5 +1,5 @@
 
-export function SpherePurple() {
+export default function SpherePurple() {
 	return (
 		<div
         className="radial-ellipse-dashboard w-full aspect-square

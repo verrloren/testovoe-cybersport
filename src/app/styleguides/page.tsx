@@ -5,7 +5,10 @@ import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-act
 import { StyleGuidesList } from "@/modules/styleguides/ui/style-guides-list";
 import { styleGuidesApi } from "@/modules/styleguides/api";
 import { StyleguidesPageInfo } from "@/modules/projects/ui/styleguides-page-info";
-import { SpherePurple } from "@/components/sphere-purple";
+import SpherePurple from "@/components/sphere-purple";
+
+
+
 
 export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();

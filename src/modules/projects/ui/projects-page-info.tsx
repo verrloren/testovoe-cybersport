@@ -5,7 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
 import { motion } from 'framer-motion';
 
-export function ProjectsPageInfo() {
+export default function ProjectsPageInfo() {
   return (
     <motion.div 
 			initial={{ opacity: 0}}
