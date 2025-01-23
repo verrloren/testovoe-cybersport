@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 export function AuthSphere() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.6, delay: 0.2, ease: "easeIn" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.8, delay: 0, ease: "easeIn" }}
       className="h-full w-full absolute top-0 left-0 z-0"
     >
       <div

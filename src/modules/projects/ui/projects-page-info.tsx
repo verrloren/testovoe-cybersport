@@ -8,11 +8,11 @@ import { motion } from 'framer-motion';
 export function ProjectsPageInfo() {
   return (
     <motion.div 
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, ease: "easeInOut" }}
+			initial={{ opacity: 0}}
+			animate={{ opacity: 1}}
+			transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
 		className="flex flex-col sm:flex-row items-center justify-between">
-      <h3 className="text-7xl lg:text-8xl 2xl:text-9xl text-white font-semibold pb-12 xl:pb-16">
+      <h3 className="text-7xl lg:text-8xl 2xl:text-9xl text-white font-semibold pb-8 xl:pb-16">
         Projects
       </h3>
       <Link href="/new-project">

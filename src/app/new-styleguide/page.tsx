@@ -4,12 +4,12 @@ import { StyleguideCreateForm } from "@/modules/styleguides/ui/styleguide-create
 export default async function NewStyleGuidePage() {
   return (
     <Container>
-      {/* sphere */}
+			{/* dark */}
       <div
-        className="radial-ellipse-dashboard w-full aspect-square
-			absolute left-0 -top-[20%] md:-top-1/3 lg:-bottom-1/3 -z-50
-			  xl:top-[10%] "
-      ></div>
+        className="radial-ellipse-dashboard-black w-full aspect-square
+        fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
+        xl:-top-[60%] "
+      />
       <main
         className="w-full min-h-screen relative flex flex-col justify-center items-center md:flex-row gap-y-8
  				xl:gap-x-12 2xl:gap-x-20 md:gap-x-8 overflow-x-hidden mt-12 sm:mt-24 lg:mt-32"

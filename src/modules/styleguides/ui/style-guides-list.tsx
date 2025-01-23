@@ -15,6 +15,7 @@ import { DeleteStyleGuideDialog } from "./delete-style-guide-dialog";
 import { styleGuidesApi } from "../api";
 import { EditStyleGuideSheet } from "./edit-style-guide-sheet";
 import { motion } from "framer-motion";
+import { ClientLoader } from "@/components/client-loader";
 
 const container = {
   hidden: { opacity: 0 },
@@ -27,8 +28,9 @@ const container = {
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
+  hidden: { opacity: 0 },
+  show: { opacity: 1,transition: { duration: 0.3, ease: "easeInOut" } },
+
 };
 
 export function StyleGuidesList() {
@@ -39,7 +41,11 @@ export function StyleGuidesList() {
     refetchOnWindowFocus: false,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return (
+		<div className="w-full h-full flex justify-center items-center">
+			<ClientLoader />
+		</div>
+	)
 
   return (
     <motion.div

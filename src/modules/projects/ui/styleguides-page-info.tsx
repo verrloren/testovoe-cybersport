@@ -8,9 +8,9 @@ import { motion } from 'framer-motion';
 export function StyleguidesPageInfo() {
   return (
     <motion.div 
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4 }}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut"}}
 		className="flex flex-col sm:flex-row items-center justify-between">
       <h3 className="text-7xl lg:text-8xl text-white font-semibold pb-8 xl:pb-16">
         Style Guides

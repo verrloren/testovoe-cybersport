@@ -11,6 +11,7 @@ export function Logo() {
 			className="flex items-center justify-center cursor-pointer hover:brightness-110 transition-all duration-300"
     >
 			<Link
+			aria-label="Home"
 			href="/"
 			className="text-2xl 2xl:text-2xl text-white/40 font-ibmPlexMono hover:text-white/70 pr-2 
 			transition-colors"

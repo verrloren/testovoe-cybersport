@@ -36,7 +36,7 @@ export default function Header() {
     <motion.header
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       className="w-full h-24 z-10 absolute top-0 left-0
 			 bg-transparent flex items-center justify-center"
     >
@@ -52,45 +52,45 @@ export default function Header() {
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger>
             <MenuIcon
+							aria-label="Menu"
               size={20}
               className={`transition-colors text-neutral-400 hover:text-white`}
             />
           </DropdownMenuTrigger>
 
           <DropdownMenuContent className="mt-2 rounded-2xl bg-black border border-neutral-800 hover:border-neutral-50 transition-colors shadow-lg ">
-
-            <DropdownMenuItem className="hover:bg-black">
-              <Button className="w-full bg-black shadow-none hover:text-white hover:bg-neutral-950">
-                <Link
-                  className="text-neutral-300  font-normal hover:text-white transition-colors"
-                  href="/"
-                >
+            <DropdownMenuItem className="hover:bg-black cursor-pointer">
+              <Link
+                className="w-full flex items-center justify-center"
+                href="/"
+              >
+                <Button className="w-full bg-transparent shadow-none hover:text-white hover:bg-transparent">
                   Projects
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="hover:bg-black">
-              <Button className="w-full bg-black shadow-none hover:text-white hover:bg-neutral-950">
-                <Link
-                  className="text-neutral-300 font-normal hover:text-white transition-colors"
-                  href="/styleguides"
-                >
+            <DropdownMenuItem className="hover:bg-black cursor-pointer">
+              <Link
+                className="w-full flex items-center justify-center"
+                href="/styleguides"
+              >
+                <Button className="w-full bg-transparent shadow-none hover:text-white hover:bg-transparent">
                   Style Guides
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="hover:bg-black">
+            <DropdownMenuItem className="hover:bg-black cursor-pointer">
               <Button
-                className="w-full bg-black text-neutral-300 font-normal shadow-none hover:text-white hover:bg-neutral-950"
+                className="w-full bg-transparen
+								 shadow-none hover:text-white hover:bg-transparent"
                 onClick={onLogout}
               >
                 Sign out
               </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
-
         </DropdownMenu>
       </nav>
     </motion.header>

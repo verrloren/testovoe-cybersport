@@ -75,22 +75,24 @@ export default function LoginForm() {
 
   return (
     <>
+		
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         className=" z-20"
       >
-        <h1 className="font-poppins text-7xl xl:text-8xl text-white">
+				<h1 className="font-poppins text-7xl xl:text-8xl text-white">
           Welcome
         </h1>
+
       </motion.div>
 
       <Form {...form}>
         <form className="mt-8 z-20" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
             className="w-[20rem] md:w-[25rem] z-20 xl:w-[30rem]  flex justify-center flex-col gap-y-6"
           >
@@ -153,7 +155,7 @@ export default function LoginForm() {
 
             <Button
               disabled={isPending}
-              className="w-full py-4 bg-white
+              className="w-full py-4 bg-neutral-100 hover:bg-white
 							rounded-2xl h-12 text-xl text-black font-poppins border-none
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
@@ -166,9 +168,9 @@ export default function LoginForm() {
 
       <motion.div
         className=" fixed flex items-center justify-center bottom-12"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 1, ease: "easeInOut" }}
       >
         <Link
           className="text-base font-semibold

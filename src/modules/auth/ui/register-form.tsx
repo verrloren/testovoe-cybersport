@@ -68,9 +68,9 @@ export default function RegisterForm() {
     <>
 				<motion.div
 
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.4, ease: "easeInOut" }}
 					 className=" z-20"
 		 >
 			<h1 className="font-poppins text-7xl xl:text-8xl text-white">Sign up</h1>
@@ -80,8 +80,8 @@ export default function RegisterForm() {
       <Form {...form}>
         <form className="mt-8 z-20" onSubmit={form.handleSubmit(onSubmit)}>
           <motion.div 
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
 					transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
 					className="w-[20rem] bg-transparent md:w-[25rem] xl:w-[30rem] flex justify-center flex-col gap-y-6">
             <FormField
@@ -169,7 +169,7 @@ export default function RegisterForm() {
 
             <Button
               disabled={isPending}
-              className="w-full py-4 bg-white border-none
+              className="w-full py-4 bg-neutral-100 hover:bg-white border-none
 							rounded-2xl h-12 text-xl text-black font-poppins
 							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
@@ -182,9 +182,9 @@ export default function RegisterForm() {
 
 			<motion.div
 			className="fixed bottom-12 flex justify-center font-semibold text-base"
-			initial={{ opacity: 0, y: 30 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4, delay: 0.8, ease: "easeInOut" }}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{ duration: 0.4, delay: 1, ease: "easeInOut" }}
 			>
 			<Link
         className="text-base text-neutral-200

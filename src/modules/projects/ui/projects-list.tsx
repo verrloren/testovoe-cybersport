@@ -17,6 +17,7 @@ import { EditProjectSheet } from "./edit-project-sheet";
 import Link from "next/link";
 import { useProjectsStore } from "../projects-store";
 import { motion } from "framer-motion";
+import { ClientLoader } from "@/components/client-loader";
 
 const container = {
   hidden: { opacity: 0 },
@@ -29,8 +30,8 @@ const container = {
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
 };
 
 const spinTransition = {
@@ -64,7 +65,11 @@ export function ProjectsList() {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return (
+		<div className="w-full h-full flex justify-center items-center">
+			<ClientLoader />
+		</div>
+	)
 
   return (
     <motion.div
