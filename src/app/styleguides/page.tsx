@@ -16,6 +16,7 @@ export default async function StyleGuidesPage() {
     await queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
       queryFn: getStyleGuidesAction,
+			staleTime: 1000 * 60 * 5, // 5 minutes
     });
 
   const dehydratedState = dehydrate(queryClient);

@@ -5,11 +5,10 @@ import { styleGuidesApi } from "@/modules/styleguides/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
 import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
-import dynamic from "next/dynamic";
+import SpherePurple from "@/components/sphere-purple";
+import ProjectsPageInfo from "@/modules/projects/ui/projects-page-info";
+import ProjectsList from "@/modules/projects/ui/projects-list";
 
-const SpherePurple = dynamic(() => import('@/components/sphere-purple'), { ssr: false });
-const ProjectsPageInfo = dynamic(() => import('@/modules/projects/ui/projects-page-info'));
-const ProjectsList = dynamic(() => import('@/modules/projects/ui/projects-list'));
 
 export default async function HomePage() {
   const queryClient = getQueryClient();
