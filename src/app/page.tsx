@@ -13,7 +13,7 @@ import ProjectsList from "@/modules/projects/ui/projects-list";
 export default async function HomePage() {
   const queryClient = getQueryClient();
 
-	Promise.all([
+	await Promise.all([
 		queryClient.prefetchQuery({
 			queryKey: [projectsApi.baseKey],
 			queryFn: getProjectsAction,
