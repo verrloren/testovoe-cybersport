@@ -26,7 +26,7 @@ export default async function StyleGuidesPage() {
 			<SpherePurple />
       <Container>
         <HydrationBoundary state={dehydratedState}>
-          <div className="w-full pt-20 md:pt-44 lg:pt-52 2xl:pt-72">
+          <div className="w-full pt-40 md:pt-44 lg:pt-52 2xl:pt-72">
 							<StyleguidesPageInfo />
             <div
               className="w-full relative flex flex-col justify-center
