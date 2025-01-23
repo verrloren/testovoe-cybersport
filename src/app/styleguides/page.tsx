@@ -7,13 +7,13 @@ import { styleGuidesApi } from "@/modules/styleguides/api";
 import { StyleguidesPageInfo } from "@/modules/projects/ui/styleguides-page-info";
 import { SpherePurple } from "@/components/sphere-purple";
 
-export default function StyleGuidesPage() {
+export default async function StyleGuidesPage() {
   const queryClient = getQueryClient();
 
   if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
     queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
-      queryFn: getStyleGuidesAction,
+      queryFn: await getStyleGuidesAction,
     });
   }
 

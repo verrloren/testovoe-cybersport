@@ -9,20 +9,20 @@ import { ProjectsList } from "@/modules/projects/ui/projects-list";
 import { ProjectsPageInfo } from "@/modules/projects/ui/projects-page-info";
 import { SpherePurple } from "@/components/sphere-purple";
 
-export default function HomePage() {
+export default async function HomePage() {
   const queryClient = getQueryClient();
 
   if (!queryClient.getQueryData([projectsApi.baseKey])) {
     queryClient.prefetchQuery({
       queryKey: [projectsApi.baseKey],
-      queryFn: getProjectsAction,
+      queryFn: await getProjectsAction,
     });
   }
 
   if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
     queryClient.prefetchQuery({
       queryKey: [styleGuidesApi.baseKey],
-      queryFn: getStyleGuidesAction,
+      queryFn: await getStyleGuidesAction,
     });
   }
 
