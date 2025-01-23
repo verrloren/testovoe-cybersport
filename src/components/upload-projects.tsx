@@ -24,40 +24,42 @@ export function UploadProjects({ onFilesUpdate }: UploadProjectsProps) {
   };
 
   return (
-    <div 
-      onClick={() => pondRef.current?.browse()} 
-      className="relative radial-ellipse-upload-project-files w-[35rem] aspect-square rounded-full 
-			cursor-pointer bg-neutral-950 border border-neutral-900"
-    >
+<div 
+  onClick={() => pondRef.current?.browse()} 
+  className="relative radial-ellipse-upload-project-files 
+    w-[35rem] aspect-square rounded-full 
+    cursor-pointer bg-neutral-950 border border-neutral-900"
+>
+  <div className={`absolute inset-0 ${isUploaded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+    <FilePond
+      ref={pondRef}
+      onupdatefiles={handleFilesUpdate}
+      allowMultiple={true}
+      maxFiles={200}
+      name="files"
+      className="absolute left-0 top-0 w-full h-full z-50"
+      dropOnPage={false}
+      dropOnElement={true}
+      instantUpload={false}
+      allowRevert={false}
+      allowProcess={false}
+			labelIdle="tap"
+    />
+  </div>
 
-			<AnimatePresence>
-        {!isUploaded && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-              text-neutral-600 text-xl z-50 pointer-events-none"
-          >
-            Browse
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <FilePond
-        ref={pondRef}
-        onupdatefiles={handleFilesUpdate}
-        allowMultiple={true}
-        maxFiles={200}
-        name="files"
-        className="absolute left-0 top-0 w-full h-full z-50"
-        dropOnPage={false}
-        dropOnElement={true}
-        instantUpload={false}
-        allowRevert={false}
-        allowProcess={false}
-				labelIdle=""
-      />
-    </div>
+  <AnimatePresence>
+    {!isUploaded && (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+          text-neutral-200 text-xl z-50 pointer-events-none"
+      >
+        Browse
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
   );
 }

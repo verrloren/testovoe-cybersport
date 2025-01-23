@@ -32,16 +32,20 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
       {/* sphere */}
-      <div
+      {/* <div
         className="radial-ellipse-dashboard-black w-full aspect-square
         fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
         xl:-top-[60%] "
-      />
+      /> */}
+			<div
+        className="radial-ellipse-dashboard w-full aspect-square
+				absolute left-0 -top-[10%] md:-top-1/3 lg:-bottom-1/3 -z-50
+			  xl:top-[10%] "
+      ></div>
       <Container>
         <HydrationBoundary state={dehydratedState}>
-          <div className="w-full pt-40 md:pt-44 lg:pt-52 2xl:pt-72">
+          <div className="w-full pt-40 md:pt-44 lg:pt-52 2xl:pt-96">
 							<ProjectsPageInfo />
-
             <div
               className="w-full relative flex flex-col justify-center
 							gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20"

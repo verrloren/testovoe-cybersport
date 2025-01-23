@@ -72,17 +72,17 @@ export function ProjectsList() {
       initial="hidden"
       animate="show"
       className="w-full min-h-screen gap-x-4 gap-y-4
-		grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 "
+		grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 "
     >
       {projects.map((project) => (
         <motion.div
 					variants={item}
           key={project.id}
           className={`relative min-w-40 min-h-48 border  rounded-2xl 
-				hover:border-neutral-600 transition-colors px-8 py-8 
+				hover:border-neutral-400 transition-colors px-8 py-8 
 				${project.project_status === "pending" ? "bg-[#080808]" : "bg-neutral-950"}
-				${project.project_status === "pending" ? "border-none" : "border-neutral-900"}
-				${project.project_status === "pending" ? "brightness-75" : "border-neutral-800"}
+				${project.project_status === "pending" ? "border-none" : "border-neutral-600"}
+				${project.project_status === "pending" ? "brightness-50" : "border-neutral-800"}
 				`}
           // onClick={() => router.push(`/${project.id}`)}
         >

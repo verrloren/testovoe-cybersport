@@ -90,7 +90,7 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
     <motion.form
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+      transition={{ duration: 3, delay: .2,  ease: "easeInOut" }}
       onSubmit={handleSubmit(onSubmit)}
       className="w-full h-full flex flex-col items-start gap-y-4 xl:gap-y-6"
     >
