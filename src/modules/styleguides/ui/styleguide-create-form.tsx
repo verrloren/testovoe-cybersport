@@ -27,10 +27,13 @@ export function StyleguideCreateForm() {
       setIsSubmitting(true);
       const formData = new FormData();
 
-      // Append form data
-      formData.append("projectName", data.styleGuideName);
+			Object.entries(data).forEach(([key, value]) => {
+				formData.append(key, value);
+			})
 
       console.log(data);
+      setIsSubmitting(false);
+
     } catch (error) {
       console.error("Submission error:", error);
     }
@@ -44,7 +47,7 @@ export function StyleguideCreateForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-center gap-y-4 xl:gap-y-6"
     >
-      <h5 className="text-5xl pb-2 font-bold text-center text-white">
+      <h5 className="text-4xl md:text-5xl xl:text-6xl pb-4 font-bold text-center text-white">
         Create your custom <br/> Style Guide
       </h5>
       <Input

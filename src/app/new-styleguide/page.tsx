@@ -14,7 +14,7 @@ export default async function NewStyleGuidePage() {
         className="w-full min-h-screen relative flex flex-col justify-center items-center md:flex-row gap-y-8
  				xl:gap-x-12 2xl:gap-x-20 md:gap-x-8 overflow-x-hidden mt-12 sm:mt-24 lg:mt-32"
       >
-        <div className="w-full xl:w-1/2 mt-20 pb-12">
+        <div className="w-full md:w-3/4 xl:w-[60%] mt-20 md:mt-16 pb-12">
           <StyleguideCreateForm />
         </div>
       </main>
