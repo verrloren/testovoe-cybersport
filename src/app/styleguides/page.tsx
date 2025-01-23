@@ -34,11 +34,17 @@ export default async function StyleGuidesPage() {
         fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
         xl:-top-[60%] "
       /> */}
-			<div
+						<div
+        className="radial-ellipse-dashboard w-full aspect-square
+				absolute left-0 -top-[10%] md:-top-1/3 lg:-bottom-1/3 -z-50
+			  xl:top-[10%] "
+      ></div>
+			{/* dark sphere */}
+			{/* <div
         className="radial-ellipse-dashboard-black w-full aspect-square
         fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
         xl:-top-[60%] "
-      />
+      /> */}
 
       <Container>
         <HydrationBoundary state={dehydratedState}>

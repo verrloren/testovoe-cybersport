@@ -12,7 +12,7 @@ export function ProjectsPageInfo() {
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4, ease: "easeInOut" }}
 		className="flex flex-col sm:flex-row items-center justify-between">
-      <h3 className="text-7xl lg:text-8xl 2xl:text-9xl text-white font-semibold pb-12 xl:pb-20">
+      <h3 className="text-7xl lg:text-8xl 2xl:text-9xl text-white font-semibold pb-12 xl:pb-16">
         Projects
       </h3>
       <Link href="/new-project">
