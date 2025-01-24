@@ -1,8 +1,6 @@
 "use client";
 
 import { UploadProjects } from "@/components/upload-projects";
-// import { FileList } from "@/components/file-list";
-
 import { ProjectCreateForm } from "@/modules/projects/ui/project-create-form";
 import { useState } from "react";
 

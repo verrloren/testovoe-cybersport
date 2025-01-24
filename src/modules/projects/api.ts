@@ -10,6 +10,15 @@ interface ResponseDto {
   response: string;
 }
 
+
+export type ProjectStatus = 'pending' | 'processing' | 'success' | 'error';
+
+export interface ProjectStatusResponse {
+  status: ProjectStatus;
+  message?: string;
+}
+
+
 export const projectsApi = {
   baseKey: "projects",
   baseUrl: "/api/projects",
@@ -54,17 +63,20 @@ export const projectsApi = {
       json: data,
     });
   },
-  async createProject(formData: FormData) {
-    const response = await fetch("/api/projects", {
-      method: "POST",
+
+
+  createProject: async (formData: FormData) => {
+    const response = await fetch('/api/projects', {
+      method: 'POST',
       body: formData,
     });
-
-    if (!response.ok) {
-      throw new Error("Failed to create project");
-    }
-
-    return response.json();
+    const data = await response.json();
+    return data;
   },
+	checkProjectStatus: async (projectId: number): Promise<ProjectStatusResponse> => {
+    const response = await fetch(`/api/projects/${projectId}/status`);
+    return response.json();
+  }
 };
+
 
