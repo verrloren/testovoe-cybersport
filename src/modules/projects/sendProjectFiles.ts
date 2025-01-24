@@ -21,7 +21,7 @@ import { getToken } from "@/modules/auth/getToken";
 				method: 'POST',
 				headers: {
 					'Authorization': `Bearer ${token}`,
-					'API-Key': process.env.BACKEND_API_KEY as string
+					'X-API-KEY': process.env.BACKEND_API_KEY as string
 				},
 				body: formData,
 			});

@@ -8,6 +8,7 @@ import { getQueryClient } from "@/shared/get-query-clients";
 export default async function NewProjectPage() {
 	
   const queryClient = getQueryClient();
+	
 		if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
 			await queryClient.prefetchQuery({
 				queryKey: [styleGuidesApi.baseKey],

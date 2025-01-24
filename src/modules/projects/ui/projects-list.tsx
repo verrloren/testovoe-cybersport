@@ -87,7 +87,7 @@ export default function ProjectsList() {
   const projectStatuses = Object.fromEntries(
     processingStatusQueries.map(({ projectId, query }) => [
       projectId,
-      query.data?.status
+      query.data?.response.project_status
     ])
   );
 

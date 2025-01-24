@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { projectsApi } from "../api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,6 +26,7 @@ import Link from "next/link";
 import { useProjectStatus } from "../use-project-status";
 import { useRouter } from "next/navigation";
 import { useProcessingProjectsStore } from "../processing-projects-store";
+import { createProjectAction } from "../create-project-action";
 
 export function ProjectCreateForm({ files }: { files: File[] }) {
 
@@ -90,11 +90,12 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       }
       console.log("formData before fetch:", formData)
       
-      const response = await projectsApi.createProject(formData);
-      
-			setProjectId(response.id);
-      addProcessingProject(response.id); // Add to processing projects list
-			router.push('/projects');
+      const { success, response } = await createProjectAction(formData);
+      if(success){
+				setProjectId(response);
+				addProcessingProject(response); // Add to processing projects list
+				router.push('/projects');
+			}
     } catch (error) {
       console.error("Submission error:", error);
       toast.error("Failed to create project");
@@ -175,8 +176,8 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
         disabled={isSubmitting}
       >
         {isSubmitting ? (
-					statusData?.status === 'pending' ? "Uploading..." :
-          statusData?.status === 'processing' ? "Processing..." :
+					statusData?.response.project_status === 'pending' ? "Uploading..." :
+          statusData?.response.project_status === 'processing' ? "Processing..." :
           "Creating..."
         ) : "Submit"}
       </Button>

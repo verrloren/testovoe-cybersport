@@ -14,7 +14,7 @@ type DataType = {
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json',
-					'API-Key': process.env.BACKEND_API_KEY as string
+					'X-API-KEY': process.env.BACKEND_API_KEY as string
 				},
 			})
 

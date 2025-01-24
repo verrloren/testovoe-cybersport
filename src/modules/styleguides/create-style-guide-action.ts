@@ -4,10 +4,10 @@ import { getToken } from "../auth/getToken";
 import { styleGuidesApi } from "./api";
 // import { styleGuidesApi } from "./api";
 
-export const sendStyleGuideAction = async (formData: FormData) => {
+export const createStyleGuideAction = async (formData: FormData) => {
   const { token } = await getToken();
   try {
-		const result = await styleGuidesApi.sendStyleGuide(formData, token);
+		const result = await styleGuidesApi.createStyleGuide(formData, token);
 		return await result.json();
   } catch (error) {
     return { 

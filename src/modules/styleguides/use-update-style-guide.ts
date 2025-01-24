@@ -7,15 +7,15 @@ export const useUpdateStyleGuide = () => {
 
 	const queryClient = useQueryClient();
 	type UpdateStyleGuideVariables = {
-		id: number;
+		guideline_id: number;
 		name: string;
 	}
 	
 
 	const updateStyleGuideMutation = useMutation({
-		mutationFn: ({ id, name }: UpdateStyleGuideVariables) => editStyleGuideAction(id, name),
+		mutationFn: ({ guideline_id, name }: UpdateStyleGuideVariables) => editStyleGuideAction(guideline_id, name),
     
-    onMutate: async ({ id, name }) => {
+    onMutate: async ({ guideline_id, name }) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({
         queryKey: [styleGuidesApi.baseKey],
@@ -27,7 +27,7 @@ export const useUpdateStyleGuide = () => {
       // Optimistically update styleguide list
       if (previousStyleGuides) {
         const updatedStyleGuides = previousStyleGuides.map(styleguide => 
-          styleguide.id === id ? { ...styleguide, name } : styleguide
+          styleguide.guideline_id === guideline_id ? { ...styleguide, name } : styleguide
         );
         queryClient.setQueryData([styleGuidesApi.baseKey], updatedStyleGuides);
       }
@@ -47,8 +47,8 @@ export const useUpdateStyleGuide = () => {
 		}
 	});
 
-	const updateStyleGuide = (id: number, name: string) => {
-		updateStyleGuideMutation.mutate({ id, name });
+	const updateStyleGuide = (guideline_id: number, name: string) => {
+		updateStyleGuideMutation.mutate({ guideline_id, name });
 	};
 
 	return { updateStyleGuide };

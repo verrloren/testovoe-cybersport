@@ -17,7 +17,7 @@ export const getMD = async (projectId: number) => {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
-      'API-Key': process.env.BACKEND_API_KEY as string,
+      'X-API-KEY': process.env.BACKEND_API_KEY as string,
       'id': `${projectId}`,
     },
   });

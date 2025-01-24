@@ -14,18 +14,18 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password } = validatedFields.data;
 
   try {
-    const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/login`, {
+    const result = await fetch(`${process.env.BACKEND_API_URL}/api/auth/login`, {
       method: "POST",
 			credentials: "include",
       headers: {
         "Content-Type": "application/json",
-				"API-Key": process.env.BACKEND_API_KEY as string,
+				"X-API-KEY": process.env.BACKEND_API_KEY as string,
 				'Accept': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
 
-    const { success, access_token: token } = await result.json();
+    const { success, response: token } = await result.json();
 
 		if (success && token) {
 			await setSession(token);

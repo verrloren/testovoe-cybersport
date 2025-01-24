@@ -27,9 +27,9 @@ import { login } from "@/modules/auth/login";
 
 export type LoginResponse = {
   success: boolean;
-} | {
-  error: string;
-};
+	response: string;
+}
+
 export default function LoginForm() {
 
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function LoginForm() {
       try {
         const data: LoginResponse = await login(values);
 				if ('error' in data) {
-          toast.error(data.error);
+          toast.error(data.success);
           return;
         }
         if (data.success) {

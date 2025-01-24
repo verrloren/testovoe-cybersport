@@ -13,12 +13,12 @@ export const styleGuidesApi = {
   baseKey: "styleguides",
   getStyleGuides: async (token: string | undefined) => {
     const response = await jsonApiInstance<StyleGuidesResponse>(
-      "/api/styleguide",
+      "/api/guidelines",
       {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-          "API-Key": process.env.BACKEND_API_KEY as string,
+          "X-API-KEY": process.env.BACKEND_API_KEY as string,
         },
         json: null,
       }
@@ -28,14 +28,12 @@ export const styleGuidesApi = {
     }
     return response.response;
   },
-  sendStyleGuide: (formData: FormData, token: string | undefined) => {
-    return fetch(`${process.env.BACKEND_API_URL}/api/styleguide/upload`, {
+  createStyleGuide: (formData: FormData, token: string | undefined) => {
+    return fetch(`${process.env.BACKEND_API_URL}/api/guidelines?&name=${formData.get('name')}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
-        id: formData.get("codelang_code") as string,
-        name: formData.get("subject") as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
       body: formData.get("file") as Blob,
     });
@@ -46,29 +44,29 @@ export const styleGuidesApi = {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
-      json: { id } // Changed from json: id to json: { id }
+      json: { id }
     });
   },
 
-	updateStyleGuide: (id: number, name: string, token: string | undefined) => {
-    return jsonApiInstance<ResponseDto>(`/api/styleguide/${id}`, {
-      method: "PUT",
+	updateStyleGuide: (guideline_id: number, name: string, token: string | undefined) => {
+    return jsonApiInstance<ResponseDto>(`/api/guidelines?name=${name}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
-      json: { name }
+      json: { id: guideline_id }
     });
   },
 
   deleteStyleGuide: (id: number, token: string | undefined) => {
-    return jsonApiInstance<ResponseDto>(`/api/styleguide`, {
+    return jsonApiInstance<ResponseDto>(`/api/guidelines`, {
 			method: "DELETE",
 			headers: {
 				Authorization: `Bearer ${token}`,
-				"API-Key": process.env.BACKEND_API_KEY as string,
+				"X-API-KEY": process.env.BACKEND_API_KEY as string,
 			},
 			json: { id }
 		});

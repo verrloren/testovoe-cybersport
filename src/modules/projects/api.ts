@@ -14,8 +14,7 @@ interface ResponseDto {
 export type ProjectStatus = 'pending' | 'processing' | 'success' | 'error';
 
 export interface ProjectStatusResponse {
-  status: ProjectStatus;
-  message?: string;
+  response: ProjectDto;
 }
 
 
@@ -27,7 +26,7 @@ export const projectsApi = {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
       json: null,
     });
@@ -41,41 +40,50 @@ export const projectsApi = {
     data: Partial<ProjectDto> & { id: number; name: string },
     token: string | undefined
   ) => {
-    return jsonApiInstance<ResponseDto>(`/api/projects/edit`, {
-      method: "POST",
+    return jsonApiInstance<ResponseDto>(`/api/projects?id=${data.id}&name=${data.name}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
-      json: data,
+      json: null,
     });
   },
   deleteProject: (
     data: Partial<ProjectDto> & { id: number },
     token: string | undefined
   ) => {
-    return jsonApiInstance<ResponseDto>(`/api/projects/delete`, {
-      method: "POST",
+    return jsonApiInstance<ResponseDto>(`/api/projects`, {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
       json: data,
     });
+		
   },
 
 
-  createProject: async (formData: FormData) => {
-    const response = await fetch('/api/projects', {
+  createProject: async (formData: FormData, token: string | undefined) => {
+     return jsonApiInstance<ResponseDto>('/api/projects', {
       method: 'POST',
-      body: formData,
+			headers: {
+				Authorization: `Bearer ${token}`,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
+			},
+      json: formData,
     });
-    const data = await response.json();
-    return data;
   },
-	checkProjectStatus: async (projectId: number): Promise<ProjectStatusResponse> => {
-    const response = await fetch(`/api/projects/${projectId}/status`);
-    return response.json();
+	checkProjectStatus: async (projectId: number, token: string | undefined): Promise<ProjectStatusResponse> => {
+    return jsonApiInstance(`/api/projects?id=${projectId}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
+			},
+			json: null
+		});
   }
 };
 

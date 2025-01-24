@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { styleGuidesApi } from "./api";
 import {  StyleGuide } from "@/shared/model/types";
-import { sendStyleGuideAction } from "./send-style-guide-action";
+import { createStyleGuideAction } from "../styleguides/create-style-guide-action";
+import { styleGuidesApi } from "../styleguides/api";
 
 interface UploadVariables {
   file: File;
@@ -11,7 +11,7 @@ interface MutationContext {
   previousStyleGuides: StyleGuide[] | undefined;
 }
 
-export const useSendStyleGuide = () => {
+export const useCreateStyleGuide = () => {
 
 	const queryClient = useQueryClient();
 
@@ -25,7 +25,7 @@ export const useSendStyleGuide = () => {
       );
       formData.append('file', file);
 
-      const result = await sendStyleGuideAction(formData);
+      const result = await createStyleGuideAction(formData);
 
       if (!result.success) {
         throw new Error(result.response);

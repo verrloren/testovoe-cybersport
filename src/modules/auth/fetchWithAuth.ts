@@ -12,7 +12,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
 	const headers = {
 		...options.headers,
 		"Content-Type": "application/json",
-		"API-Key": process.env.BACKEND_API_KEY as string,
+		"X-API-KEY": process.env.BACKEND_API_KEY as string,
 		'Authorization': `Bearer ${token}`,
 	}
 

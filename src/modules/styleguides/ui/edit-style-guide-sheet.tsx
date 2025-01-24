@@ -20,6 +20,7 @@ import { useUpdateStyleGuide } from "../use-update-style-guide";
 
 interface EditStyleGuideSheetProps {
   styleGuideId?: number;
+	styleGuideGuidelineId?: number;
   styleGuideName?: string;
   bg?: string;
   border?: string;
@@ -28,7 +29,7 @@ interface EditStyleGuideSheetProps {
   wfull?: string;
 }
 
-export function EditStyleGuideSheet({ styleGuideId, styleGuideName, bg, border, text, rounded, wfull}: EditStyleGuideSheetProps) {
+export function EditStyleGuideSheet({ styleGuideId, styleGuideGuidelineId, styleGuideName, bg, border, text, rounded, wfull}: EditStyleGuideSheetProps) {
 
   const { updateStyleGuide } = useUpdateStyleGuide();
 
@@ -45,8 +46,8 @@ export function EditStyleGuideSheet({ styleGuideId, styleGuideName, bg, border, 
     }
 
     try {
-			if(styleGuideId && styleGuideName) {
-				await updateStyleGuide(styleGuideId, newStyleGuideName);
+			if(styleGuideName && styleGuideGuidelineId) {
+				await updateStyleGuide(styleGuideGuidelineId, newStyleGuideName);
 			} 
 			toast.success('Style Guide updated successfully');
 			document.getElementById('dialog-close-button')?.click();
