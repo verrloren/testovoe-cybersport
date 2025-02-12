@@ -6,7 +6,7 @@
 ## Запуск Проекта 🚀
 
 Для запуска проекта достаточно просто пройти по [этой ссылке]
-[https://hackathon-evrz.vercel.app/auth/login](https://evrz.vercel.app/)
+[[https://hackathon-evrz.vercel.app/auth/login](https://evrz.vercel.app/)](https://evrz.vercel.app/)
 Аккаунт для входа на сайт: 
 логин: admin@gmail.com
 пароль: 123123
