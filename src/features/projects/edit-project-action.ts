@@ -1,7 +1,7 @@
 'use server';
 
 import { getToken } from "@/modules/auth/getToken";
-import { projectsApi } from "./api";
+import { projectsApi } from ".";
 
  export const editProjectAction = async (id: number, name: string) => {
 	const { token } = await getToken();

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { projectsApi } from "./api";
+import { projectsApi } from ".";
 import { ProjectDto } from "@/shared/model/types";
 import { useProjectsStore } from "./projects-store";
 import { deleteProjectAction } from "./delete-project-action";

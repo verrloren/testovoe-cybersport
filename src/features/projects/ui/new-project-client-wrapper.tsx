@@ -3,8 +3,8 @@
 import { UploadProjects } from "@/features/projects/ui/upload-projects";
 // import { FileList } from "@/components/file-list";
 
-import { ProjectCreateForm } from "@/modules/projects/ui/project-create-form";
 import { useState } from "react";
+import { ProjectCreateForm } from "./project-create-form";
 
 export function NewProjectClientWrapper() {
   const [files, setFiles] = useState<File[]>([]);

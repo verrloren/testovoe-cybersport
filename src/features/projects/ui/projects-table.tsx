@@ -4,13 +4,13 @@ import { CodeBlock } from "react-code-block";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { themes } from "prism-react-renderer";
-import { useProjectsStore } from "@/modules/projects/projects-store";
 import { CodeIcon } from "@radix-ui/react-icons";
 import { Button } from "@/shared/ui/button";
 import { useCopyCode } from "@/shared/hooks/use-copy-code";
 import { Input } from "@/shared/ui/input";
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { useProjectsStore } from "../projects-store";
 
 function HighlightText({ text, query }: { text: string; query: string }) {
   if (!query) return <>{text}</>;

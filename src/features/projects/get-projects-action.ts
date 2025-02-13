@@ -2,7 +2,7 @@
 
 import { ProjectDto } from "@/shared/model/types";
 import { getToken } from "@/modules/auth/getToken";
-import { projectsApi } from "./api";
+import { projectsApi } from ".";
 
 export const getProjectsAction = async (): Promise<ProjectDto[]> => {
   try {

@@ -3,7 +3,7 @@
 import { ProjectDto } from "@/shared/model/types";
 import { useQuery } from "@tanstack/react-query";
 import { getProjectsAction } from "../get-projects-action";
-import { projectsApi } from "../api";
+import { projectsApi } from "..";
 import { DotsVerticalIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { GitBranch, GitCommit } from "lucide-react";
 import {

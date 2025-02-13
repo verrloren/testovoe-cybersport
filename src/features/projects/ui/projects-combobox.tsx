@@ -17,7 +17,7 @@ import {
 } from "@/shared/ui/popover";
 import { StatusIndicator } from "./status-indicator";
 import { getProjectsAction } from "../get-projects-action";
-import { projectsApi } from "../api";
+import { projectsApi } from "..";
 import { ProjectDto } from "@/shared/model/types";
 import { useProjectsStore } from "../projects-store";
 import { CheckIcon } from "@radix-ui/react-icons";
