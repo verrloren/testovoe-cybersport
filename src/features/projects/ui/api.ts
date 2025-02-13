@@ -10,6 +10,14 @@ interface ResponseDto {
   response: string;
 }
 
+
+export type ProjectStatus = 'pending' | 'processing' | 'success' | 'error';
+
+export interface ProjectStatusResponse {
+  response: ProjectDto;
+}
+
+
 export const projectsApi = {
   baseKey: "projects",
   baseUrl: "/api/projects",
@@ -18,7 +26,7 @@ export const projectsApi = {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
       json: null,
     });
@@ -32,39 +40,51 @@ export const projectsApi = {
     data: Partial<ProjectDto> & { id: number; name: string },
     token: string | undefined
   ) => {
-    return jsonApiInstance<ResponseDto>(`/api/projects/edit`, {
-      method: "POST",
+    return jsonApiInstance<ResponseDto>(`/api/projects?id=${data.id}&name=${data.name}`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
-      json: data,
+      json: null,
     });
   },
   deleteProject: (
     data: Partial<ProjectDto> & { id: number },
     token: string | undefined
   ) => {
-    return jsonApiInstance<ResponseDto>(`/api/projects/delete`, {
-      method: "POST",
+    return jsonApiInstance<ResponseDto>(`/api/projects`, {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
-        "API-Key": process.env.BACKEND_API_KEY as string,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
       json: data,
     });
+		
   },
-  async createProject(formData: FormData) {
-    const response = await fetch("/api/projects", {
-      method: "POST",
-      body: formData,
+
+
+  createProject: async (formData: FormData, token: string | undefined) => {
+     return jsonApiInstance<ResponseDto>('/api/projects', {
+      method: 'POST',
+			headers: {
+				Authorization: `Bearer ${token}`,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
+			},
+      json: formData,
     });
-
-    if (!response.ok) {
-      throw new Error("Failed to create project");
-    }
-
-    return response.json();
   },
+	checkProjectStatus: async (projectId: number, token: string | undefined): Promise<ProjectStatusResponse> => {
+    return jsonApiInstance(`/api/projects?id=${projectId}`, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+        "X-API-KEY": process.env.BACKEND_API_KEY as string,
+			},
+			json: null
+		});
+  }
 };
+
 

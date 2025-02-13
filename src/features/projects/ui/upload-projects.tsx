@@ -1,5 +1,7 @@
-import { FilePond } from 'react-filepond';
+'use client';
+
 import 'filepond/dist/filepond.min.css';
+import { FilePond } from 'react-filepond';
 import { type FilePondFile } from 'filepond';
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';

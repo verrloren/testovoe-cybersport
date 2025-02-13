@@ -29,7 +29,7 @@ export default async function StyleGuidesPage() {
           <div className="w-full pt-40 md:pt-44 lg:pt-52 2xl:pt-72">
 							<StyleguidesPageInfo />
             <div
-              className="w-full relative flex flex-col justify-center
+						className="w-full relative flex flex-col justify-center
 							gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20"
             >
 							<StyleGuidesList />

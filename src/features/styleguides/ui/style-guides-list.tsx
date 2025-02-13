@@ -88,6 +88,7 @@ export function StyleGuidesList() {
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                   <EditStyleGuideSheet
                     styleGuideId={styleguide.id}
+										styleGuideGuidelineId={styleguide.guideline_id}
                     styleGuideName={styleguide.name}
                     bg="dark"
                     border="none"

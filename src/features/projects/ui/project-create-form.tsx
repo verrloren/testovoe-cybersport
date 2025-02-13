@@ -24,9 +24,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader } from "../../../shared/ui/loader";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useProjectStatus } from "../use-project-status";
+import { useRouter } from "next/navigation";
+import { useProcessingProjectsStore } from "../processing-projects-store";
+import { createProjectAction } from "../create-project-action";
 
 export function ProjectCreateForm({ files }: { files: File[] }) {
+
+	const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [projectId, setProjectId] = useState<number>(0);
+
+	const { data: statusData } = useProjectStatus(projectId);
+  const addProcessingProject = useProcessingProjectsStore(state => state.addProcessingProject);
 
   const { data: styleguides = [], isLoading } = useQuery<StyleGuide[]>({
     queryKey: [styleGuidesApi.baseKey],
@@ -44,17 +54,6 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
     resolver: zodResolver(createProjectSchema),
   });
 
-  const createProjectMutation = useMutation({
-    mutationFn: projectsApi.createProject,
-    onSuccess: () => {
-      toast.success("Project created successfully!");
-      // Optional: Reset form here
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to create project");
-    },
-  });
-
   const onSubmit = async (data: CreateProjectFormData) => {
     if (files.length === 0) {
       toast.error("Please upload at least one file");
@@ -68,18 +67,39 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       // Append form data
       formData.append("projectName", data.projectName);
       formData.append("styleGuide", data.styleGuide);
+      
+      const hasZipFile = files.some((file) => file.type === "application/zip");
 
-      // Append files
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
+      if (hasZipFile) {
+        // Append all files directly if any ZIP file is present
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
+      } else {
+        // Create a ZIP for non-ZIP files
+        const zip = new JSZip();
+        files.forEach((file) => {
+          zip.file(file.name, file);
+        });
 
-      console.log(data);
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        formData.append("files", new File([zipBlob], "archive.zip", { type: "application/zip" }));
+      }
 
-      await createProjectMutation.mutateAsync(formData);
+      for(const [keys, values] of formData) {
+        console.log(keys,values)
+      }
+      console.log("formData before fetch:", formData)
+      
+      const { success, response } = await createProjectAction(formData);
+      if(success){
+				setProjectId(response);
+				addProcessingProject(response); // Add to processing projects list
+				router.push('/projects');
+			}
     } catch (error) {
       console.error("Submission error:", error);
-    } finally {
+      toast.error("Failed to create project");
       setIsSubmitting(false);
     }
   };
@@ -102,8 +122,8 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
         placeholder="What will it be?"
         name="projectName"
         className="w-full py-6 text-neutral-400
-		transition-colors bg-black rounded-2xl font-poppins
-		font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+    transition-colors bg-black rounded-2xl font-poppins
+    font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.projectName && (
         <p className="text-red-500 text-sm">{errors.projectName.message}</p>
@@ -152,11 +172,15 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       )}
       <Button
         className="py-6 mt-4 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 
-				transition-colors hover:bg-white disabled:opacity-50"
+        transition-colors hover:bg-white disabled:opacity-50"
         type="submit"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Creating..." : "Submit"}
+        {isSubmitting ? (
+					statusData?.response.project_status === 'pending' ? "Uploading..." :
+          statusData?.response.project_status === 'processing' ? "Processing..." :
+          "Creating..."
+        ) : "Submit"}
       </Button>
     </motion.form>
   );

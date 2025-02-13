@@ -47,7 +47,7 @@ export function StyleguideCreateForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-center gap-y-4 xl:gap-y-6"
     >
-      <h5 className="text-4xl md:text-5xl xl:text-6xl pb-4 font-bold text-center text-white">
+      <h5 className="text-5xl sm:text-6xl xl:text-7xl pb-6 font-bold text-center text-white">
         Create your custom <br/> Style Guide
       </h5>
       <Input

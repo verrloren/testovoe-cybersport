@@ -20,7 +20,7 @@ export function StyleguidesPageInfo() {
           className="mb-4 sm:mb-0 w-auto px-4 h-12 py-2 bg-neutral-100 
 					hover:bg-white rounded-xl
 							hover:border-white shadow-none transition-colors 
-							text-neutral-950 text-base 2xl:text-2xl 2xl:px-8 2xl:py-6"
+							text-neutral-950 text-base 2xl:text-xl 2xl:px-8 2xl:py-6"
         >
           <AiOutlinePlus className="text-black" />
           Create Style Guide

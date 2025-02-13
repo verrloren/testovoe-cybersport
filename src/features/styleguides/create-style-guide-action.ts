@@ -1,7 +1,7 @@
 'use server';
 
 import { getToken } from "../auth/getToken";
-import { styleGuidesApi } from "../styleguides/api/api";
+import { styleGuidesApi } from "./api/api";
 
 export const createStyleGuideAction = async (formData: FormData) => {
   const { token } = await getToken();

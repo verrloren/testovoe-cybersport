@@ -10,17 +10,17 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 		return { error: "Invalid fields" };
 	}
 
-	const { email, password, name } = validatedFields.data;
+	const { email, password, name: username } = validatedFields.data;
 
 
 	try {
-		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users/create`, {
+		const result = await fetch(`${process.env.BACKEND_API_URL}/api/users`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'API-Key': process.env.BACKEND_API_KEY as string
+				"X-API-KEY": process.env.BACKEND_API_KEY as string,
 			},
-			body: JSON.stringify({ name, email, password })
+			body: JSON.stringify({ username, email, password })
 		})
 
 		const { success, response } = await result.json();
