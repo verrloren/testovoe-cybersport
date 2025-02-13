@@ -1,16 +1,14 @@
 "use client";
 
-import { CodeBlock } from "react-code-block";
+import { Search } from "lucide-react";
 import { motion } from "framer-motion";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { useMemo, useState } from "react";
+import { CodeBlock } from "react-code-block";
 import { themes } from "prism-react-renderer";
 import { CodeIcon } from "@radix-ui/react-icons";
-import { Button } from "@/shared/ui/button";
-import { useCopyCode } from "@/shared/hooks/use-copy-code";
-import { Input } from "@/shared/ui/input";
-import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
-import { useProjectsStore } from "../projects-store";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger, Button, Input, useCopyCode } from "@/shared";
+import { useProjectsStore } from "@/features/projects";
 
 function HighlightText({ text, query }: { text: string; query: string }) {
   if (!query) return <>{text}</>;

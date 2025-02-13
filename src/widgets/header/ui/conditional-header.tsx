@@ -1,9 +1,9 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Header from '../../../components/header/header'; // Adjust the import path as needed
+import { Header } from '@/widgets/header';
 
-export default function ConditionalHeader() {
+export function ConditionalHeader() {
   const pathname = usePathname();
   const hideHeaderRoutes = ['/auth/login', '/auth/register'];
 

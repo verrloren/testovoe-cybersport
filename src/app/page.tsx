@@ -1,13 +1,8 @@
-import { getProjectsAction } from "@/modules/projects/get-projects-action";
-import Container from "@/shared/ui/container";
-import { projectsApi } from "@/modules/projects/api";
-import { styleGuidesApi } from "@/modules/styleguides/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/get-query-clients";
-import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import SpherePurple from "@/shared/ui/sphere-purple";
-import ProjectsPageInfo from "@/modules/projects/ui/projects-page-info";
-import ProjectsList from "@/modules/projects/ui/projects-list";
+
+import { Container, getQueryClient, SpherePurple } from "@/shared";
+import { getStyleGuidesAction, styleGuidesApi } from "@/features/styleguides";
+import { getProjectsAction, ProjectsPageInfo, ProjectsList, projectsApi } from "@/features/projects";
 
 
 export default async function HomePage() {

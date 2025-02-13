@@ -1,9 +1,9 @@
 
 import Container from "@/shared/ui/container";
-import { styleGuidesApi } from "@/modules/styleguides/api";
 import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import { NewProjectClientWrapper } from "@/modules/projects/ui/new-project-client-wrapper";
-import { getQueryClient } from "@/shared/get-query-clients";
+import { getQueryClient } from "@/shared/api/get-query-clients";
+import { NewProjectClientWrapper } from "@/features/projects/ui/new-project-client-wrapper";
+import { styleGuidesApi } from "@/features/styleguides/api/api";
 
 export default async function NewProjectPage() {
 	

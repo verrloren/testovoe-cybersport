@@ -1,12 +1,12 @@
 // button-md.tsx
 'use client'
 
-import { FaMarkdown } from "react-icons/fa"; // ✅ Change to markdown icon
-import { Button } from "../../../shared/ui/button";
-import toast from "react-hot-toast";
-import { useProjectsStore } from "@/modules/projects/projects-store";
 import { useState } from "react";
-import { getMD } from "@/modules/projects/getMD";
+import { FaMarkdown } from "react-icons/fa";
+import toast from "react-hot-toast";
+
+import { Button } from "@/shared";
+import { useProjectsStore, getMD } from "@/features/projects";
 
 export function ButtonMD() {
   const [MDLoading, setMDLoading] = useState(false);

@@ -1,11 +1,9 @@
-import { jsonApiInstance } from "@/shared/projects/api-instance";
 import { UseQueryOptions } from "@tanstack/react-query";
 
-export type UserDto = {
-	id: number; 
-	login: string; 
-	password: string 
-};
+import { UserDto } from "@/entities";
+import { jsonApiInstance } from "@/shared";
+
+
 
 export const authApi = {
   baseKey: "users",

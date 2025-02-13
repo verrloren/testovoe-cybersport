@@ -1,28 +1,24 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
 import { motion } from "framer-motion";
+import { FaChevronDown } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { CheckIcon } from "@radix-ui/react-icons";
+
 import {
+	Button,
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/shared/ui/command";
-import {
-  Popover,
+	Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/shared/ui/popover";
-import { StatusIndicator } from "./status-indicator";
-import { getProjectsAction } from "../get-projects-action";
-import { projectsApi } from "..";
-import { ProjectDto } from "@/shared/model/types";
-import { useProjectsStore } from "../projects-store";
-import { CheckIcon } from "@radix-ui/react-icons";
-import { useQuery } from "@tanstack/react-query";
-import { FaChevronDown } from "react-icons/fa";
+} from "@/shared";
+import { Project } from "@/entities/";
+import { getProjectsAction, projectsApi, StatusIndicator, useProjectsStore } from "@/features/projects";
 
 export function ProjectsCombobox() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
@@ -30,7 +26,7 @@ export function ProjectsCombobox() {
   const isComboboxOpen = useProjectsStore((state) => state.isComboboxOpen);
   const setIsComboboxOpen = useProjectsStore((state) => state.setIsComboboxOpen);
 
-  const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
+  const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
     staleTime: 60_000,

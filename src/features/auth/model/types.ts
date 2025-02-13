@@ -1,5 +1,10 @@
-export type LoginResponse = {
-  success: boolean;
-} | {
-  error: string;
-};
+export type AuthResponse =
+  | {
+      success: boolean;
+      response: string;
+			message?: string;
+    }
+  | {
+      error: string;
+    };
+

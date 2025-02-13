@@ -1,4 +1,5 @@
 'use client'
+
 interface StatusIndicatorProps {
 	status: string;
 	size?: string;

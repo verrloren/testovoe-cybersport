@@ -3,7 +3,7 @@
 import { ExclamationMark } from "@/features/auth/ui/exclamation-mark";
 
 interface FormErrorMessageProps {
-	message: string | undefined;
+	message?: string | undefined;
 }
 
 export function FormErrorMessage({ message }: FormErrorMessageProps) {

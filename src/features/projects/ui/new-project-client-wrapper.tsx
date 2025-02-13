@@ -1,10 +1,7 @@
 "use client";
 
-import { UploadProjects } from "@/features/projects/ui/upload-projects";
-// import { FileList } from "@/components/file-list";
-
 import { useState } from "react";
-import { ProjectCreateForm } from "./project-create-form";
+import { UploadProjects, ProjectCreateForm } from "@/features/projects";
 
 export function NewProjectClientWrapper() {
   const [files, setFiles] = useState<File[]>([]);

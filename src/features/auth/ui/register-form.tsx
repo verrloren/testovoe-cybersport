@@ -1,33 +1,25 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { useTransition } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
-import { Button } from "@/shared/ui/button";
-import { useTransition } from "react";
-import { ExclamationMark } from "@/features/auth/ui/exclamation-mark";
-import { RegisterSchema } from "@/shared/schemas";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { motion } from "framer-motion";
-import Link from "next/link";
-
-export type RegisterResponse =
-  | {
-      success: boolean;
-      response: string;
-    }
-  | {
-      error: string;
-    };
+  Input,
+  Button,
+  RegisterSchema,
+} from "@/shared";
+import { register, ExclamationMark, AuthResponse } from "@/features/auth";
 
 export default function RegisterForm() {
   const [isPending, setTransition] = useTransition();
@@ -44,7 +36,7 @@ export default function RegisterForm() {
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setTransition(() => {
-      register(values).then((data: RegisterResponse) => {
+      register(values).then((data: AuthResponse) => {
         if ("error" in data) {
           toast.error(data.error);
           return;

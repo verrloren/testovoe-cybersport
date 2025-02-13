@@ -1,11 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
 import { motion } from 'framer-motion';
+import { AiOutlinePlus } from "react-icons/ai";
 
-export default function ProjectsPageInfo() {
+import { Button } from "@/shared";
+
+export function ProjectsPageInfo() {
   return (
     <motion.div 
 			initial={{ opacity: 0}}

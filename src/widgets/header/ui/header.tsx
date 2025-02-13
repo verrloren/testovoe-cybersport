@@ -1,21 +1,22 @@
 "use client";
 
-import { Logo } from "../../../components/header/logo";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import toast from "react-hot-toast";
-import { Button } from "../../../shared/ui/button";
+import { motion } from "framer-motion";
 import { MenuIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/shared/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
-import { useLogout } from "@/modules/auth/use-logout";
-import Link from "next/link";
+	Button
+} from "@/shared";
+import { Logo } from "@/widgets/header";
+import { useLogout } from "@/features/auth";
 
-export default function Header() {
+export function Header() {
   const router = useRouter();
   const { handleLogout } = useLogout();
 

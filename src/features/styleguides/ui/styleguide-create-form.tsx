@@ -1,15 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import {
-  CreateStyleGuideFormData,
-  createStyleGuideSchema,
-} from "@/shared/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Button, Input, CreateStyleGuideFormData, createStyleGuideSchema } from "@/shared";
+
 
 export function StyleguideCreateForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

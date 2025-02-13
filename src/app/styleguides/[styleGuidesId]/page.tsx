@@ -1,12 +1,12 @@
 "use server";
-import { ActionButtons } from "@/modules/projects/ui/action-buttons";
 import Container from "@/shared/ui/container";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/get-query-clients";
+import { getQueryClient } from "@/shared/api/get-query-clients";
 import {  StyleGuide } from "@/shared/model/types";
-import { styleGuidesApi } from "@/modules/styleguides/api";
-import { StyleGuideName } from "@/modules/styleguides/ui/style-guide-name";
 import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
+import { StyleGuideName } from "@/features/styleguides/ui/style-guide-name";
+import { ActionButtons } from "@/features/projects/ui/action-buttons";
+import { styleGuidesApi } from "@/features/styleguides/api/api";
 
 interface StyleGuidePageProps {
   params: {

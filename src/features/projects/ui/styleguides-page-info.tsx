@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
-import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
 import { motion } from 'framer-motion';
+import { AiOutlinePlus } from "react-icons/ai";
+
+import { Button } from "@/shared";
 
 export function StyleguidesPageInfo() {
   return (

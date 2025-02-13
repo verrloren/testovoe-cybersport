@@ -1,7 +1,8 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
+import toast from "react-hot-toast";
 import { AiOutlineEdit } from "react-icons/ai";
+
 
 import {
   Sheet,
@@ -11,12 +12,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/shared/ui/sheet";
-
-import { Input } from "../../../shared/ui/input";
-import toast from "react-hot-toast";
-import { useProjectsStore } from "@/modules/projects/projects-store";
-import { useUpdateProject } from "../use-update-project";
+	Input, 
+	Button
+} from "@/shared";
+import { useProjectsStore, useUpdateProject } from "@/features/projects";
 
 
 interface SheetEditProps {
@@ -29,7 +28,7 @@ interface SheetEditProps {
   wfull?: string;
 }
 
-export default function EditProjectSheet({ projectId, projectName, bg, border, text, rounded, wfull}: SheetEditProps) {
+export function EditProjectSheet({ projectId, projectName, bg, border, text, rounded, wfull}: SheetEditProps) {
 
 
 	const { selectedProject} = useProjectsStore();

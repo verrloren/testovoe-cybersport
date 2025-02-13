@@ -1,14 +1,11 @@
 'use client'
 
-import { useRouter } from "next/navigation";
-import { Button } from "@/shared/ui/button"
-// import { PlusIcon } from "@radix-ui/react-icons"
-import { SheetComponent } from "./sheet-component";
 import { motion } from 'framer-motion';
-import EditProjectSheet from "./edit-project-sheet";
-import DeleteProjectDialog from "@/modules/projects/ui/delete-project-dialog";
-import { ButtonMD } from "./button-md";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@/shared"
+import { EditProjectSheet, ButtonMD, DeleteProjectDialog } from "@/features/projects";
 
 
 
@@ -43,7 +40,7 @@ export function ActionButtons({ redirect, rounded, bg }: { redirect?: boolean, r
 			<DeleteProjectDialog bg={bg} rounded={rounded} redirect={redirect} />
 			
 			{/* SETTINGS */}
-			<SheetComponent  />
+			{/* <SheetComponent  /> */}
 		</motion.div>
 
 	)

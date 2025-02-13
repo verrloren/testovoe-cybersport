@@ -1,13 +1,13 @@
 "use server";
-import { ProjectsTable } from "@/modules/projects/ui/projects-table";
-import { ActionButtons } from "@/modules/projects/ui/action-buttons";
 import Container from "@/shared/ui/container";
-import { projectsApi } from "@/modules/projects/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/get-query-clients";
+import { getQueryClient } from "@/shared/api/get-query-clients";
 import { Project } from "@/shared/model/types";
-import { getProjectsAction } from "@/modules/projects/get-projects-action";
-import { ProjectName } from "@/modules/projects/ui/project-name";
+import { projectsApi } from "@/shared/projects/api";
+import { getProjectsAction } from "@/features/projects/get-projects-action";
+import { ProjectName } from "@/features/projects/ui/project-name";
+import { ActionButtons } from "@/features/projects/ui/action-buttons";
+import { ProjectsTable } from "@/features/projects/ui/projects-table";
 
 interface PageProps {
   params: {

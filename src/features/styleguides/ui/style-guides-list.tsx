@@ -1,21 +1,19 @@
 "use client";
 
-import { StyleGuide } from "@/shared/model/types";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/shared/ui/dropdown-menu";
-import Link from "next/link";
-import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import { DeleteStyleGuideDialog } from "./delete-style-guide-dialog";
-import { styleGuidesApi } from "../api";
-import { EditStyleGuideSheet } from "./edit-style-guide-sheet";
-import { motion } from "framer-motion";
-import { ClientLoader } from "@/shared/ui/client-loader";
+	ClientLoader
+} from "@/shared";
+import { StyleGuide } from "@/entities/styleguide";
+import { styleGuidesApi, DeleteStyleGuideDialog, EditStyleGuideSheet, getStyleGuidesAction } from "@/features/styleguides";
 
 const container = {
   hidden: { opacity: 0 },

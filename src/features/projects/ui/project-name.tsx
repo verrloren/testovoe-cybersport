@@ -1,6 +1,6 @@
 'use client'
 
-import { useProjectsStore } from "../projects-store"
+import { useProjectsStore } from "@/features/projects";
 
 export function ProjectName({ projectName }: {projectName: string}) {
 

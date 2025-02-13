@@ -1,20 +1,13 @@
-import { ProjectDto } from "@/shared/model/types";
-import { jsonApiInstance } from "@/shared/projects/api-instance";
+import { jsonApiInstance, ResponseDto } from "@/shared";
+import { ProjectsResponse } from "@/features/projects";
+import { Project } from "@/entities";
 
-interface ProjectsResponse {
-  response: ProjectDto[];
-}
-
-interface ResponseDto {
-  success: boolean;
-  response: string;
-}
 
 
 export type ProjectStatus = 'pending' | 'processing' | 'success' | 'error';
 
 export interface ProjectStatusResponse {
-  response: ProjectDto;
+  response: Project;
 }
 
 
@@ -37,7 +30,7 @@ export const projectsApi = {
   },
   // This means all ProjectDto fields are optional EXCEPT id
   updateProject: (
-    data: Partial<ProjectDto> & { id: number; name: string },
+    data: Partial<Project> & { id: number; name: string },
     token: string | undefined
   ) => {
     return jsonApiInstance<ResponseDto>(`/api/projects?id=${data.id}&name=${data.name}`, {
@@ -50,7 +43,7 @@ export const projectsApi = {
     });
   },
   deleteProject: (
-    data: Partial<ProjectDto> & { id: number },
+    data: Partial<Project> & { id: number },
     token: string | undefined
   ) => {
     return jsonApiInstance<ResponseDto>(`/api/projects`, {

@@ -1,13 +1,7 @@
-import { StyleGuide } from "@/shared/model/types";
-import { jsonApiInstance } from "@/shared/projects/api-instance";
+import { ResponseDto, jsonApiInstance } from "@/shared";
+import { StyleGuidesResponse } from "@/entities";
 
-interface StyleGuidesResponse {
-  response: StyleGuide[];
-}
-interface ResponseDto {
-  success: boolean;
-  response: string;
-}
+
 
 export const styleGuidesApi = {
   baseKey: "styleguides",

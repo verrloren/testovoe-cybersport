@@ -2,7 +2,7 @@
 import { Toaster } from "react-hot-toast";
 
 
-const ToasterProvider = () => {
+export function ToasterProvider()  {
 	return <Toaster position="bottom-left" toastOptions={{
 		style: {
 			backgroundColor: '#000000f7',
@@ -13,5 +13,3 @@ const ToasterProvider = () => {
     } 
 	}} />;
 };
-
-export default ToasterProvider;

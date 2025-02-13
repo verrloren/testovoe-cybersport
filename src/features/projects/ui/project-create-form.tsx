@@ -1,33 +1,34 @@
 "use client";
 
+import JSZip from 'jszip';
+import Link from "next/link";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { projectsApi } from "../api";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
-
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import toast from "react-hot-toast";
-import { CreateProjectFormData, createProjectSchema } from "@/shared/schemas";
-import { StyleGuide } from "@/shared/model/types";
-import { styleGuidesApi } from "@/modules/styleguides/api";
-import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import { useQuery } from "@tanstack/react-query";
-import { Loader } from "../../../shared/ui/loader";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useProjectStatus } from "../use-project-status";
-import { useRouter } from "next/navigation";
-import { useProcessingProjectsStore } from "../processing-projects-store";
-import { createProjectAction } from "../create-project-action";
+	Input,
+	Loader,
+	Button, 
+	CreateProjectFormData,
+	createProjectSchema
+} from "@/shared";
+import { 
+	createProjectAction, 
+	useProjectStatus, 
+	useProcessingProjectsStore
+} from "@/features/projects";
+import { getStyleGuidesAction, styleGuidesApi } from "@/features/styleguides";
+import { StyleGuide } from '@/entities';
 
 export function ProjectCreateForm({ files }: { files: File[] }) {
 
@@ -91,10 +92,10 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       }
       console.log("formData before fetch:", formData)
       
-      const { success, response } = await createProjectAction(formData);
-      if(success){
-				setProjectId(response);
-				addProcessingProject(response); // Add to processing projects list
+      const res = await createProjectAction(formData);
+      if(res?.success || res?.response){
+				setProjectId(Number(res?.response));
+				addProcessingProject(Number(res?.response)); // Add to processing projects list
 				router.push('/projects');
 			}
     } catch (error) {

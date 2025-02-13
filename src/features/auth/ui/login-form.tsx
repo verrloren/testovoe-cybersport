@@ -1,30 +1,25 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { useTransition } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
-import { Button } from "@/shared/ui/button";
-import { useTransition } from "react";
-import { ExclamationMark } from "./exclamation-mark";
-import { LoginSchema } from "@/shared/schemas";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { login } from "@/features/auth/login";
-import {  LoginResponse } from "@/features/auth/model/types";
-// import { useQueryClient } from "@tanstack/react-query";
-// import { projectsApi, styleGuidesApi } from "@/modules/projects/api";
-// import { getProjectsAction } from "@/modules/projects/get-projects-action";
-// import { getStyleGuidesAction } from "@/modules/projects/get-style-guides-action";
+	Input,
+	Button, 
+	LoginSchema
+} from "@/shared";
+import { login, ExclamationMark } from "@/features/auth";
 
 
 export default function LoginForm() {
@@ -44,12 +39,11 @@ export default function LoginForm() {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setTransition(async () => {
       try {
-        const data: LoginResponse = await login(values);
-				if ('error' in data) {
-          toast.error(data.success);
+        const { success } = await login(values);
+				if (!success) {
+          toast.error(`${success}`);
           return;
         }
-        if (data.success) {
 					// await queryClient.prefetchQuery({
 					// 	queryKey: [projectsApi.baseKey],
 					// 	queryFn: getProjectsAction,
@@ -60,9 +54,7 @@ export default function LoginForm() {
 					// });
 					toast.success("Login successful!");
           router.push("/");
-        } else {
-          toast.error("Login failed!");
-        }
+        
       } catch (error) {
         console.error('Login error:', error);
         toast.error("Login failed!");

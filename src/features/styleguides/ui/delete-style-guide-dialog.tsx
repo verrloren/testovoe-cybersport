@@ -1,7 +1,12 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { TrashIcon } from "@radix-ui/react-icons";
+
 import {
+	Button,
+	Loader,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -10,14 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "@/shared/ui/dialog";
-import { useProjectsStore } from "@/modules/projects/projects-store";
-import { TrashIcon } from "@radix-ui/react-icons";
-import toast from "react-hot-toast";
-// import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Loader } from '../../../shared/ui/loader';
-import { useDeleteStyleGuideMutation } from "../use-delete-styleguide";
+} from "@/shared";
+import { useProjectsStore } from "@/features/projects";
+import { useDeleteStyleGuideMutation } from "@/features/styleguides";
 
 
 interface DeleteStyleGuideDialogProps {
@@ -32,7 +32,6 @@ interface DeleteStyleGuideDialogProps {
 
 export function DeleteStyleGuideDialog({ styleguideId, bg, border, text, rounded, wfull }: DeleteStyleGuideDialogProps) {
   const { deleteStyleGuide } = useDeleteStyleGuideMutation();
-	// const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const isOpen = useProjectsStore((state) => state.isDeleteDialogOpen);

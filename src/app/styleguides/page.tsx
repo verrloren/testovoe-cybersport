@@ -1,11 +1,11 @@
 import Container from "@/shared/ui/container";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/get-query-clients";
+import { getQueryClient } from "@/shared/api/get-query-clients";
 import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import { StyleGuidesList } from "@/modules/styleguides/ui/style-guides-list";
-import { styleGuidesApi } from "@/modules/styleguides/api";
-import { StyleguidesPageInfo } from "@/modules/projects/ui/styleguides-page-info";
+import { StyleguidesPageInfo } from "@/features/projects/ui/styleguides-page-info";
 import SpherePurple from "@/shared/ui/sphere-purple";
+import { StyleGuidesList } from "@/features/styleguides/ui/style-guides-list";
+import { styleGuidesApi } from "@/features/styleguides/api/api";
 
 
 

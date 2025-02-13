@@ -1,6 +1,10 @@
 "use client";
 
-import { Button } from "@/shared/ui/button";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { TrashIcon } from "@radix-ui/react-icons";
+
 import {
   Dialog,
   DialogContent,
@@ -10,14 +14,10 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "@/shared/ui/dialog";
-import { useProjectsStore } from "@/modules/projects/projects-store";
-import { TrashIcon } from "@radix-ui/react-icons";
-import toast from "react-hot-toast";
-import { useDeleteProjectMutation } from "../use-delete-project";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Loader } from '../../../shared/ui/loader';
+	Loader, 
+	Button
+} from "@/shared";
+import { useProjectsStore, useDeleteProjectMutation } from "@/features/projects";
 
 
 interface DeleteProjectDialogProps {
@@ -31,7 +31,7 @@ interface DeleteProjectDialogProps {
 }
 
 
-export default function DeleteProjectDialog({ projectId, bg, border, text, rounded, wfull, redirect }: DeleteProjectDialogProps) {
+export function DeleteProjectDialog({ projectId, bg, border, text, rounded, wfull, redirect }: DeleteProjectDialogProps) {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
   const { deleteProject } = useDeleteProjectMutation();
 	const router = useRouter();

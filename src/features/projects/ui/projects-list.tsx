@@ -1,27 +1,28 @@
 "use client";
 
-import { ProjectDto } from "@/shared/model/types";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { getProjectsAction } from "../get-projects-action";
-import { projectsApi } from "..";
-import { DotsVerticalIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { GitBranch, GitCommit } from "lucide-react";
+import { DotsVerticalIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/shared/ui/dropdown-menu";
-import Link from "next/link";
-import { useProjectsStore } from "../projects-store";
-import { motion } from "framer-motion";
-import { ClientLoader } from "@/shared/ui/client-loader";
-import dynamic from "next/dynamic";
-import { useProjectStatus } from "../use-project-status";
-import { useProcessingProjectsStore } from "../processing-projects-store";
+	ClientLoader,
+} from "@/shared";
+import { 
+	getProjectsAction, 
+	useProjectsStore, 
+	projectsApi, 
+	useProjectStatus, 
+	useProcessingProjectsStore, 
+	DeleteProjectDialog,
+	EditProjectSheet} from "@/features/projects";
+import { Project } from "@/entities";
 
-const DeleteProjectDialog = dynamic(() => import('./delete-project-dialog'), { ssr: false });
-const EditProjectSheet = dynamic(() => import('./edit-project-sheet'), { ssr: false });
 
 const container = {
   hidden: { opacity: 0 },
@@ -44,11 +45,11 @@ const spinTransition = {
   ease: "linear"
 };
 
-export default function ProjectsList() {
+export function ProjectsList() {
   const selectProject = useProjectsStore((state) => state.setSelectedProject);
   const processingProjects = useProcessingProjectsStore(state => state.processingProjects);
 
-  const { data: projects = [], isLoading } = useQuery<ProjectDto[]>({
+  const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
 		staleTime: 5 * 60 * 1000, // 5 minutes

@@ -1,9 +1,10 @@
 "use client";
-
-import { Button } from "@/shared/ui/button";
+import toast from "react-hot-toast";
 import { AiOutlineEdit } from "react-icons/ai";
 
 import {
+	Button,
+	Input,
   Sheet,
   SheetClose,
   SheetContent,
@@ -11,11 +12,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/shared/ui/sheet";
-
-import { Input } from "../../../shared/ui/input";
-import toast from "react-hot-toast";
-import { useUpdateStyleGuide } from "../use-update-style-guide";
+} from "@/shared";
+import { useUpdateStyleGuide } from "@/features/styleguides";
 
 
 interface EditStyleGuideSheetProps {
