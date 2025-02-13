@@ -1,7 +1,7 @@
 
-import Container from "@/components/container";
+import Container from "@/shared/ui/container";
 import { styleGuidesApi } from "@/modules/styleguides/api";
-import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
+import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
 import { NewProjectClientWrapper } from "@/modules/projects/ui/new-project-client-wrapper";
 import { getQueryClient } from "@/shared/get-query-clients";
 

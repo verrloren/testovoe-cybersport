@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import ToasterProvider from "@/shared/providers/toaster-provider";
-import ConditionalHeader from "@/components/header/conditional-header";
+import ConditionalHeader from "@/widgets/header/ui/conditional-header";
 import Providers from "@/shared/providers/providers";
 // import { SuspenseLoader } from "@/components/loader";
 

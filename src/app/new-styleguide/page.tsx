@@ -1,4 +1,4 @@
-import Container from "@/components/container";
+import Container from "@/shared/ui/container";
 import { StyleguideCreateForm } from "@/modules/styleguides/ui/styleguide-create-form";
 
 export default async function NewStyleGuidePage() {

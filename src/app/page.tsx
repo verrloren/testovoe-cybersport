@@ -1,11 +1,11 @@
 import { getProjectsAction } from "@/modules/projects/get-projects-action";
-import Container from "@/components/container";
+import Container from "@/shared/ui/container";
 import { projectsApi } from "@/modules/projects/api";
 import { styleGuidesApi } from "@/modules/styleguides/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";
-import { getStyleGuidesAction } from "@/modules/styleguides/get-style-guides-action";
-import SpherePurple from "@/components/sphere-purple";
+import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
+import SpherePurple from "@/shared/ui/sphere-purple";
 import ProjectsPageInfo from "@/modules/projects/ui/projects-page-info";
 import ProjectsList from "@/modules/projects/ui/projects-list";
 

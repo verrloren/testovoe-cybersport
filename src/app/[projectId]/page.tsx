@@ -1,7 +1,7 @@
 "use server";
 import { ProjectsTable } from "@/modules/projects/ui/projects-table";
 import { ActionButtons } from "@/modules/projects/ui/action-buttons";
-import Container from "@/components/container";
+import Container from "@/shared/ui/container";
 import { projectsApi } from "@/modules/projects/api";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { getQueryClient } from "@/shared/get-query-clients";

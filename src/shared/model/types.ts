@@ -3,7 +3,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  role: string; // Consider using an enum for predefined roles
+  role: string;
   projects: Project[];
   user_guidelines: StyleGuide[];
 }
