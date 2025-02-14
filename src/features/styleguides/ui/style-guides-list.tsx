@@ -10,33 +10,21 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-	ClientLoader
+	ClientLoader,
+	container,
+	item,
 } from "@/shared";
 import { StyleGuide } from "@/entities/styleguide";
 import { styleGuidesApi, DeleteStyleGuideDialog, EditStyleGuideSheet, getStyleGuidesAction } from "@/features/styleguides";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
 
-const item = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1,transition: { duration: 0.3, ease: "easeInOut" } },
 
-};
 
 export function StyleGuidesList() {
+
   const { data: styleguides = [], isLoading } = useQuery<StyleGuide[]>({
     queryKey: [styleGuidesApi.baseKey],
     queryFn: getStyleGuidesAction,
-    staleTime: 60_000,
-    refetchOnWindowFocus: false,
   });
 
 	if (isLoading) return (
@@ -57,11 +45,9 @@ export function StyleGuidesList() {
 					variants={item}
           key={styleguide.id}
           className={`relative bg-neutral-950 border border-neutral-900 rounded-2xl 
-				hover:border-neutral-600 transition-colors px-8 py-8 
-				`}
-          // onClick={() => router.push(`/${styleguide.id}`)}
+				hover:border-neutral-600 transition-colors px-8 py-8 `}
         >
-          {/* styleguide name */}
+          {/* STYLEGUIDE NAME */}
           <div className="flex flex-row items-center gap-x-2">
             <Link
               href={`/styleguides/${styleguide.id}`}
@@ -72,8 +58,10 @@ export function StyleGuidesList() {
             <div className="w-2 h-2 mt-1 rounded-full"></div>
           </div>
 
+
+					{/* DROPDOWN */}
           <div className="absolute top-6 right-4 ">
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger>
                 <DotsVerticalIcon
                   width={18}

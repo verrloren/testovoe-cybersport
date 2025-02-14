@@ -12,6 +12,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 	ClientLoader,
+	container,
+	item,
+	spinTransition,
 } from "@/shared";
 import { 
 	getProjectsAction, 
@@ -24,37 +27,16 @@ import {
 import { Project } from "@/entities";
 
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
 
-const item = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } },
-};
-
-const spinTransition = {
-  repeat: Infinity,
-  duration: 1,
-  ease: "linear"
-};
 
 export function ProjectsList() {
+
   const selectProject = useProjectsStore((state) => state.setSelectedProject);
   const processingProjects = useProcessingProjectsStore(state => state.processingProjects);
 
   const { data: projects = [], isLoading } = useQuery<Project[]>({
     queryKey: [projectsApi.baseKey],
     queryFn: getProjectsAction,
-		staleTime: 5 * 60 * 1000, // 5 minutes
-		gcTime: 20 * 60 * 1000, // 20 minutes
-    refetchOnWindowFocus: false,
     select: (data) => {
       return [...data].sort((a, b) => {
         // First, sort by pending status
@@ -72,7 +54,6 @@ export function ProjectsList() {
     },
   });
 
-  // Create status queries only for processing projects
   const processingStatusQueries = projects
     .filter(project => 
       project.project_status === "pending" || 
@@ -85,8 +66,8 @@ export function ProjectsList() {
       query: useProjectStatus(project.id)
     }));
 
-  // Create a status map for easier access
-  const projectStatuses = Object.fromEntries(
+
+	const projectStatuses = Object.fromEntries(
     processingStatusQueries.map(({ projectId, query }) => [
       projectId,
       query.data?.response.project_status
@@ -105,13 +86,12 @@ export function ProjectsList() {
       initial="hidden"
       animate="show"
       className="w-full min-h-screen gap-x-4 gap-y-4
-		grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 "
+			grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 "
     >
       {projects.map((project) => {
-        // Use status from queries only if project is being processed
-        const status = projectStatuses[project.id] || project.project_status;
-
+				const status = projectStatuses[project.id] || project.project_status;
         return (
+					
           <motion.div
             variants={item}
             key={project.id}
@@ -123,12 +103,11 @@ export function ProjectsList() {
               ${status === "error" ? "border-red-800" : ""}
             `}
           >
-            {/* project name */}
+
+            {/* PROJECT NAME */}
             <div className="flex flex-row items-center gap-x-3">
               <Link
-                href={
-                  status !== "pending" && status !== "processing" ? `/${project.id}` : ""
-                }
+                href={status !== "pending" && status !== "processing" ? `/${project.id}` : ""}
                 onClick={(e) => {
                   if (status === "pending" || status === "processing") {
                     e.preventDefault();
@@ -143,6 +122,8 @@ export function ProjectsList() {
               >
                 {project.name}
               </Link>
+
+							{/* STATUS */}
               {status === "pending" || status === "processing" ? (
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -160,7 +141,7 @@ export function ProjectsList() {
             </div>
 
             <div className="w-full flex items-start gap-x-8 mt-2">
-              {/* git section  */}
+              {/* GIT SECTION  */}
               <div className="pt-4 flex flex-col items-start gap-y-2">
                 <div className="w-full h-6 bg-neutral-900 rounded-xl flex justify-center items-center">
                   <p className="flex items-center  gap-x-2 text-sm text-neutral-400">
@@ -178,14 +159,15 @@ export function ProjectsList() {
                 </p>
               </div>
 
-              {/* current styleguide  */}
+              {/* CURRENT STYLEGUIDE  */}
               <div className="pt-4 flex flex-col items-start gap-y-2">
                 <h5 className="text-neutral-400">Styleguide</h5>
               </div>
             </div>
-
+						
+						{/* DROPDOWN */}
             <div className="absolute top-6 right-4 ">
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger>
                   <DotsVerticalIcon
                     width={18}
@@ -194,7 +176,8 @@ export function ProjectsList() {
                   />
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="bg-neutral-950 w-full border border-neutral-800  rounded-xl">
+                <DropdownMenuContent 
+								className="bg-neutral-950 w-full border border-neutral-800  rounded-xl">
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <EditProjectSheet
                       projectId={project.id}

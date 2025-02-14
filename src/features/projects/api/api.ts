@@ -14,6 +14,7 @@ export interface ProjectStatusResponse {
 export const projectsApi = {
   baseKey: "projects",
   baseUrl: "/api/projects",
+
   getProjects: async (token: string | undefined) => {
     const response = await jsonApiInstance<ProjectsResponse>("/api/projects", {
       method: "GET",
@@ -28,6 +29,7 @@ export const projectsApi = {
     }
     return response.response;
   },
+
   // This means all ProjectDto fields are optional EXCEPT id
   updateProject: (
     data: Partial<Project> & { id: number; name: string },
@@ -42,6 +44,7 @@ export const projectsApi = {
       json: null,
     });
   },
+
   deleteProject: (
     data: Partial<Project> & { id: number },
     token: string | undefined
@@ -59,15 +62,20 @@ export const projectsApi = {
 
 
   createProject: async (formData: FormData, token: string | undefined) => {
-     return jsonApiInstance<ResponseDto>('/api/projects', {
+		const projectName = formData.get('projectName');
+		const styleGuide = formData.get('styleGuide');
+		const files = formData.get('files')
+     return jsonApiInstance<ResponseDto>(`/api/projects?name=${projectName}&guideline=${styleGuide}`, {
       method: 'POST',
 			headers: {
 				Authorization: `Bearer ${token}`,
         "X-API-KEY": process.env.BACKEND_API_KEY as string,
+
 			},
-      json: formData,
+      json: files,
     });
   },
+	
 	checkProjectStatus: async (projectId: number, token: string | undefined): Promise<ProjectStatusResponse> => {
     return jsonApiInstance(`/api/projects?id=${projectId}`, {
 			method: 'GET',

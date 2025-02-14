@@ -15,9 +15,9 @@ import {
   FormField,
   FormItem,
   FormMessage,
-	Input,
 	Button, 
-	LoginSchema
+	LoginSchema,
+	CustomInput
 } from "@/shared";
 import { login, ExclamationMark } from "@/features/auth";
 
@@ -85,14 +85,14 @@ export function LoginForm() {
             transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
             className="w-[20rem] md:w-[25rem] z-20 xl:w-[30rem]  flex justify-center flex-col gap-y-6"
           >
+						{/* EMAIL */}
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      className="w-full py-6 pl-4 text-lg text-white transition-colors duration-200 bg-black border border-none rounded-2xl placeholder:text-lg border-neutral-800 focus:outline-none placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
+                    <CustomInput
                       disabled={isPending}
                       type="email"
                       placeholder="email"
@@ -107,16 +107,16 @@ export function LoginForm() {
                   )}
                 </FormItem>
               )}
-            />
+            />	
 
+						{/* PASSWORD */}
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      className="w-full py-6 pl-4 text-lg text-white transition-colors duration-200 bg-black border border-none rounded-2xl font-poppins placeholder:text-lg border-neutral-800 focus:outline-none placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
+                    <CustomInput
                       disabled={isPending}
                       type="password"
                       placeholder="password"
@@ -133,12 +133,10 @@ export function LoginForm() {
               )}
             />
 
-            {/* <FormError message={error || urlError} />
-						<FormSuccess message={success} /> */}
 
             <Button
+							className="w-full h-12"
               disabled={isPending}
-              className="w-full h-12 py-4 text-xl text-black transition-all duration-300 border-none shadow-xl bg-neutral-100 hover:bg-white rounded-2xl font-poppins hover:brightness-125"
               type="submit"
             >
               Submit
@@ -148,7 +146,7 @@ export function LoginForm() {
       </Form>
 
       <motion.div
-        className="fixed flex items-center justify-center  bottom-12"
+        className="fixed flex items-center justify-center bottom-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 1, ease: "easeInOut" }}

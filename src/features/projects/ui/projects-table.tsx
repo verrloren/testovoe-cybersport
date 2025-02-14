@@ -38,6 +38,7 @@ function HighlightText({ text, query }: { text: string; query: string }) {
 }
 
 export function ProjectsTable() {
+
   const selectedProject = useProjectsStore((state) => state.selectedProject);
   const { getCopyStatus, copyToClipboard } = useCopyCode();
   const [searchQuery, setSearchQuery] = useState("");
@@ -80,7 +81,7 @@ export function ProjectsTable() {
 
 			{/* TABS */}
       <Tabs defaultValue="codeReview" className="w-full text-white ">
-			<div className="w-full min-h-96 bg-black/95 backdrop-blur-xl rounded-3xl pb-8  border border-neutral-800">
+			<div className="w-full min-h-96 bg-black/95 backdrop-blur-xl rounded-3xl pb-8 border border-neutral-800">
           <TabsList className="bg-transparent  border-b rounded-none px-4
 					 md:px-12 2x:px-16 py-10 border-neutral-800 w-full justify-start gap-4">
             <TabsTrigger

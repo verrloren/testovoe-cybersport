@@ -8,7 +8,6 @@ export * from "./project-create-form";
 export * from "./project-name";
 export * from "./projects-combobox";
 export * from "./projects-list";
-export * from "./projects-page-info";
 export * from "./projects-table";
 export * from "./status-indicator";
 export * from "./styleguides-page-info";

@@ -5,10 +5,12 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button, Input, CreateStyleGuideFormData, createStyleGuideSchema } from "@/shared";
+import { Button, CreateStyleGuideFormData, createStyleGuideSchema, CustomInput } from "@/shared";
+import { createStyleGuideAction } from "@/features/styleguides";
 
 
 export function StyleguideCreateForm() {
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -27,8 +29,12 @@ export function StyleguideCreateForm() {
 			Object.entries(data).forEach(([key, value]) => {
 				formData.append(key, value);
 			})
+      console.log("before fetching", formData);
 
-      console.log(data);
+			const res = createStyleGuideAction(formData);
+
+			console.log("response:", res)
+
       setIsSubmitting(false);
 
     } catch (error) {
@@ -47,13 +53,12 @@ export function StyleguideCreateForm() {
       <h5 className="text-5xl sm:text-6xl xl:text-7xl pb-6 font-bold text-center text-white">
         Create your custom <br/> Style Guide
       </h5>
-      <Input
+			{/* NAME */}
+      <CustomInput
         {...register("styleGuideName")}
         placeholder="Style guide name"
         name="styleGuideName"
-        className="w-full py-6 text-neutral-50  
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+        variant="outline"
       />
       {errors.styleGuideName && (
         <p className="text-red-500 text-sm">{errors.styleGuideName.message}</p>
@@ -64,8 +69,9 @@ export function StyleguideCreateForm() {
         placeholder="Architecture preferences..."
         name="architectureErrors"
         className="w-full	 text-neutral-50 p-2
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+				placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.architectureErrors && (
         <p className="text-red-500 text-sm">
@@ -79,8 +85,9 @@ export function StyleguideCreateForm() {
         placeholder="Package settings..."
         name="packageErrors"
         className="w-full p-2 text-neutral-50
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+				placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.packageErrors && (
         <p className="text-red-500 text-sm">
@@ -93,8 +100,9 @@ export function StyleguideCreateForm() {
         placeholder="Structure preferences..."
         name="structureErrors"
         className="w-full p-2 text-neutral-50
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+				placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.structureErrors && (
         <p className="text-red-500 text-sm">
@@ -107,8 +115,9 @@ export function StyleguideCreateForm() {
         placeholder="Naming preferences..."
         name="namingErrors"
         className="w-full p-2 text-neutral-50
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+			placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.structureErrors && (
         <p className="text-red-500 text-sm">
@@ -121,8 +130,9 @@ export function StyleguideCreateForm() {
         placeholder="Style preferences..."
         name="styleErrors"
         className="w-full p-2 text-neutral-50
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+			placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.structureErrors && (
         <p className="text-red-500 text-sm">
@@ -135,8 +145,9 @@ export function StyleguideCreateForm() {
         placeholder="Standarts preferences..."
         name="standartsErrors"
         className="w-full p-2 text-neutral-50
-	transition-colors bg-black rounded-2xl font-poppins
-	font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+				transition-colors bg-black rounded-2xl font-poppins
+				font-light z-40 border border-neutral-800 hover:border-neutral-400 
+				placeholder:text-neutral-400 focus:border-neutral-400"
       />
       {errors.standartsErrors && (
         <p className="text-red-500 text-sm">
@@ -145,8 +156,7 @@ export function StyleguideCreateForm() {
       )}
 
       <Button
-        className="py-6 mt-4 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 
-			transition-colors hover:bg-white disabled:opacity-50"
+        className="w-full h-12"
         type="submit"
         disabled={isSubmitting}
       >

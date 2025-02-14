@@ -1,8 +1,8 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
-import { Container, getQueryClient, SpherePurple } from "@/shared";
+import { Container, getQueryClient, SpherePurple, PageHeader, PageContainer } from "@/shared";
 import { getStyleGuidesAction, styleGuidesApi } from "@/features/styleguides";
-import { getProjectsAction, ProjectsPageInfo, ProjectsList, projectsApi } from "@/features/projects";
+import { getProjectsAction, ProjectsList, projectsApi } from "@/features/projects";
 
 
 export default async function HomePage() {
@@ -22,22 +22,20 @@ export default async function HomePage() {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
+    <PageContainer>
       <SpherePurple />
 
       <Container>
-          <div className="w-full pt-40 md:pt-44 lg:pt-52 2xl:pt-72">
-            <ProjectsPageInfo />
-            <div
-              className="w-full relative flex flex-col justify-center
-							gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20"
-            >
-							<HydrationBoundary state={dehydratedState}>
-              	<ProjectsList />
-     			  	</HydrationBoundary>
-            </div>
-          </div>
+         <div className="w-full pt-40 sm:pt-44 md:pt-48 lg:pt-52 2xl:pt-72">
+           <PageHeader href="/new-project" header="Projects" buttonText="Create project" />
+
+           <div className="w-full relative flex-center pt-8 xl:pt-16 gap-y-6 md:gap-y-16 xl:gap-y-20 pb-20">
+						<HydrationBoundary state={dehydratedState}>
+             	<ProjectsList />
+     		  	</HydrationBoundary>
+           </div>
+         </div>
       </Container>
-    </main>
+    </PageContainer>
   );
 }

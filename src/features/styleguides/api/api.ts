@@ -22,14 +22,17 @@ export const styleGuidesApi = {
     }
     return response.response;
   },
+
   createStyleGuide: (formData: FormData, token: string | undefined) => {
-    return fetch(`${process.env.BACKEND_API_URL}/api/guidelines?&name=${formData.get('name')}`, {
+		const name = formData.get('name');
+		const file = formData.get("file") as Blob;
+    return jsonApiInstance<ResponseDto>(`/api/guidelines?&name=${name}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "X-API-KEY": process.env.BACKEND_API_KEY as string,
       },
-      body: formData.get("file") as Blob,
+      json: { file },
     });
   },
 	

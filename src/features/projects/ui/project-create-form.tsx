@@ -16,11 +16,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-	Input,
 	Loader,
 	Button, 
 	CreateProjectFormData,
-	createProjectSchema
+	createProjectSchema,
+	CustomInput
 } from "@/shared";
 import { 
 	createProjectAction, 
@@ -29,6 +29,8 @@ import {
 } from "@/features/projects";
 import { getStyleGuidesAction, styleGuidesApi } from "@/features/styleguides";
 import { StyleGuide } from '@/entities';
+
+
 
 export function ProjectCreateForm({ files }: { files: File[] }) {
 
@@ -54,6 +56,9 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
   } = useForm<CreateProjectFormData>({
     resolver: zodResolver(createProjectSchema),
   });
+
+
+
 
   const onSubmit = async (data: CreateProjectFormData) => {
     if (files.length === 0) {
@@ -88,14 +93,15 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       }
 
       for(const [keys, values] of formData) {
-        console.log(keys,values)
+        console.log("formData before fetch:", keys,values)
       }
-      console.log("formData before fetch:", formData)
-      
       const res = await createProjectAction(formData);
+
+			console.log(res)
+
       if(res?.success || res?.response){
 				setProjectId(Number(res?.response));
-				addProcessingProject(Number(res?.response)); // Add to processing projects list
+				addProcessingProject(Number(res?.response));
 				router.push('/projects');
 			}
     } catch (error) {
@@ -104,6 +110,10 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       setIsSubmitting(false);
     }
   };
+
+
+
+
 
   if (isLoading) return <Loader loading={isLoading} />;
 
@@ -118,13 +128,10 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
       <h5 className="text-3xl font-bold text-center text-white">
         Project name
       </h5>
-      <Input
-        {...register("projectName")}
+      <CustomInput
+  			variant="outline"
         placeholder="What will it be?"
-        name="projectName"
-        className="w-full py-6 text-neutral-400
-    transition-colors bg-black rounded-2xl font-poppins
-    font-light z-40 border border-neutral-800 hover:border-neutral-400 placeholder:text-neutral-400 focus:border-neutral-400"
+        {...register("projectName")}
       />
       {errors.projectName && (
         <p className="text-red-500 text-sm">{errors.projectName.message}</p>
@@ -172,8 +179,7 @@ export function ProjectCreateForm({ files }: { files: File[] }) {
         <p className="text-red-500 text-sm">{errors.styleGuide.message}</p>
       )}
       <Button
-        className="py-6 mt-4 w-full text-xl bg-white text-black font-poppins rounded-2xl z-40 
-        transition-colors hover:bg-white disabled:opacity-50"
+				className='w-full h-12 mt-4'
         type="submit"
         disabled={isSubmitting}
       >

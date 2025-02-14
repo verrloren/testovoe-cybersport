@@ -11,7 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-	Button
+  Button,
 } from "@/shared";
 import { Logo } from "@/widgets/header";
 import { useLogout } from "@/features/auth";
@@ -52,7 +52,7 @@ export function Header() {
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger>
             <MenuIcon
-							aria-label="Menu"
+              aria-label="Menu"
               size={20}
               className={`transition-colors text-neutral-400 hover:text-white`}
             />
@@ -64,7 +64,7 @@ export function Header() {
                 className="w-full flex items-center justify-center"
                 href="/"
               >
-                <Button className="w-full bg-transparent shadow-none hover:text-white hover:bg-transparent">
+                <Button variant="ghost" className="w-full text-neutral-400">
                   Projects
                 </Button>
               </Link>
@@ -75,7 +75,7 @@ export function Header() {
                 className="w-full flex items-center justify-center"
                 href="/styleguides"
               >
-                <Button className="w-full bg-transparent shadow-none hover:text-white hover:bg-transparent">
+                <Button variant="ghost" className="w-full text-neutral-400">
                   Style Guides
                 </Button>
               </Link>
@@ -83,8 +83,8 @@ export function Header() {
 
             <DropdownMenuItem className="hover:bg-black cursor-pointer">
               <Button
-                className="w-full bg-transparen
-								 shadow-none hover:text-white hover:bg-transparent"
+                variant="ghost"
+                className="w-full text-neutral-400"
                 onClick={onLogout}
               >
                 Sign out

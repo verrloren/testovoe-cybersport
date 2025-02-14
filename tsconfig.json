@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/shared/lib/tailwind-preset/utilities.js", "src/shared/lib/tailwind-preset/theme.js", "src/shared/lib/tailwind-preset/plugins.js", "src/shared/lib/tailwind-preset/index.js"],
   "exclude": ["node_modules"]
 }

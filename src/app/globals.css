@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+	overflow-y: scroll;
+}
+
 html, body {
 	background-color: #000;
-	overflow-y: scroll;
-	overflow-x: hidden;
 	margin: 0;
   padding: 0;
 }
@@ -30,6 +32,29 @@ html, body {
 	100% {
 		filter: saturate(100%) brightness(100%);
 	}
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.flex-center-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.flex-between-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
 }
 
 

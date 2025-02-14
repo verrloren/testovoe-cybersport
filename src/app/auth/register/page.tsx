@@ -1,14 +1,15 @@
 import { Suspense } from "react";
+
+import { PageContainer } from "@/shared";
 import { RegisterForm, AuthSphere } from "@/features/auth";
 
 export default async function LoginPage() {
-
   return (
-    <main className="w-full h-screen relative flex flex-col justify-center items-center overflow-hidden">
+    <PageContainer className="flex-center-col">
 			<AuthSphere />
       <Suspense>
         <RegisterForm />
       </Suspense>
-    </main>
+		</PageContainer>
   );
 }

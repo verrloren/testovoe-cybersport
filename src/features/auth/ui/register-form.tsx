@@ -15,13 +15,14 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  Input,
   Button,
   RegisterSchema,
+	CustomInput,
 } from "@/shared";
 import { register, ExclamationMark, AuthResponse } from "@/features/auth";
 
 export function RegisterForm() {
+
   const [isPending, setTransition] = useTransition();
   const router = useRouter();
 
@@ -73,17 +74,14 @@ export function RegisterForm() {
             transition={{ duration: 0.4, delay: 0.4, ease: "easeInOut" }}
             className="w-[20rem] bg-transparent md:w-[25rem] xl:w-[30rem] flex justify-center flex-col gap-y-6"
           >
+						{/* NAME */}
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      className="w-full rounded-2xl font-poppins 
-											text-white text-lg placeholder:text-lg pl-4 py-6 border-none bg-black
-											transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
+                    <CustomInput
                       disabled={isPending}
                       placeholder="name"
                       {...field}
@@ -98,21 +96,17 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-
+						{/* EMAIL */}
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      className="w-full rounded-2xl font-poppins
-											text-white text-lg placeholder:text-lg pl-4 py-6 border-none
-											bg-black transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
-                      disabled={isPending}
+                    <CustomInput
                       type="email"
                       placeholder="email"
+                      disabled={isPending}
                       {...field}
                     />
                   </FormControl>
@@ -125,18 +119,14 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-
+						{/* PASSWORD */}
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      className="w-full rounded-2xl font-poppins
-											text-white text-lg placeholder:text-lg pl-4 py-6 border-none
-											bg-black transition-colors duration-200 focus:outline-none
-											placeholder:text-neutral-600 focus:bg-black focus:border-neutral-600"
+                    <CustomInput
                       disabled={isPending}
                       type="password"
                       placeholder="password"
@@ -154,11 +144,9 @@ export function RegisterForm() {
             />
 
             <Button
-              disabled={isPending}
-              className="w-full py-4 bg-neutral-100 hover:bg-white border-none
-							rounded-2xl h-12 text-xl text-black font-poppins
-							hover:brightness-125 transition-all duration-300 shadow-xl"
               type="submit"
+							className="w-full h-12"
+              disabled={isPending}
             >
               Create an account
             </Button>
@@ -174,7 +162,7 @@ export function RegisterForm() {
       >
         <Link
           className="text-base text-neutral-200
-		hover:text-neutral-50 transition-colors duration-300 "
+				hover:text-neutral-50 transition-colors duration-300 "
           href="/auth/login"
         >
           already have one?

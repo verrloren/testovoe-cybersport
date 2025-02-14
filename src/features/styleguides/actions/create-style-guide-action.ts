@@ -6,8 +6,8 @@ import { styleGuidesApi } from "@/features/styleguides";
 export const createStyleGuideAction = async (formData: FormData) => {
   const { token } = await getToken();
   try {
-		const result = await styleGuidesApi.createStyleGuide(formData, token);
-		return await result.json();
+		const { success, response } = await styleGuidesApi.createStyleGuide(formData, token);
+		return { success, response }
   } catch (error) {
     return { 
       success: false, 
