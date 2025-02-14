@@ -1,20 +1,14 @@
 "use server";
-import Container from "@/shared/ui/container";
+
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/api/get-query-clients";
-import {  StyleGuide } from "@/shared/model/types";
-import { getStyleGuidesAction } from "@/features/styleguides/get-style-guides-action";
-import { StyleGuideName } from "@/features/styleguides/ui/style-guide-name";
-import { ActionButtons } from "@/features/projects/ui/action-buttons";
-import { styleGuidesApi } from "@/features/styleguides/api/api";
 
-interface StyleGuidePageProps {
-  params: {
-    styleGuidesId: string;
-  }
-}
+import { StyleGuide } from "@/entities";
+import { Container, getQueryClient } from "@/shared";
+import { ActionButtons } from "@/features/projects";
+import { styleGuidesApi, getStyleGuidesAction, StyleGuideName } from "@/features/styleguides";
 
-export default async function StyleGuidePage({ params }: StyleGuidePageProps ) {
+
+export default async function StyleGuidePage({ params }: { params: { styleGuidesId: string}} ) {
 	const queryClient = getQueryClient();
   const styleGuideId = parseInt(params.styleGuidesId);
 
@@ -40,12 +34,7 @@ export default async function StyleGuidePage({ params }: StyleGuidePageProps ) {
 
   return (
     <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
-      {/* sphere */}
-      {/* <div
-        className="radial-ellipse-dashboard w-full aspect-square
-        fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
-        xl:-top-[60%] "
-      /> */}
+
       <Container>
         <HydrationBoundary state={dehydratedState}>
           <div

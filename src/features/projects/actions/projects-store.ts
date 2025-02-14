@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { Project } from '@/entities';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { Project } from "@/entities";
 
 interface ProjectsStoreState {
   selectedProject: Project | null;
@@ -8,51 +8,50 @@ interface ProjectsStoreState {
   updateProjectName: (id: number, newName: string) => void;
   clearSelectedProject: (project: Project | null) => void;
 
-	isComboboxOpen: boolean;
-	setIsComboboxOpen: (isOpen: boolean) => void;
+  isComboboxOpen: boolean;
+  setIsComboboxOpen: (isOpen: boolean) => void;
 
-	searchQuery: string;
+  searchQuery: string;
   setSearchQuery: (query: string) => void;
 
-	isDeleteDialogOpen: boolean;
+  isDeleteDialogOpen: boolean;
   setDeleteDialogOpen: (open: boolean) => void;
-
-
 }
 
 export const useProjectsStore = create<ProjectsStoreState>()(
   persist(
     (set) => ({
       selectedProject: null,
-		setSelectedProject: (project) => set({ selectedProject: project }),
-      updateProjectName: (id, newName) => 
+      setSelectedProject: (project) => set({ selectedProject: project }),
+      updateProjectName: (id, newName) =>
         set((state) => {
           if (state.selectedProject?.id === id) {
             return {
               selectedProject: {
                 ...state.selectedProject,
-                name: newName
-              }
+                name: newName,
+              },
             };
           }
           return state;
         }),
-        clearSelectedProject: (nextProject) => set(() => ({ 
-					selectedProject: nextProject || null,
-					isDeleteDialogOpen: false // Close dialog when clearing
-				})),
-				
-				searchQuery: '',
-				setSearchQuery: (query) => set({ searchQuery: query }),
+      clearSelectedProject: (nextProject) =>
+        set(() => ({
+          selectedProject: nextProject || null,
+          isDeleteDialogOpen: false, // Close dialog when clearing
+        })),
 
-			isComboboxOpen: false,
-			setIsComboboxOpen: (isOpen) => set({ isComboboxOpen: isOpen }),
+      searchQuery: "",
+      setSearchQuery: (query) => set({ searchQuery: query }),
 
-			isDeleteDialogOpen: false,
-  		setDeleteDialogOpen: (open) => set({ isDeleteDialogOpen: open }),
+      isComboboxOpen: false,
+      setIsComboboxOpen: (isOpen) => set({ isComboboxOpen: isOpen }),
+
+      isDeleteDialogOpen: false,
+      setDeleteDialogOpen: (open) => set({ isDeleteDialogOpen: open }),
     }),
     {
-      name: 'project-storage',
+      name: "project-storage",
     }
   )
 );

@@ -22,7 +22,7 @@ import {
 import { login, ExclamationMark } from "@/features/auth";
 
 
-export default function LoginForm() {
+export function LoginForm() {
 
   const router = useRouter();
   const [isPending, setTransition] = useTransition();

@@ -1,5 +1,5 @@
-import { StyleguideCreateForm } from "@/features/styleguides/ui/styleguide-create-form";
-import Container from "@/shared/ui/container";
+import { Container } from "@/shared";
+import { StyleguideCreateForm } from "@/features/styleguides";
 
 export default async function NewStyleGuidePage() {
   return (

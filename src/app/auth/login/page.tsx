@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import LoginForm from "@/features/auth/ui/login-form";
-import { AuthSphere } from "@/features/auth/ui/auth-sphere";
+import { LoginForm, AuthSphere } from "@/features/auth";
+
 
 export default async function LoginPage() {
   return (

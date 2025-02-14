@@ -7,15 +7,21 @@ import { CodeBlock } from "react-code-block";
 import { themes } from "prism-react-renderer";
 import { CodeIcon } from "@radix-ui/react-icons";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger, Button, Input, useCopyCode } from "@/shared";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Button,
+  Input,
+  useCopyCode,
+} from "@/shared";
 import { useProjectsStore } from "@/features/projects";
 
 function HighlightText({ text, query }: { text: string; query: string }) {
   if (!query) return <>{text}</>;
-
   const regex = new RegExp(`(${query})`, "gi");
   const parts = text.split(regex);
-
   return (
     <>
       {parts.map((part, i) =>
@@ -33,57 +39,36 @@ function HighlightText({ text, query }: { text: string; query: string }) {
 
 export function ProjectsTable() {
   const selectedProject = useProjectsStore((state) => state.selectedProject);
-  // const searchQuery = useProjectsStore((state) => state.searchQuery);
-  // const setSearchQuery = useProjectsStore((state) => state.setSearchQuery);
-
   const { getCopyStatus, copyToClipboard } = useCopyCode();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // 2. Compute filtered reviews based on the search query
   const filteredReviews = useMemo(() => {
-    if (!selectedProject?.code_reviews) {
+    if (!selectedProject?.code_reviews || !selectedProject.code_reviews.issues)
       return [];
-    }
 
     const query = searchQuery.toLowerCase();
 
-    return selectedProject.code_reviews
-      .map((review) => {
-        // Filter the issues within each review
-        const filteredIssues = review.issues?.filter((issue) => {
-          const issueContent = [
-            issue.type_of_issue,
-            issue.issue_body,
-            issue.file_path,
-            issue.line_snippet,
-            issue.suggested_code,
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
+    const filteredIssues = selectedProject.code_reviews.issues.filter(
+      (issue) => {
+        const issueContent = [
+          issue.type_of_issue,
+          issue.issue_body,
+          issue.file_path,
+          issue.line_snippet,
+          issue.suggested_code,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
 
-          return issueContent.includes(query);
-        });
+        return issueContent.includes(query);
+      }
+    );
 
-        if (filteredIssues && filteredIssues.length > 0) {
-          return {
-            ...review,
-            issues: filteredIssues,
-          };
-        } else {
-          return null;
-        }
-      })
-      .filter(Boolean) as typeof selectedProject.code_reviews;
+    return filteredIssues.length > 0
+      ? [{ ...selectedProject.code_reviews, issues: filteredIssues }]
+      : [];
   }, [selectedProject, searchQuery]);
-
-	// if (!selectedProject) {
-  //   return (
-  //     <div className="min-h-[600px] flex items-center justify-center">
-  //       <p className="text-neutral-500">Loading project details...</p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <motion.div
@@ -92,18 +77,21 @@ export function ProjectsTable() {
       transition={{ duration: 0.6, delay: 0.2, ease: "easeInOut" }}
       className="w-full min-h-80 "
     >
+
+			{/* TABS */}
       <Tabs defaultValue="codeReview" className="w-full text-white ">
-        <div className="w-full min-h-96 bg-black/95 backdrop-blur-xl rounded-3xl pb-8  border border-neutral-800">
-          <TabsList className="bg-transparent  border-b rounded-none px-12 py-10 border-neutral-800 w-full justify-start gap-4">
+			<div className="w-full min-h-96 bg-black/95 backdrop-blur-xl rounded-3xl pb-8  border border-neutral-800">
+          <TabsList className="bg-transparent  border-b rounded-none px-4
+					 md:px-12 2x:px-16 py-10 border-neutral-800 w-full justify-start gap-4">
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-lg 
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base md:text-lg 
 							hover:text-neutral-200 data-[state=active]:bg-white/5 gap-x-2 flex items-center px-4"
               value="codeReview"
             >
               Code review <CodeIcon width={16} height={16} />
             </TabsTrigger>
             <TabsTrigger
-              className="text-neutral-600 data-[state=active]:text-white font-poppins text-lg 
+              className="text-neutral-600 data-[state=active]:text-white font-poppins text-base md:text-lg 
 							hover:text-neutral-200 data-[state=active]:bg-white/5 gap-x-2 flex items-center px-4"
               value="overview"
             >
@@ -136,20 +124,19 @@ export function ProjectsTable() {
               />
             </div>
           </TabsList>
-
+					
+					{/* OVERVIEW */}
           <TabsContent
-            className="text-neutral-300 font-ibmPlexMono  my-8 w-full px-12"
+            className="text-neutral-300 font-ibmPlexMono  my-8 w-full px-4 md:px-12 2x:px-16"
             value="overview"
           >
-            {selectedProject?.code_reviews?.map((review) => (
-              <div key={review.id} className="flex items-center ">
-                <h3 className=" font-ibmPlexMono text-neutral-500 text-lg">
-                  {review.project_review}
-                </h3>
-              </div>
-            ))}
-            {(!selectedProject?.code_reviews ||
-              selectedProject?.code_reviews.length === 0) && (
+            <div key={selectedProject?.code_reviews.id} className="flex items-center ">
+              <h3 className="font-ibmPlexMono text-neutral-500 text-base md:text-lg">
+                {selectedProject?.code_reviews.project_review}
+              </h3>
+            </div>
+
+            {!selectedProject?.code_reviews && (
               <div className="flex items-center gap-x-2">
                 <h3 className="ml-8 font-poppins text-neutral-200 text-xl">
                   No reviews available
@@ -157,9 +144,10 @@ export function ProjectsTable() {
               </div>
             )}
           </TabsContent>
+
           {/* SEARCH HERE */}
           <TabsContent
-            className="text-neutral-300 font-ibmPlexMono mt-4 mb-8 w-full px-12"
+            className="text-neutral-300 font-ibmPlexMono mt-4 mb-8 w-full px-4 md:px-12 2x:px-16"
             value="codeReview"
           >
             {filteredReviews.length > 0 ? (
@@ -168,24 +156,26 @@ export function ProjectsTable() {
                   {review.issues?.map((issue) => (
                     <div key={issue.id} className="mb-8 rounded-xl">
                       {/* File info */}
-                      <div className="flex items-end justify-between gap-4 pt-4 pb-8 text-sm ">
-                        <h5 className="text-3xl text-white">
+                      <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 pt-4 2xl:pt-8 pb-8 text-sm ">
+                        <h5 className="text-2xl md:text-3xl 2xl:text-4xl text-white">
                           <HighlightText
                             text={issue.type_of_issue}
                             query={searchQuery}
                           />
                         </h5>
                         <div className="flex items-center gap-x-8">
-                          <p className="text-base font-ibmPlexMono text-neutral-500">
+                          <p className="text-xs md:text-base xl:text-base font-ibmPlexMono text-neutral-600">
                             ~{" "}
                             <HighlightText
                               text={issue.file_path}
                               query={searchQuery}
                             />
                           </p>
-                          <p className="text-base font-ibmPlexMono text-neutral-500">
-                            on Line {issue.line_number}
-                          </p>
+                            {typeof Number(issue.line_number) === "number" && !isNaN(Number(issue.line_number)) && issue.line_number !== "" && (
+                              <p className="text-xs md:text-base xl:text-base font-ibmPlexMono text-neutral-600">
+																on Line {issue?.line_number}
+															</p>
+                            )}
                         </div>
                       </div>
 
@@ -218,7 +208,7 @@ export function ProjectsTable() {
                             />
                           </p>
 
-                          {/* Code snippet */}
+                          {/* CODE SNIPPET */}
                           {issue.line_snippet && (
                             <div className=" pt-4 pb-2 rounded-lg">
                               <CodeBlock

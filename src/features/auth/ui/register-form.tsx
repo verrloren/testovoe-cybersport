@@ -21,7 +21,7 @@ import {
 } from "@/shared";
 import { register, ExclamationMark, AuthResponse } from "@/features/auth";
 
-export default function RegisterForm() {
+export function RegisterForm() {
   const [isPending, setTransition] = useTransition();
   const router = useRouter();
 

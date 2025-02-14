@@ -1,31 +1,18 @@
 "use server";
-import Container from "@/shared/ui/container";
+
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { getQueryClient } from "@/shared/api/get-query-clients";
-import { Project } from "@/shared/model/types";
-import { projectsApi } from "@/shared/projects/api";
-import { getProjectsAction } from "@/features/projects/get-projects-action";
-import { ProjectName } from "@/features/projects/ui/project-name";
-import { ActionButtons } from "@/features/projects/ui/action-buttons";
-import { ProjectsTable } from "@/features/projects/ui/projects-table";
 
-interface PageProps {
-  params: {
-    projectId: string;
-  }
-}
+import { getQueryClient, Container } from "@/shared";
+import {
+  projectsApi,
+  getProjectsAction,
+  ProjectName,
+  ActionButtons,
+  ProjectsTable,
+} from "@/features/projects";
+import { Project } from "@/entities";
 
-export default async function HomePage({ params }: PageProps ) {
-	const queryClient = getQueryClient();
-  const projectId = parseInt(params.projectId);
-	
 
-  if (!queryClient.getQueryData([projectsApi.baseKey])) {
-    await queryClient.prefetchQuery({
-      queryKey: [projectsApi.baseKey],
-      queryFn: getProjectsAction,
-    });
-  }
 
   // if (!queryClient.getQueryData([styleGuidesApi.baseKey])) {
   //   await queryClient.prefetchQuery({
@@ -35,28 +22,36 @@ export default async function HomePage({ params }: PageProps ) {
   // }
 
 
+export default async function HomePage({params }: { params: { projectId: string }}) {
 
-	  // Get cached project data
-		const projects = queryClient.getQueryData<Project[]>([projectsApi.baseKey]);
-    const project = projects?.find(p => p.id === projectId);
+	const { projectId } = await params;
+  const queryClient = getQueryClient();
+  const parsedProjectId = parseInt(projectId);
 
+  if (!queryClient.getQueryData([projectsApi.baseKey])) {
+    await queryClient.prefetchQuery({
+      queryKey: [projectsApi.baseKey],
+      queryFn: getProjectsAction,
+    });
+  }
 
-    if (!project) {
-      return <div className="text-white text-center mt-52 text-2xl">Project not found</div>;
-    }
-		
+  const projects = queryClient.getQueryData<Project[]>([projectsApi.baseKey]);
+  const project = projects?.find((p) => p.id === parsedProjectId);
 
+  if (!project) return <div className="text-white text-center mt-52 text-2xl">Project not found</div>
+	console.log(project)
 
-  	const dehydratedState = dehydrate(queryClient);
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden">
-      {/* sphere */}
+      {/* SPHERE */}
       <div
         className="radial-ellipse-dashboard w-full aspect-square
-        fixed right-0 -top-[20%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
+        fixed right-0 -top-[15%] sm:-top-1/4 md:-top-1/4 lg:-top-[40%]
         xl:-top-[60%] "
       />
+
       <Container>
         <HydrationBoundary state={dehydratedState}>
           <div
@@ -64,8 +59,7 @@ export default async function HomePage({ params }: PageProps ) {
 						gap-y-6 md:gap-y-16 xl:gap-y-20"
           >
             <div className="w-full flex flex-col md:flex-row gap-y-16 items-center justify-center md:justify-between">
-
-							<ProjectName projectName={project.name} />
+              <ProjectName projectName={project.name} />
               <ActionButtons bg="black" rounded="full" redirect={true} />
             </div>
             <div className="h-full w-full">
@@ -77,4 +71,3 @@ export default async function HomePage({ params }: PageProps ) {
     </main>
   );
 }
-

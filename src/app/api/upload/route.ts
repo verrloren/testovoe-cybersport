@@ -1,5 +1,6 @@
-import { sendProjectFiles } from '@/features/projects/actions/send-project-files';
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
+;
+import { sendProjectFiles } from '@/features/projects';
 
 export async function POST(request: Request) {
   try {
