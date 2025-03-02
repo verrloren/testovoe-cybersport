@@ -15,14 +15,21 @@ const config: Config = {
   	extend: {
       fontFamily: {
         poppins: ['var(--font-poppins)', 'sans-serif'],
-        ibmPlexMono: ['var(--font-ibmPlexMono)', 'monospace'],
+        tactic: ['var(--font-tactic)', 'sans-serif'],
       },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-  		colors: {},
+  		colors: {
+				pink: '#EB0237',
+				green: '#43AD28',
+				dark: '#0B0E12',
+				black: '#06080C',
+				orange: '#EB6402',
+				darkGrey: '#101318'
+			},
     },
   },
   plugins: [tailwindcssAnimate],

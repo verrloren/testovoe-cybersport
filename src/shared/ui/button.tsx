@@ -12,6 +12,7 @@ const buttonVariants = cva(
         default: " py-4 text-lg 2xl:text-xl text-black transition-all duration-300 border-none shadow-xl bg-neutral-100 hover:bg-white rounded-2xl font-poppins hover:brightness-125",
         destructive:
           "bg-red-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90",
+				pink: "bg-[#EB0237] rounded-[4px] font-semibold text-white  hover:bg-[#f2083d]",
         outline:
           "border border-neutral-200 bg-white hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50",
         secondary:

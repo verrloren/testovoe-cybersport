@@ -18,7 +18,7 @@ url: string,
 		};
 		init.body = JSON.stringify(init.json);
  	}
-	const result = await fetch(`${process.env.BACKEND_API_URL}${url}`, {
+	const result = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}${url}`, {
 		...init,
 		headers
 	})

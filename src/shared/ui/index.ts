@@ -11,8 +11,5 @@ export * from './loader';
 export * from './popover';
 export * from './select';
 export * from './sheet';
-export * from './sphere-purple';
 export * from './tabs';
-export * from "./page-header";
 export * from "./page-container";
-export * from "./custom-input";

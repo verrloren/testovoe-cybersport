@@ -1,10 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Poppins, IBM_Plex_Mono } from "next/font/google";
+import { Tac_One, Poppins } from "next/font/google";
 
 import { Providers, ToasterProvider } from "@/shared";
-import { ConditionalHeader } from "@/widgets/header";
-// import { SuspenseLoader } from "@/components/loader";
+import { Header } from "@/widgets/header";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -12,12 +11,14 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ["400", "700"],
+
+const tactic = Tac_One({
+  weight: ["400"],
   style: "normal", 
   subsets: ["latin"],
-  variable: "--font-ibmPlexMono",
+  variable: "--font-tactic",
 });
+
 
 export const metadata: Metadata = {
   title: "evrz",
@@ -30,27 +31,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${poppins} ${ibmPlexMono}`} lang="en">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (window.history.scrollRestoration) {
-                window.history.scrollRestoration = 'manual';
-              }
-              window.scrollTo(0, 0);
-            `,
-          }}
-        />
-      </head>
+    <html className={`${poppins} ${tactic}`} lang="en">
       <body>
         <Providers>
-          <ConditionalHeader />
-          {/* <ModalProvider /> */}
           <ToasterProvider />
-          {/* <SuspenseLoader> */}
-						{children}
-					{/* </SuspenseLoader> */}
+					<Header />
+					{children}
         </Providers>
       </body>
     </html>
