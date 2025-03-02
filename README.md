@@ -10,5 +10,5 @@
 
 ## Запуск Проекта 🚀
 
+Создать .env с кодом внутри: NEXT_PUBLIC_BACKEND_API_URL="https://app.ftoyd.com/fronttemp-service"
 bun i && bun run dev
-
