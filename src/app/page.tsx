@@ -1,3 +1,4 @@
+'use server';
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
 import { Container, getQueryClient, PageContainer } from "@/shared";
